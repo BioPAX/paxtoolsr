@@ -1,0 +1,22 @@
+Package: paxtoolsr
+Type: Package
+Title: Paxtools R
+Version: 0.99.8
+Date: 2014-10-01
+Author: Augustin Luna
+Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
+Depends: R (>= 3.0.0), rJava (>= 0.9-4), XML, RCurl, rjson, plyr
+Suggests: testthat, knitr, RColorBrewer, igraph, biomaRt, estrogen,
+        affy, hgu95av2, hgu95av2cdf, limma
+SystemRequirements: Java (>= 1.5)
+License: LGPL-3
+Description: The package provides a basic set of R functions for
+        interacting with BioPAX OWL files and the querying Pathway
+        Commons (PC) molecular interaction data server, hosted by the
+        Computational Biology Center at Memorial-Sloan-Kettering Cancer
+        Center (MSKCC).
+VignetteBuilder: knitr
+LazyData: true
+biocViews: GeneSetEnrichment, GraphAndNetwork, Pathways, Software,
+        SystemsBiology
+URL: https://bitbucket.org/cbio_mskcc/paxtoolsr
