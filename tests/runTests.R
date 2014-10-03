@@ -1,0 +1,3 @@
+library(testthat)
+library(paxtoolsr)
+test_package("paxtoolsr")
