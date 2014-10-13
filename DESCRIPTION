@@ -1,7 +1,7 @@
 Package: paxtoolsr
 Type: Package
 Title: Paxtools R
-Version: 1.0.0
+Version: 1.1.0
 Date: 2014-10-01
 Author: Augustin Luna
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
