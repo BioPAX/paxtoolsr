@@ -1,3 +1,15 @@
-# Version 1.00
+# Version 1.0.1
+Transitioned to Pathway Commons Version 5 (PC2 v5)
+Changed downloadPc to download from PC2 v5
+Changed code to validate Pathway Commons webservice requests 
+Added table of contents to vignette 
+Added description for traverse() in vignette
+Changed R dependency to 3.1.1 to match Bioconductor 3
+Added function to download a single file extended SIF, splitSifnx
+Added the ability to download GMT in downloadPc
+Added function to read GMT files 
+Added tests for new functions
+
+# Version 1.0.0
 Initial release 
 

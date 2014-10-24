@@ -1,5 +1,12 @@
+---
+title: "Using PaxtoolsR"
+output:
+  BiocStyle::html_document:
+    toc: true
+---
+
 <!--
-%\VignetteEngine{knitr::knitr}
+%\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{Using PaxtoolsR}
 %\VignetteKeywords{paxtoolsr}
 %\VignetteDepends{paxtoolsr}
@@ -10,7 +17,7 @@
 
 ```{r knitrSetup, include=FALSE}
 library(knitr)
-opts_chunk$set(out.extra='style="display:block; margin: auto"', fig.align="center")
+opts_chunk$set(out.extra='style="display:block; margin: auto"', fig.align="center", tidy=TRUE)
 ```
 
 The **paxtoolsr** package exposes a number of the algorithms and functions provided by the Paxtools Java library and Pathway Commons webservice allowing them to be used in R. 
@@ -23,7 +30,7 @@ The [Biological Pathway Exchange](http://www.ncbi.nlm.nih.gov/pubmed/20829833) (
 
 [Paxtools](http://www.ncbi.nlm.nih.gov/pubmed/24068901) is a Java libary that allows users to interact with biological pathways represented in the BioPAX language. [Pathway Commons](http://www.pathwaycommons.org/about/) is a resource that integrates biological pathway information for a number of public pathway databases, including Reactome, PantherDB, HumanCyc, etc. that are represented using the BioPAX language. 
 
-**IMPORTANT NOTE:** BioPAX can encode very detailed information about biological processes. Analysis of this data, however, can be complicated as one needs to consider a wide array of n-ary relationships, different states of entities and generics. An alternative approach is to derive higher order relations based on a set of templates to define a simple binary network between biological entities and use conventional graph algorithms to analyze it. For many users of this package, the binary representation termed the Simple Interaction Format (SIF) will be the main entry point to the usage of BioPAX data. Conversion of BioPAX datasets to the SIF format is done through a series of [simplification rules](https://docs.google.com/document/d/1coFo66uuPQQ4ZMSHr8IzCV7I2DwXCoDBfZw7Vg4MgUE/edit?usp=sharing). 
+**NOTE:** BioPAX can encode very detailed information about biological processes. Analysis of this data, however, can be complicated as one needs to consider a wide array of n-ary relationships, different states of entities and generics. An alternative approach is to derive higher order relations based on a set of templates to define a simple binary network between biological entities and use conventional graph algorithms to analyze it. For many users of this package, the binary representation termed the Simple Interaction Format (SIF) will be the main entry point to the usage of BioPAX data. Conversion of BioPAX datasets to the SIF format is done through a series of [simplification rules](https://docs.google.com/document/d/1coFo66uuPQQ4ZMSHr8IzCV7I2DwXCoDBfZw7Vg4MgUE/edit?usp=sharing). 
 
 ## Limitations 
 
@@ -71,7 +78,7 @@ help(graphPc)
 We illustrate how to merge two BioPAX files. Only entities that share IDs will be merged; no additional merging occurs on cross-references. The merging occurs as described further in the Java library [documentation](http://sourceforge.net/projects/biopax/files/paxtools/paxtools.pdf/download). Throughout this tutorial we use the system.file() command to access sample BioPAX files included with the **paxtoolsr** package. Merging may result in warning messages caused as a result of redundant actions being checked against by the Java library; these messages may be ignored. 
 
 ```{r paxtoolsMergeExample}
-file1 <- system.file("extdata", "dna_replication.owl", package="paxtoolsr")
+file1 <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")
 file2 <- system.file("extdata", "circadian_clock.owl", package="paxtoolsr")
 
 mergedFile <- mergeBiopax(file1, file2)
@@ -94,7 +101,7 @@ s3$Catalysis
 To validate BioPAX **paxtoolsr** the types of validation performed are described in the [**BioPAX Validator**](http://www.ncbi.nlm.nih.gov/pubmed/23918249) publication by Rodchenkov I, et al. 
 
 ```{r paxtoolsValidationExample, eval=FALSE}
-errorLog <- validate(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), onlyErrors=TRUE) 
+errorLog <- validate(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), onlyErrors=TRUE) 
 ```
 
 ## Converting BioPAX Files to Other Formats
@@ -129,6 +136,8 @@ results <- toSifnx(inputFile=system.file("extdata", "dna_replication.owl", packa
 
 The **results** object is a list with two entries: nodes and edges. **nodes** will be a **data.frame** where each row corresponds to a biological entity, an **EntityReference**, and will contain any user-selected node properties as additional columns. Similarly, **edges** will be a **data.frame** with a SIF extended with any user-selected properties for an **Interaction** as additional columns. Information on possible properties for an EntityReference or Interaction is available through the [BioPAX ontology](http://www.biopax.org/owldoc/Level3/). It is also possible to download a pre-computed extended SIF representation for the entire [Pathway Commons database](http://www.pathwaycommons.org) that includes information about the data sources for interactions and identifiers for nodes; refer to documentation of the method for more details about the returned entries.  
 
+**NOTE:** **downloadPc** may take several minutes to complete. It is suggested that the results of this command be saved locally rather than using this command frequently. 
+
 ```{r downloadSif, eval=FALSE}
 results <- downloadPc(format="SIFNX")
 ```
@@ -153,7 +162,7 @@ Pathway Commons search results are returned as an XML object.
 str(searchResults)
 ```
 
-These results can be filtered using the **XML** package using XPath expressions; [examples of XPath expressions and syntax](http://www.w3schools.com/xpath/xpath_examples.asp). The examples here shows how to pull the name for the [[FIX]] where the ID exists and pathways in which it participates. 
+These results can be filtered using the **XML** package using XPath expressions; [examples of XPath expressions and syntax](http://www.w3schools.com/xpath/xpath_examples.asp). The examples here shows how to pull the name for the pathway and the URI that contains information about the pathway in the BioPAX format. 
 
 ```{r searchResultsXpathExample}
 xpathSApply(searchResults, "/searchResponse/searchHit/name", xmlValue)[1]
@@ -169,7 +178,7 @@ searchResultsDf <- ldply(xmlToList(searchResults), data.frame)
 
 This type of searching can be used to locallly save BioPAX files retrieved from Pathway Commons. 
 
-```{r saveBiopaxFileFromPcQuery, message=FALSE}
+```{r saveBiopaxFileFromPcQuery, message=FALSE, results='hide'}
 ## Use an XPath expression to extract the results of interest. In this case, the URIs (IDs) for the pathways from the results
 searchResults <- xpathSApply(searchResults, "/searchResponse/searchHit/uri", xmlValue)
 
@@ -179,6 +188,31 @@ biopaxFile <- tempfile()
 ## Extract the URI for the first pathway in the search results and save into a file  
 uri <- searchResults[1]
 saveXML(getPc(uri, "BIOPAX"), biopaxFile) 
+```
+
+# Extracting Information from BioPAX Datasets Using traverse() 
+
+The **traverse** function allows the extraction of specific entries from BioPAX records. traverse() functionality should be available for any **uniprot.org** or **purl.org** URI. 
+
+```{r traverse}
+# Get the protein Uniprot ID for a given HGNC gene symbol
+id <- idMapping("AKT1")
+
+# Covert the Uniprot ID to a URI that would be found in Pathway Commons
+uri <- paste0("http://identifiers.org/uniprot/", id)
+
+# Get URIs for only the ModificationFeatures of the protein
+xml <- traverse(uri=uri, path="ProteinReference/entityFeature:ModificationFeature")
+
+# Extract all the URIs 
+uris <- xpathSApply(xml, "//value/text()", xmlValue)
+
+# For the first URI get the modification position and type
+tmpXml <- traverse(uri=uris[1], path="ModificationFeature/featureLocation:SequenceSite/sequencePosition")
+cat("Modification Position: ", xpathSApply(tmpXml, "//value/text()", xmlValue))
+
+tmpXml <- traverse(uri=uris[1], path="ModificationFeature/modificationType/term")
+cat("Modification Type: ", xpathSApply(tmpXml, "//value/text()", xmlValue))
 ```
 
 # Common Data Visualization Pathways and Network Analysis
@@ -405,7 +439,7 @@ toSif("X:\\directory\\file")
 
 By default **paxtoolsr** uses a maximum heap size limit of 512MB. For large BioPAX files, this limit may be insufficient. The code below shows how to change this limit and observe that the change was made.  
 
-NOTE: This limit cannot be changed once the virtual machine has been initialized 
+**NOTE:** This limit cannot be changed once the virtual machine has been initialized 
 by loading the library, so the memory heap size limit must be changed beforehand. 
 
 ```{r changeHeapSize, eval=FALSE} 
