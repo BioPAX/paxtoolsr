@@ -17,7 +17,7 @@
 #'   example organism as c("9606", "10016") returns results for both human and
 #'   mice. Only humans, "9606" is officially supported.
 #' @param type BioPAX class filter. See Details.
-#' @param verbose a boolean, display the common used to query Pathway Commons
+#' @param verbose a boolean, display the command used to query Pathway Commons
 #' @return an XMLInternalDocument with results
 #' 
 #' @details Indexed fields were selected based on most common searches. Some of 
@@ -38,14 +38,14 @@
 #' BioPAX classes can be found at \url{http://www.pathwaycommons.org/pc2/#biopax_types}
 #' 
 #' @examples
-#' searchPc("Q06609")
+#' results <- searchPc("Q06609")
 #' 
 #' @concept paxtoolsr
 #' @export
 searchPc <- function(q, page=0, datasource=NULL, organism=NULL, type=NULL, 
                      verbose=FALSE) {
-    baseUrl <- "http://www.pathwaycommons.org/pc2/search.xml?q="
-    url <- paste(baseUrl, q, "&page=", page, sep="") 
+    baseUrl <- paste0(getPcUrl(), "search.xml?q=")
+    url <- paste0(baseUrl, q, "&page=", page) 
     
     if(!is.null(datasource)) {
         # Put into the correct format
@@ -83,7 +83,7 @@ searchPc <- function(q, page=0, datasource=NULL, organism=NULL, type=NULL,
 #'   Identifiers.org in details. 
 #' @param format output format. Valid options can be found using 
 #'   \code{\link{pcFormats}}
-#' @param verbose a boolean, display the common used to query Pathway Commons
+#' @param verbose a boolean, display the command used to query Pathway Commons
 #' @return a XMLInternalDocument object
 #' 
 #' @details Get commands only retrieve the BioPAX elements that are directly
@@ -96,18 +96,18 @@ searchPc <- function(q, page=0, datasource=NULL, organism=NULL, type=NULL,
 #' @seealso \code{\link{pcFormats}}
 #' 
 #' @examples 
-#' getPc("http://identifiers.org/uniprot/Q06609")
+#' results <- getPc("http://identifiers.org/uniprot/O14503")
 #' 
-#' getPc(c("http://identifiers.org/uniprot/Q06609", 
-#'         "http://identifiers.org/uniprot/Q96EB6"), 
-#'       verbose=TRUE)
+#' results <- getPc(c("http://identifiers.org/uniprot/O14503", 
+#'                    "http://identifiers.org/uniprot/Q9P2X7"), 
+#'                  verbose=TRUE)
 #' 
 #' @concept paxtoolsr
 #' @export
 getPc <- function(uri, format=NULL, verbose=FALSE) {
     uris <- paste(paste0("uri=", uri), collapse="&")
     
-    baseUrl <- "http://www.pathwaycommons.org/pc2/get?"
+    baseUrl <- paste0(getPcUrl(), "get?")
     url <- paste(baseUrl, uris, sep="") 
             
     stopifnot(format %in% pcFormats())
@@ -143,17 +143,16 @@ getPc <- function(uri, format=NULL, verbose=FALSE) {
 #' @param format output format. Valid options: \code{\link{pcFormats}}
 #' @param datasource datasource filter (same as for 'search').
 #' @param organism organism filter (same as for 'search').
-#' @param verbose a boolean, display the common used to query Pathway Commons
+#' @param verbose a boolean, display the command used to query Pathway Commons
 #' @return depending on the the output format a different object may be returned. 
 #'   \code{\link{pcFormats}}
 #' 
 #' @seealso \code{\link{pcFormats}, \link{pcDirections}}
 #' 
 #' @examples
-#' graphPc(source="http://identifiers.org/uniprot/Q96EB6", 
+#' results <- graphPc(source="http://identifiers.org/uniprot/O14503", 
 #'  kind="neighborhood", 
-#'  format="EXTENDED_BINARY_SIF", 
-#'  verbose=TRUE)
+#'  format="EXTENDED_BINARY_SIF")
 #' 
 #' @concept paxtoolsr
 #' @export 
@@ -164,7 +163,7 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
     ## Convert to uppercase to avoid issues in if statements
     format <- toupper(format)
     
-    baseUrl <- "http://www.pathwaycommons.org/pc2/graph?kind=" 
+    baseUrl <- paste0(getPcUrl(), "graph?kind=")
     url <- paste(baseUrl, kind, sep="") 
     
     stopifnot(format %in% pcFormats())
@@ -220,73 +219,13 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
         cat("FILENAME: ", filename, "\n") 
         
         write(tmp, file=filename)
-         
-        con <- file(filename) 
-        
-        open(con)
-        edges <- NULL
-        nodes <- NULL
-        edgesNames <- NULL
-        nodesNames <- NULL
-        
-        resultsFlag <- TRUE
-        cnt <- 1
-        
-        while (length(line <- readLines(con, n=1, warn=FALSE)) > 0) {       
-            #DEBUG 
-            #cat("Line: ", line, "\n") 
 
-            if(line == "") {
-                #DEBUG 
-                #cat("HIT\n") 
-                
-                resultsFlag <- FALSE
-                cnt <- 0
-            } else {        
-                splitLine <- unlist(strsplit(line, split="\t"))
-
-                # Make checks on whether it is the first line of results
-                # If so, then it is the name row
-                if(cnt == 1 && resultsFlag) {
-                    edgesNames <- splitLine
-                }
-
-                if(cnt == 1 && !resultsFlag) {
-                    nodesNames <- splitLine
-                }               
-            
-                # Add to data
-                if(cnt != 1 && resultsFlag) {
-                
-                    # Check to make sure there are no missing entries at the end
-                    if(length(splitLine) != length(edgesNames)) {
-                        splitLine <- c(splitLine, "") 
-                    }
-                    
-                    edges <- rbind(edges, splitLine)
-                }
-                
-                if(cnt != 1 && !resultsFlag) {
-                    if(length(splitLine) != length(nodesNames)) {
-                        splitLine <- c(splitLine, "") 
-                    }
-
-                    nodes <- rbind(nodes, splitLine)
-                }
-            }
-            
-            cnt <- cnt + 1
-        } 
-        
-        close(con)
-
-        colnames(edges) <- edgesNames
-        colnames(nodes) <- nodesNames
-
-        rownames(edges) <- 1:nrow(edges)
-        rownames(nodes) <- 1:nrow(nodes)
-        
-        result <- list(edges=edges, nodes=nodes) 
+        if(file.info(filename)$size > 0) {
+            con <- file(filename) 
+            result <- splitSifnx(con, verbose) 
+        } else {
+            result <- list(edges=NULL, nodes=NULL)   
+        }
     } else if(format == "BINARY_SIF") {
         result <- read.table(textConnection(tmp), sep="\t", header=FALSE)           
         colnames(result) <- c("PARTICIPANT_A",  "INTERACTION_TYPE", "PARTICIPANT_B")
@@ -308,7 +247,7 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
 #' @param path a BioPAX propery path in the form of
 #'   property1[:type1]/property2[:type2]; see properties, inverse properties,
 #'   Paxtools, org.biopax.paxtools.controller.PathAccessor.
-#' @param verbose a boolean, display the common used to query Pathway Commons
+#' @param verbose a boolean, display the command used to query Pathway Commons
 #' @return an XMLInternalDocument with results
 #' 
 #' @details With traverse users can explicitly state the paths they would like
@@ -339,7 +278,7 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
 #' @concept paxtoolsr
 #' @export   
 traverse <- function(uri, path, verbose=FALSE) {
-    baseUrl <- "http://www.pathwaycommons.org/pc2/traverse?"
+    baseUrl <- paste0(getPcUrl(), "traverse?")
     
     if(!is.null(uri)) {
         # Put into the correct format
@@ -362,7 +301,7 @@ traverse <- function(uri, path, verbose=FALSE) {
 #' 
 #' @param datasource filter by data source (same as for 'search').
 #' @param organism organism filter (same as for 'search').
-#' @param verbose a boolean, display the common used to query Pathway Commons
+#' @param verbose a boolean, display the command used to query Pathway Commons
 #' @return a data.frame with the following columns:
 #'   \itemize{ 
 #'     \item uri URI ID for the pathway
@@ -377,12 +316,12 @@ traverse <- function(uri, path, verbose=FALSE) {
 #'   another process.
 #' 
 #' @examples
-#' topPathways()
+#' results <- topPathways(datasource="panther")
 #' 
 #' @concept paxtoolsr
 #' @export
 topPathways <- function(datasource=NULL, organism=NULL, verbose=FALSE) {
-    baseUrl <- "http://www.pathwaycommons.org/pc2/top_pathways?"
+    baseUrl <- paste0(getPcUrl(), "top_pathways?")
     url <- baseUrl
 
     if(!is.null(datasource)) {
@@ -412,7 +351,7 @@ topPathways <- function(datasource=NULL, organism=NULL, verbose=FALSE) {
 #' one query.
 #' 
 #' @param ids a vector of IDs 
-#' @param verbose a boolean, display the common used to query Pathway Commons
+#' @param verbose a boolean, display the command used to query Pathway Commons
 #' @return a list of where each entry is a HGNC symbol provided and the each 
 #'   value is a primary UniProt or ChEBI ID. 
 #'   
@@ -430,11 +369,13 @@ topPathways <- function(datasource=NULL, organism=NULL, verbose=FALSE) {
 #' @concept paxtoolsr
 #' @export 
 idMapping <- function(ids, verbose=FALSE) {
-    baseUrl <- "http://www.pathwaycommons.org/pc2/idmapping?id="
-    url <- paste(baseUrl, ids[1], sep="")
+    baseUrl <- paste0(getPcUrl(), "idmapping?id=")
+    url <- paste0(baseUrl, ids[1])
 
-    for(i in 2:length(ids)) {
-        url <- paste(url, "&id=", ids[i], sep="")
+    if(length(ids) >= 2) {
+        for(i in 2:length(ids)) {
+            url <- paste0(url, "&id=", ids[i])
+        }        
     }
     
     tmp <- getPcRequest(url, verbose)
@@ -449,8 +390,12 @@ idMapping <- function(ids, verbose=FALSE) {
 #' Download Pathway Commons data in various formats
 #' 
 #' @param format a string describing the format to be downloaded; 
-#'   currently, only the Extended Simple Interaction Format (SIF) "SIFNX" is supported
-#' @return a list with two data.frames: 
+#'   currently, only the Extended Simple Interaction Format (SIF) "SIFNX" and 
+#'   Gene Set Enrichment Analysis "GMT" formats for the entire Pathway Commons 
+#'   database are supported. 
+#' @param verbose a boolean debugging information
+#' @return a named list with named pathways, each entry contains a vector of gene 
+#'   symbols (for GMT) or a list with two data.frames (for SIFNX): 
 #'   \itemize{ 
 #'     \item edges Network edges with the following columns: 
 #'       PARTICIPANT_A: Edge (interaction) participant, 
@@ -470,7 +415,7 @@ idMapping <- function(ids, verbose=FALSE) {
 #'       RELATIONSHIP_XREF: An RelationshipXref defines a reference to an entity
 #'         in an external resource that does not have the same biological 
 #'         identity as the referring entity.
-#' }
+#'   }
 #'  
 #' @details 
 #' 
@@ -478,24 +423,32 @@ idMapping <- function(ids, verbose=FALSE) {
 #' Description of BioPAX classes: http://www.biopax.org/owldoc/Level3/
 #' 
 #' @examples 
-#' \dontrun{
-#' downloadPc(format="SIFNX") 
-#' }
+#' downloadPc(format="GMT") 
 #' 
 #' @concept paxtoolsr
 #' @seealso \code{\link{downloadPc}}
 #' @export 
-downloadPc <- function(format="SIFNX") {
-    nodesFile <- tempfile("nodes", fileext = ".gz")
-    download.file("http://www.pathwaycommons.org/pc2/downloads/Pathway%20Commons.4.All.EXTENDED_BINARY_SIF.nodes.tsv.gz", nodesFile)
-    nodes <- read.table(nodesFile, header=TRUE, sep="\t", quote="", stringsAsFactors=FALSE)
+downloadPc <- function(format=c("SIFNX", "GMT"), verbose=FALSE) {    
+    if(format == "SIFNX") {
+        orgFile <- tempfile("sifnx", fileext=".gz")
+        
+        url <- paste0(getPcUrl(), "downloads/Pathway%20Commons.5.All.EXTENDED_BINARY_SIF.tsv.gz")
+        
+        download.file(url, orgFile)
+        
+        con <- gzcon(file(orgFile, "r"))
+
+        results <- splitSifnx(con, verbose)
+    }
     
-    edgesFile <- tempfile("edges", fileext = ".gz")
-    download.file("http://www.pathwaycommons.org/pc2/downloads/Pathway%20Commons.4.All.EXTENDED_BINARY_SIF.edges.tsv.gz", edgesFile)
-    edges <- read.table(edgesFile, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+    if(format == "GMT") {
+        file <- tempfile("gmt", fileext = ".gz")
+        download.file("http://purl.org/pc2/5/downloads/Pathway%20Commons.5.All.GSEA.gmt.gz", file)
+        
+        results <- readGmt(gzfile(file))
+    }
     
-    result <- list(edges=edges, nodes=nodes) 
-    return(result)
+    return(results)       
 }
 
 #' Acceptable Pathway Commons Formats 
@@ -577,6 +530,20 @@ pcDirections <- function() {
     return(pcDirections)
 }
 
+#' Get base Pathway Commons URL
+#' 
+#' @param pcVersion a number indicating the Pathway Commons version
+#' @return a string with base Pathway Commons URL
+#' 
+#' @details paxtoolsr will support versions Pathway Commons 5 and later
+#' 
+#' @concept paxtoolsr
+#' @keywords internal
+#' @noRd
+getPcUrl <- function(pcVersion=5) {
+    return(paste0("http://purl.org/pc2/", pcVersion, "/"))
+}
+
 #' Get Error Message for a Pathway Commons Error 
 #' 
 #' @param code a three digit numerical error code
@@ -588,9 +555,9 @@ pcDirections <- function() {
 getErrorMessage <- function(code) {
     codes <- c("452", "460", "500", "503")
     messages <- c("Bad Request (illegal or no arguments)", 
-                                "No Results Found", 
-                                "Internal Server Error", 
-                                "Server is temporarily unavailable due to regular maintenance")
+                  "No Results Found", 
+                  "Internal Server Error", 
+                  "Server is temporarily unavailable due to regular maintenance")
     
     errors <- data.frame(codes=codes, messages=messages, stringsAsFactors=FALSE)
     
@@ -601,6 +568,77 @@ getErrorMessage <- function(code) {
     } else {
         return("Unknown Error")
     }
+}
+
+#' Split Extended SIF File
+#' 
+#' Split an extended SIF file into nodes and edges 
+#' 
+#' @param con an opened file connection 
+#' @param verbose a boolean, display debugging information
+#' @return a list with nodes and edges entries 
+#' 
+#' @details SIFNX files from Pathway Commons commonly come a single file that 
+#' includes a tab-delimited sections for nodes and another for edges. The 
+#' sections are separated by an empty lines. These sections must be split before
+#' they are read. 
+#' 
+#' @examples
+#' con <- file(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
+#' results <- splitSifnx(con, verbose=TRUE)
+#' 
+#' @concept paxtoolsr
+#' @export 
+splitSifnx <- function(con, verbose=FALSE) {
+    edgesFile <- tempfile("edges", fileext=".txt")
+    nodesFile <- tempfile("nodes", fileext=".txt")
+
+    # Open file connections
+    edgesCon <- file(edgesFile, "w")
+    nodesCon <- file(nodesFile, "w")
+    
+    newLineFlag <- FALSE
+    currentLine <- 1 
+    
+    # Read single lines
+    lineTmp <- readLines(con, warn=FALSE)
+
+    if(verbose) {
+        pb <- txtProgressBar(min=1, max=length(lineTmp), style=3)        
+    }
+
+    for (i in 1:length(lineTmp)) {
+        if(verbose) {
+            setTxtProgressBar(pb, i)
+        }
+
+        line <- lineTmp[i]
+        
+        if(verbose) {
+            cat("Current Line: ", currentLine, "\n")
+        }
+        currentLine <- currentLine + 1
+        
+        if(grepl("^$", line)) {
+            newLineFlag <- TRUE
+            next
+        }
+        
+        if(!newLineFlag) {
+            writeLines(line, edgesCon)
+        } else {
+            writeLines(line, nodesCon)        
+        }
+    }
+    
+    close(edgesCon)
+    close(nodesCon)
+    close(con)
+    
+    edges <- read.table(edgesFile, header=TRUE, sep="\t", quote="", stringsAsFactors=FALSE)
+    nodes <- read.table(nodesFile, header=TRUE, sep="\t", quote="", stringsAsFactors=FALSE)
+    
+    return(list(edges=edges, nodes=nodes))
 }
 
 #' Get a Pathway Commons Webservice Request 
@@ -618,24 +656,41 @@ getPcRequest <- function(url, verbose) {
         cat("URL: ", url, "\n") 
     }
     
-    tmp <- tryCatch(getURLContent(url),
-                    error=function(e) {
-                        #DEBUG
-                        #cat("X", e$message, "\n")
-                        
-                        code <- substr(e$message, 1, 3)
-                        
-                        # Make sure the code is numeric
-                        if(grepl("^\\d+$", code)) {
-                            message <- getErrorMessage(code)                                            
-                        } else {
-                            code <- NA
-                            message <- e$message
-                        }
-                        
-                        result <- paste("ERROR: Code:", code, "Message:", message)
-                        result
-                    })
+#     tmp <- tryCatch(getURLContent(url, .opts=list(followlocation=TRUE)),
+#                     error=function(e) {
+#                         #DEBUG
+#                         #cat("X", e$message, "\n")
+#                         
+#                         code <- substr(e$message, 1, 3)
+#                         
+#                         # Make sure the code is numeric
+#                         if(grepl("^\\d+$", code)) {
+#                             message <- getErrorMessage(code)                                            
+#                         } else {
+#                             code <- NA
+#                             message <- e$message
+#                         }
+#                         
+#                         result <- paste("ERROR: Code:", code, "Message:", message)
+#                         result
+#                     })
+    
+    statusCode <- url.exists(url, .opts=list(followlocation=TRUE), .header=TRUE)["status"]
+    
+    # Check HTTP status code; 200 is success 
+    if(statusCode == "200") {
+        tmp <- getURLContent(url, .opts=list(followlocation=TRUE))
+    } else {
+        # Make sure the statusCode is numeric
+        if(grepl("^\\d+$", statusCode)) {
+            message <- getErrorMessage(statusCode)                                            
+        } else {
+            statusCode <- NA
+            message <- NA
+        }
+        
+        tmp <- paste("ERROR: Code:", statusCode, "Message:", message)
+    }
     
     if(grepl("^ERROR", tmp)) {
         stop(paste(tmp, "(PC Webservice Error)"))

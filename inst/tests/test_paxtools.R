@@ -5,7 +5,7 @@ context("Paxtools Functionality")
 test_that("fetch", {
     outFile <- tempfile()
     
-    tmp <- getPc(uri="http://purl.org/pc2/4/Pathway_8cd6ef6591606767f64719b8cbac35df", 
+    tmp <- getPc(uri="http://purl.org/pc2/5/Pathway_2682d9cea55c43107adcf10343cf8211", 
                              format="BIOPAX", 
                              verbose=TRUE)
     
@@ -137,13 +137,18 @@ test_that("summarize", {
 })
 
 test_that("xmlInternalDocumentInput", {
-    tmp <- getPc(uri="http://purl.org/pc2/4/Pathway_8cd6ef6591606767f64719b8cbac35df", 
-                                 format="BIOPAX", 
-                                 verbose=TRUE)
+    tmp <- getPc(uri="http://purl.org/pc2/5/Pathway_2682d9cea55c43107adcf10343cf8211", 
+                 format="BIOPAX", 
+                 verbose=TRUE)
     
     results <- toSif(tmp) 
     
     expect_is(results, "data.frame")
+})
+
+test_that("readGmt", {
+    results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
+    expect_is(results, "list")
 })
 
 #DEBUG 

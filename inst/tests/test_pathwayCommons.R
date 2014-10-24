@@ -38,41 +38,40 @@ test_that("getPc", {
 })
 
 test_that("graphPc", {  
-    results <- graphPc(source="http://identifiers.org/uniprot/P20908", 
+    results <- graphPc(source="http://identifiers.org/uniprot/O14503", 
                        kind="neighborhood", 
                        format="EXTENDED_BINARY_SIF", 
                        verbose=TRUE)
+    expect_equal(length(names(results)), 2)
     
     # Test Against Error Code 460
     expect_error(graphPc(source="http://identifiers.org/uniprot/PXXXXX", 
                          kind="neighborhood", 
                          format="EXTENDED_BINARY_SIF", 
                          verbose=TRUE), ".*460.*PC Webservice Error.*")
-    
-    expect_equal(length(names(results)), 2)
 
-    expect_error(graphPc(source="http://identifiers.org/uniprot/P20908", 
+    expect_error(graphPc(source="http://identifiers.org/uniprot/O14503", 
                          kind="PATHSFROMTO", 
                          format="EXTENDED_BINARY_SIF", 
                          verbose=TRUE), "target must be set if kind is PATHSFROMTO")
     
-    results <- graphPc(source="http://identifiers.org/uniprot/P20908", 
-                       target="http://identifiers.org/uniprot/P93738",
+    results <- graphPc(source="http://identifiers.org/uniprot/O14503", 
+                       target="http://identifiers.org/uniprot/O00327",
                        kind="PATHSFROMTO", 
                        format="EXTENDED_BINARY_SIF", 
                        verbose=TRUE)
     expect_equal(length(names(results)), 2)
     
     expect_is(graphPc(source=c("http://identifiers.org/uniprot/Q06609", 
-                                  "http://identifiers.org/uniprot/Q96EB6"), 
+                               "http://identifiers.org/uniprot/Q96EB6"), 
                          kind="neighborhood", 
                          format="EXTENDED_BINARY_SIF", 
                          verbose=TRUE), "list")
 
-    expect_is(graphPc(source=c("http://identifiers.org/uniprot/P93738", 
-                               "http://identifiers.org/uniprot/Q96EB6"),
-                      target=c("http://identifiers.org/uniprot/P20908",
-                               "http://identifiers.org/uniprot/Q06609"),
+    expect_is(graphPc(source=c("http://identifiers.org/uniprot/O14503", 
+                               "http://identifiers.org/uniprot/A2I2N6"),
+                      target=c("http://identifiers.org/uniprot/Q9P2X7",
+                               "http://identifiers.org/uniprot/O15516"),
                       kind="PATHSFROMTO", 
                       format="EXTENDED_BINARY_SIF", 
                       verbose=TRUE), "list")
@@ -129,7 +128,7 @@ test_that("traverse", {
 })
 
 test_that("topPathways", {  
-    results <- topPathways()
+    results <- topPathways(datasource="panther")
     expect_is(results, "data.frame")
 })
 
@@ -140,4 +139,10 @@ test_that("idMapping", {
         
     expect_equal(results$BRCA2, "P51587")
     expect_equal(results$TP53, "P04637")
+})
+
+test_that("splitSifnx", {
+    con <- file(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
+    results <- splitSifnx(con)
+    expect_equal(length(names(results)), 2)
 })

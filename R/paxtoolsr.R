@@ -2,7 +2,7 @@
 
 #' @import rJava
 #' @import XML
-#' @importFrom RCurl getURLContent
+#' @importFrom RCurl getURLContent url.exists
 #' @import rjson
 #' @import plyr
 .onLoad <- function(lib, pkg){

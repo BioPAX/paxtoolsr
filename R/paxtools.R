@@ -59,7 +59,8 @@ fromPsimi <- function(inputFile, outputFile=NULL, bpLevelArg=3) {
 #' 
 #' @examples
 #' outFile <- tempfile()
-#' results <- toGSEA(system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="paxtoolsr"), 
+#' results <- toGSEA(system.file("extdata", "biopax3-short-metabolic-pathway.owl", 
+#'                               package="paxtoolsr"), 
 #'                               outFile, 
 #'                               "uniprot", 
 #'                               crossSpeciesCheckFlag=TRUE) 
@@ -157,7 +158,7 @@ getNeighbors <- function(inputFile, outputFile=NULL, idList) {
 #' 
 #' @examples 
 #' outFile <- tempfile()
-#' tmp <- getPc(uri="http://purl.org/pc2/4/Pathway_8cd6ef6591606767f64719b8cbac35df", 
+#' tmp <- getPc(uri="http://purl.org/pc2/5/Pathway_2682d9cea55c43107adcf10343cf8211", 
 #'              format="BIOPAX", 
 #'              verbose=TRUE)
 #' ids <- c("http://identifiers.org/uniprot/P32754", 
@@ -292,7 +293,7 @@ toSBGN <- function(inputFile, outputFile=NULL) {
 #' @examples
 #' edgesFile <- tempfile()
 #' nodesFile <- tempfile()
-#' results <- toSifnx(system.file("extdata", "dna_replication.owl", 
+#' results <- toSifnx(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
 #'   package="paxtoolsr"), 
 #'   nodesFile,
 #'   edgesFile, 
@@ -353,7 +354,7 @@ toSifnx <- function(inputFile, outputNodesFile=NULL, outputEdgesFile=NULL,
 #'  
 #' @examples   
 #' outFile <- tempfile()
-#' results <- toSif(system.file("extdata", "dna_replication.owl", 
+#' results <- toSif(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
 #'   package="paxtoolsr"), 
 #'   outFile) 
 #'   
@@ -395,7 +396,7 @@ toSif <- function(inputFile, outputFile=NULL) {
 #' 
 #' @examples
 #' outFile <- tempfile()
-#' results <- integrateBiopax(system.file("extdata", "dna_replication.owl", 
+#' results <- integrateBiopax(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
 #'   package="paxtoolsr"), 
 #'   system.file("extdata", "circadian_clock.owl", package="paxtoolsr"), 
 #'   outFile) 
@@ -440,9 +441,11 @@ integrateBiopax <- function(inputFile1, inputFile2, outputFile=NULL) {
 #' 
 #' @examples    
 #' outFile <- tempfile()
-#' results <- mergeBiopax(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), 
-#'   system.file("extdata", "circadian_clock.owl", package="paxtoolsr"), 
-#'   outFile) 
+#' results <- mergeBiopax(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
+#'                        package="paxtoolsr"), 
+#'                        system.file("extdata", "circadian_clock.owl", 
+#'                        package="paxtoolsr"), 
+#'                        outFile) 
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -477,7 +480,7 @@ mergeBiopax <- function(inputFile1, inputFile2, outputFile=NULL) {
 #'   \url{http://www.biopax.org/}
 #' 
 #' @examples
-#' summary <- summarize(system.file("extdata", "dna_replication.owl", 
+#' summary <- summarize(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
 #' package="paxtoolsr")) 
 #' 
 #' @concept paxtoolsr
@@ -547,7 +550,7 @@ summarize <- function(inputFile) {
 #' 
 #' @examples
 #' outFile <- tempfile()
-#' rawDoc <- validate(system.file("extdata", "dna_replication.owl", 
+#' rawDoc <- validate(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
 #'   package="paxtoolsr"), onlyErrors=TRUE) 
 #' 
 #' @concept paxtoolsr
@@ -614,6 +617,26 @@ validate <- function(inputFile, outputFile=NULL,
     } else {
         return(outputFile) 
     }
+}
+
+#' Read in gene sets from GMT files 
+#'
+#' This function will read in gene sets in the GMT format into a named list. 
+#' 
+#' @param inputFile an inputFile in the GMT format
+#' @return a named list where each entry corresponds to a gene set
+#' 
+#' @examples 
+#' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
+#' 
+#' @concept paxtoolsr
+#' @export
+readGmt <- function(inputFile) {
+    f <- readLines(inputFile)
+    lst <- sapply(f, function(x) unlist(strsplit(x, "\t", fixed = TRUE)))
+    names(lst) <- sapply(lst, function(x) x[1])
+    lst <- lapply(lst, function(x) x[-(1:2)])
+    return(lst)
 }
  
 #' Utility method; create temporary file if necessary
