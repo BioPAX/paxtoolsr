@@ -20,6 +20,10 @@ library(knitr)
 opts_chunk$set(out.extra='style="display:block; margin: auto"', fig.align="center", tidy=TRUE)
 ```
 
+```{r style, include=FALSE, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
+
 The **paxtoolsr** package exposes a number of the algorithms and functions provided by the Paxtools Java library and Pathway Commons webservice allowing them to be used in R. 
 
 # Overview
@@ -454,6 +458,12 @@ runtime <- .jcall("java/lang/Runtime", "Ljava/lang/Runtime;", "getRuntime")
 maxMemory <- .jcall(runtime, "J", "maxMemory")
 maxMemoryMb <- maxMemory / mbSize
 cat("Max Memory: ", maxMemoryMb, "\n")
+```
+
+# Session Information
+
+```{r sessionInfo}
+sessionInfo()
 ```
 
 # References
