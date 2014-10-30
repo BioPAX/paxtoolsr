@@ -1,0 +1,18 @@
+citHeader("To cite paxtoolsr:")
+
+citEntry(entry="article", 
+  author =      "Demir, E.  and Cary, M. P.  and Paley, S.  and Fukuda, K.  and Lemer, C.  and Vastrik, I.  and Wu, G.  and D'Eustachio, P.  and Schaefer, C.  and Luciano, J.  and Schacherer, F.  and Martinez-Flores, I.  and Hu, Z.  and Jimenez-Jacinto, V.  and Joshi-Tope, G.  and Kandasamy, K.  and Lopez-Fuentes, A. C.  and Mi, H.  and Pichler, E.  and Rodchenkov, I.  and Splendiani, A.  and Tkachev, S.  and Zucker, J.  and Gopinath, G.  and Rajasimha, H.  and Ramakrishnan, R.  and Shah, I.  and Syed, M.  and Anwar, N.  and Babur, O.  and Blinov, M.  and Brauner, E.  and Corwin, D.  and Donaldson, S.  and Gibbons, F.  and Goldberg, R.  and Hornbeck, P.  and Luna, A.  and Murray-Rust, P.  and Neumann, E.  and Ruebenacker, O.  and Reubenacker, O.  and Samwald, M.  and van Iersel, M.  and Wimalaratne, S.  and Allen, K.  and Braun, B.  and Whirl-Carrillo, M.  and Cheung, K. H.  and Dahlquist, K.  and Finney, A.  and Gillespie, M.  and Glass, E.  and Gong, L.  and Haw, R.  and Honig, M.  and Hubaut, O.  and Kane, D.  and Krupa, S.  and Kutmon, M.  and Leonard, J.  and Marks, D.  and Merberg, D.  and Petri, V.  and Pico, A.  and Ravenscroft, D.  and Ren, L.  and Shah, N.  and Sunshine, M.  and Tang, R.  and Whaley, R.  and Letovksy, S.  and Buetow, K. H.  and Rzhetsky, A.  and Schachter, V.  and Sobral, B. S.  and Dogrusoz, U.  and McWeeney, S.  and Aladjem, M.  and Birney, E.  and Collado-Vides, J.  and Goto, S.  and Hucka, M.  and Le Novere, N.  and Maltsev, N.  and Pandey, A.  and Thomas, P.  and Wingender, E.  and Karp, P. D.  and Sander, C.  and Bader, G. D. ",
+  title =       "{{T}he {B}io{P}{A}{X} community standard for pathway data sharing}",
+  journal =     "Nat. Biotechnol.",
+  year =        "2010",
+  volume =      "28",
+  number =      "9",
+  pages =       "935--942",
+  month =       "Sep",
+  textVersion = paste("Demir, E et al. The BioPAX community standard for pathway data sharing. Nat Biotechnol. 2010 Sep;28(9):935-42. http://www.ncbi.nlm.nih.gov/pubmed/20829833"))
+
+citFooter("This free open-source software implements academic research
+by the authors. Its development took a large amount of extra time and
+effort. If you use it, please support the project by citing the listed
+journal articles.")
+
