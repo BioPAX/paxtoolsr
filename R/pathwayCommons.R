@@ -336,9 +336,12 @@ topPathways <- function(datasource=NULL, organism=NULL, verbose=FALSE) {
     
     results <- xmlTreeParse(tmp, useInternalNodes=TRUE)
     
+    #DEBUG
+    #return(results)
+    
     resultsDf <- ldply(xmlToList(results), data.frame)
     resultsDf <- resultsDf[,c("uri", "biopaxClass", "name", 
-                              "dataSource", "organism", "pathway")]
+                              "dataSource", "organism")]
     
     return(resultsDf) 
 }

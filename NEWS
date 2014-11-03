@@ -1,4 +1,15 @@
-# Version 1.0.1
+# Version 1.1.4
+Fixed topPathways() bug 
+Fixed fetch() example/test
+Changed title
+
+# Version 1.1.3
+Added CITATION file 
+
+# Version 1.1.2
+Update vignette to use BiocStyle
+
+# Version 1.1.1
 Transitioned to Pathway Commons Version 5 (PC2 v5)
 Changed downloadPc to download from PC2 v5
 Changed code to validate Pathway Commons webservice requests 
