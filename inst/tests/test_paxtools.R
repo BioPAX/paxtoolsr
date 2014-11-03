@@ -4,14 +4,11 @@ context("Paxtools Functionality")
 
 test_that("fetch", {
     outFile <- tempfile()
-    
-    tmp <- getPc(uri="http://purl.org/pc2/5/Pathway_2682d9cea55c43107adcf10343cf8211", 
-                             format="BIOPAX", 
-                             verbose=TRUE)
-    
-    ids <- c("http://identifiers.org/uniprot/P32754", 
-             "http://identifiers.org/uniprot/O43708")
-    
+    tmp <- getPc(uri="http://identifiers.org/reactome/REACT_12034.3", 
+                 format="BIOPAX", 
+                 verbose=TRUE)
+    ids <- c("http://identifiers.org/uniprot/P36894", 
+             "http://identifiers.org/uniprot/Q13873")
     results <- fetch(tmp, outFile, ids)
     
     expect_is(results, "XMLInternalDocument")
@@ -137,7 +134,7 @@ test_that("summarize", {
 })
 
 test_that("xmlInternalDocumentInput", {
-    tmp <- getPc(uri="http://purl.org/pc2/5/Pathway_2682d9cea55c43107adcf10343cf8211", 
+    tmp <- getPc(uri="http://identifiers.org/reactome/REACT_12034.3", 
                  format="BIOPAX", 
                  verbose=TRUE)
     
