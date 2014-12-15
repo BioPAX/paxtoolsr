@@ -73,7 +73,7 @@ test_that("toLevel3", {
 test_that("toSBGN", {
     outFile <- tempfile()
     
-    results <- toSBGN(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), 
+    results <- toSBGN(system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="paxtoolsr"), 
                                   outFile) 
     
     expect_is(results, "XMLInternalDocument")

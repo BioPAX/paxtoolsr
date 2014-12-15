@@ -1,3 +1,9 @@
+# Version 1.1.5
+Updated to paxtools 4.3
+Added better Java error messages
+Added the ability to switch PC versions
+Updated to PC version 6
+
 # Version 1.1.4
 Fixed topPathways() bug 
 Fixed fetch() example/test
