@@ -127,8 +127,8 @@ getPc <- function(uri, format=NULL, verbose=FALSE) {
 #' 
 #' This function will retrieve a set of BioPAX elements given a graph query match. 
 #' 
-#' @param kind graph query. Valid options can be found using pcGraphQueries. See Details for 
-#'   information on graph queries. 
+#' @param kind graph query. Valid options can be found using \code{\link{pcGraphQueries}}
+#'   See Details for information on graph queries. 
 #' @param source source object's URI/ID. Multiple source URIs/IDs are allowed
 #'   per query, for example c("http://identifiers.org/uniprot/Q06609", 
 #'   "http://identifiers.org/uniprot/Q549Z0")
@@ -435,7 +435,12 @@ downloadPc <- function(format=c("SIFNX", "GMT"), verbose=FALSE) {
     if(format == "SIFNX") {
         orgFile <- tempfile("sifnx", fileext=".gz")
         
-        url <- paste0(getPcUrl(), "downloads/Pathway%20Commons.5.All.EXTENDED_BINARY_SIF.tsv.gz")
+        url <- paste0(getPcUrl(), "downloads/Pathway%20Commons.", getOption("pc.version"), 
+                      ".All.EXTENDED_BINARY_SIF.tsv.gz")
+        
+        if(verbose) {
+            cat("URL: ", url, "\n")
+        }
         
         download.file(url, orgFile)
         
@@ -443,10 +448,34 @@ downloadPc <- function(format=c("SIFNX", "GMT"), verbose=FALSE) {
 
         results <- splitSifnx(con, verbose)
     }
+
+    if(format == "BIOPAX") {
+        orgFile <- tempfile("biopax", fileext=".gz")
+        
+        url <- paste0(getPcUrl(), "downloads/Pathway%20Commons.", getOption("pc.version"), 
+                      ".All.BIOPAX.owl.gz")
+        
+        if(verbose) {
+            cat("URL: ", url, "\n")
+        }
+        
+        download.file(url, orgFile)
+        
+        con <- gzcon(file(orgFile, "r"))
+        
+        results <- splitSifnx(con, verbose)
+    }  
     
     if(format == "GMT") {
         file <- tempfile("gmt", fileext = ".gz")
-        download.file("http://purl.org/pc2/5/downloads/Pathway%20Commons.5.All.GSEA.gmt.gz", file)
+        url <- paste0(getPcUrl(), "downloads/Pathway%20Commons.", getOption("pc.version"), 
+                      ".All.GSEA.gmt.gz")
+        
+        if(verbose) {
+            cat("URL: ", url, "\n")
+        }
+
+        download.file(url, file)
         
         results <- readGmt(gzfile(file))
     }
@@ -535,7 +564,6 @@ pcDirections <- function() {
 
 #' Get base Pathway Commons URL
 #' 
-#' @param pcVersion a number indicating the Pathway Commons version
 #' @return a string with base Pathway Commons URL
 #' 
 #' @details paxtoolsr will support versions Pathway Commons 5 and later
@@ -543,8 +571,8 @@ pcDirections <- function() {
 #' @concept paxtoolsr
 #' @keywords internal
 #' @noRd
-getPcUrl <- function(pcVersion=5) {
-    return(paste0("http://purl.org/pc2/", pcVersion, "/"))
+getPcUrl <- function() {
+    return(paste0("http://purl.org/pc2/", getOption("pc.version"), "/"))
 }
 
 #' Get Error Message for a Pathway Commons Error 

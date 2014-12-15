@@ -33,6 +33,7 @@ fromPsimi <- function(inputFile, outputFile=NULL, bpLevelArg=3) {
     argsList <- list(commandJStr, bpLevelArgJStr, inputJStr, outputJStr) 
     
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck()
     
     results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
     return(results) 
@@ -87,6 +88,7 @@ toGSEA <- function(inputFile, outputFile=NULL, database, crossSpeciesCheckFlag) 
     argsList <- list(commandJStr, inputJStr, outputJStr, dbJStr, flagJStr) 
 
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck()
     
     tmp <- read.table(outputFile, sep="\t", as.is=TRUE)
     
@@ -138,6 +140,7 @@ getNeighbors <- function(inputFile, outputFile=NULL, idList) {
     #cat("ARGSLIST:", commandJStr, "\n")
     
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck() 
     
     results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
     return(results) 
@@ -183,6 +186,7 @@ fetch <- function(inputFile, outputFile=NULL, idList) {
     argsList <- list(commandJStr, inputJStr, idListJStr, outputJStr) 
 
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck() 
     
     results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
     return(results) 
@@ -217,6 +221,7 @@ toLevel3 <- function(inputFile, outputFile=NULL) {
     argsList <- list(commandJStr, inputJStr, outputJStr) 
 
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck() 
     
     results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
     return(results) 
@@ -256,6 +261,7 @@ toSBGN <- function(inputFile, outputFile=NULL) {
     argsList <- list(commandJStr, inputJStr, outputJStr) 
 
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck() 
     
     results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
     return(results) 
@@ -328,6 +334,7 @@ toSifnx <- function(inputFile, outputNodesFile=NULL, outputEdgesFile=NULL,
                      nodePropsJStr, edgePropsJStr) 
     
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck() 
     
     edges <- read.table(outputEdgesFile, sep="\t", as.is=TRUE, quote="")
     nodes <- read.table(outputNodesFile, sep="\t", as.is=TRUE, quote="")
@@ -375,11 +382,12 @@ toSif <- function(inputFile, outputFile=NULL) {
     argsList <- list(commandJStr, inputJStr, outputJStr) 
 
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck() 
 
     results <- read.table(outputFile, sep="\t", as.is=TRUE, quote="")
     colnames(results) <- c("PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B")
     
-    return(results)
+    return(results)        
 }
 
 #' Integrate two BioPAX OWL files (DEPRECATED)
@@ -419,6 +427,7 @@ integrateBiopax <- function(inputFile1, inputFile2, outputFile=NULL) {
     argsList <- list(commandJStr, file1JStr, file2JStr, outputJStr) 
 
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck()
     
     results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
     return(results) 
@@ -464,6 +473,7 @@ mergeBiopax <- function(inputFile1, inputFile2, outputFile=NULL) {
     argsList <- list(commandJStr, file1JStr, file2JStr, outputJStr) 
 
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck()
     
     results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
     return(results) 
@@ -497,6 +507,7 @@ summarize <- function(inputFile) {
     argsList <- list(commandJStr, inputJStr, outputJStr) 
 
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck()
         
     # Make a vector with each line text as a vector entry
     lines <- readLines(outputFile)
@@ -610,6 +621,7 @@ validate <- function(inputFile, outputFile=NULL,
     }
             
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
+    .jcheck()
     
     if(type == "xml") { 
         results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)

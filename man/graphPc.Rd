@@ -7,8 +7,8 @@ graphPc(kind, source, target = NULL, direction = NULL, limit = NULL,
   format = NULL, datasource = NULL, organism = NULL, verbose = FALSE)
 }
 \arguments{
-\item{kind}{graph query. Valid options can be found using pcGraphQueries. See Details for
-information on graph queries.}
+\item{kind}{graph query. Valid options can be found using \code{\link{pcGraphQueries}}
+See Details for information on graph queries.}
 
 \item{source}{source object's URI/ID. Multiple source URIs/IDs are allowed
 per query, for example c("http://identifiers.org/uniprot/Q06609",
