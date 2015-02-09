@@ -48,7 +48,7 @@ Run these commands in the Terminal
 
 ### Install Bioconductor and PaxtoolsR
 
-Run these commands within R
+Run these commands within R:
 
     source("http://bioconductor.org/biocLite.R")
     biocLite("paxtoolsr") 
@@ -70,4 +70,4 @@ library(paxtoolsr)
 browseVignettes("paxtoolsr")
 ```
 
-A copy of the vignette [Using PaxtoolsR](http://bioconductor.org/packages/release/bioc/vignettes/paxtoolsr/inst/doc/using_paxtoolsr.html) is viewable from the Bioconductor website.  
+A copy of the vignette [Using PaxtoolsR](http://bioconductor.org/packages/release/bioc/vignettes/paxtoolsr/inst/doc/using_paxtoolsr.html) is viewable from the Bioconductor website.
