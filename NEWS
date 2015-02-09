@@ -1,3 +1,6 @@
+# Version 1.1.6
+Added RStudio files and README.md
+
 # Version 1.1.5
 Updated to paxtools 4.3
 Added better Java error messages
@@ -5,12 +8,12 @@ Added the ability to switch PC versions
 Updated to PC version 6
 
 # Version 1.1.4
-Fixed topPathways() bug 
+Fixed topPathways() bug
 Fixed fetch() example/test
 Changed title
 
 # Version 1.1.3
-Added CITATION file 
+Added CITATION file
 
 # Version 1.1.2
 Update vignette to use BiocStyle
@@ -18,15 +21,14 @@ Update vignette to use BiocStyle
 # Version 1.1.1
 Transitioned to Pathway Commons Version 5 (PC2 v5)
 Changed downloadPc to download from PC2 v5
-Changed code to validate Pathway Commons webservice requests 
-Added table of contents to vignette 
+Changed code to validate Pathway Commons webservice requests
+Added table of contents to vignette
 Added description for traverse() in vignette
 Changed R dependency to 3.1.1 to match Bioconductor 3
 Added function to download a single file extended SIF, splitSifnx
 Added the ability to download GMT in downloadPc
-Added function to read GMT files 
+Added function to read GMT files
 Added tests for new functions
 
 # Version 1.0.0
-Initial release 
-
+Initial release
