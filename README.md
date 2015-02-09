@@ -30,7 +30,7 @@ Java needs to be installed. If it is not installed, you will be prompted to inst
 
 #### Ubuntu (tested on Ubuntu 14.04)
 
-Run these commands in the Terminal
+Run these commands in the Terminal:
 
     # For plyr
     sudo apt-get install g++
