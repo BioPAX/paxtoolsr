@@ -1,11 +1,11 @@
-**NOTE:** Users interested in the source code should download the latest code directly from Bioconductor SVN repositories.
+**NOTE:** Users interested in the source code should download the latest code directly from Bioconductor SVN repositories:
 
 * [Release Version](http://bioconductor.org/packages/devel/bioc/html/paxtoolsr.html)
 * [Development Version](http://bioconductor.org/packages/devel/bioc/html/paxtoolsr.html)
 
 # PaxtoolsR
 
-An R package providing [Paxtools](http://www.biopax.org/paxtools.php) and [Pathway Commons](http://www.pathwaycommons.org/)  functionality. This project provides users with the ability to read BioPAX files and access Pathway Commons webservice functions to:
+An R package providing [Paxtools](http://www.biopax.org/paxtools.php) and [Pathway Commons](http://www.pathwaycommons.org/) functionality. This project provides users with the ability to read BioPAX files and access Pathway Commons web service functions to:
 
 * Merge multiple BioPAX files
 * Extract sub-networks from BioPAX files
@@ -13,13 +13,11 @@ An R package providing [Paxtools](http://www.biopax.org/paxtools.php) and [Pathw
 * Validate BioPAX files
 * Search and retrieve Pathway Commons data
 
-This package is primarily directed towards R users who wish to work with binary interactions
-networks in the form of Simple Interaction Format (SIF) networks.
+This package is primarily directed towards R users who wish to work with binary interactions networks in the form of Simple Interaction Format (SIF) networks.
 
 ## Install PaxtoolsR from Bioconductor (Recommended)
 
 ### Dependencies
-
 #### Windows (tested on Windows 8)
 
 [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) needs to be installed.
@@ -64,6 +62,7 @@ Download the [development version](http://bioconductor.org/packages/devel/bioc/h
 The tutorial describes a number of possible use cases, including network visualization
 and gene set enrichment analysis using this R package. Once installed, view tutorials for
 PaxtoolsR using the following command:
+
 
 ```
 library(paxtoolsr)
