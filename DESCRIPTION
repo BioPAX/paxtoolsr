@@ -28,8 +28,9 @@ Suggests:
     limma
 SystemRequirements: Java (>= 1.5)
 License: LGPL-3
-Description: The package provides a basic set of R functions for
+Description: The package provides a set of R functions for
     interacting with BioPAX OWL files using Paxtools and the querying
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     Pathway Commons (PC) molecular interaction data server, hosted by
@@ -39,6 +40,9 @@ Description: The package provides a basic set of R functions for
 =======
     Pathway Commons (PC) molecular interaction database that are hosted by
 >>>>>>> 36ea4e0e83cad82abb37c9619bf1c4da07db6f8e
+=======
+    Pathway Commons (PC) molecular interaction database that are hosted by
+>>>>>>> 5fc9de62b6ff201af1c24559a4fd457b57533c55
     the Computational Biology Center at Memorial Sloan Kettering Cancer
     Center (MSKCC).
 VignetteBuilder: knitr
