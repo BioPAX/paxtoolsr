@@ -30,7 +30,11 @@ SystemRequirements: Java (>= 1.5)
 License: LGPL-3
 Description: The package provides a basic set of R functions for
     interacting with BioPAX OWL files using Paxtools and the querying
+<<<<<<< HEAD
     Pathway Commons (PC) molecular interaction data server, hosted by
+=======
+    Pathway Commons (PC) molecular interaction database, hosted by
+>>>>>>> f3baeed20929b63ce40027c6c940a1a2bd2df195
     the Computational Biology Center at Memorial Sloan Kettering Cancer
     Center (MSKCC).
 VignetteBuilder: knitr
