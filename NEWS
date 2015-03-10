@@ -1,3 +1,9 @@
+# Version 1.1.8
+Removed PC dependent tests for paxtools functions
+Added skip_on_bioc()
+Updated vignette to use glycolysis pathway that can be converted to gene set
+Added fill=TRUE to read.table commands in paxtools.R
+
 # Version 1.1.6
 Added RStudio files and README.md
 
