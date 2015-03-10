@@ -3,11 +3,12 @@
 context("Pathway Commons Functionality")
 
 test_that("searchPc", {
+    skip_on_bioc()
     
     #A basic text search. This query returns all entities that contain the 
     #"Q06609" keyword in XML
     outFile <- tempfile()
-    results <- searchPc("Q06609")
+    results <- searchPc("Q06609", verbose=TRUE)
     expect_is(results, "XMLInternalDocument")
     
     #Search for ProteinReference entries that contain "brca2" keyword in any 
@@ -20,12 +21,15 @@ test_that("searchPc", {
 
     #Same as above with multiple datasources and organisms
     outFile <- tempfile()
+    # searchPc_reactomePid.xml
     results <- searchPc(q="brca2", datasource=c("reactome", "pid"), type="ProteinReference", 
                         organism=c("9606", "10016"), verbose=TRUE)
     expect_is(results, "XMLInternalDocument")
 })
 
 test_that("getPc", {
+    skip_on_bioc()
+    
     outFile <- tempfile()   
     results <- getPc("http://identifiers.org/uniprot/Q06609")
     expect_is(results, "XMLInternalDocument")
@@ -38,6 +42,8 @@ test_that("getPc", {
 })
 
 test_that("graphPc", {  
+    skip_on_bioc()
+    
     results <- graphPc(source="http://identifiers.org/uniprot/O14503", 
                        kind="neighborhood", 
                        format="EXTENDED_BINARY_SIF", 
@@ -78,6 +84,8 @@ test_that("graphPc", {
 })
 
 test_that("outputFormatsSupported", {
+    skip_on_bioc()
+    
     genes <- c("AKT1", "IRS1")
 
     results <- graphPc(source=genes, 
@@ -114,6 +122,8 @@ test_that("outputFormatsSupported", {
 })
 
 test_that("traverse", {
+    skip_on_bioc()
+    
     outFile <- tempfile()
     results <- traverse(uri="http://identifiers.org/uniprot/P38398", 
                         path="ProteinReference/organism/displayName")
@@ -128,11 +138,15 @@ test_that("traverse", {
 })
 
 test_that("topPathways", {  
+    skip_on_bioc()
+    
     results <- topPathways(datasource="panther")
     expect_is(results, "data.frame")
 })
 
 test_that("idMapping", {
+    skip_on_bioc()
+    
     outFile <- tempfile()
     
     results <- idMapping(c("BRCA2", "TP53"))
