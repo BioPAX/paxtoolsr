@@ -436,7 +436,7 @@ downloadPc <- function(format=c("SIFNX", "GMT"), verbose=FALSE) {
         orgFile <- tempfile("sifnx", fileext=".gz")
         
         url <- paste0(getPcUrl(), "downloads/Pathway%20Commons.", getOption("pc.version"), 
-                      ".All.EXTENDED_BINARY_SIF.tsv.gz")
+                      ".All.EXTENDED_BINARY_SIF.hgnc.sif.gz ")
         
         if(verbose) {
             cat("URL: ", url, "\n")
@@ -469,7 +469,7 @@ downloadPc <- function(format=c("SIFNX", "GMT"), verbose=FALSE) {
     if(format == "GMT") {
         file <- tempfile("gmt", fileext = ".gz")
         url <- paste0(getPcUrl(), "downloads/Pathway%20Commons.", getOption("pc.version"), 
-                      ".All.GSEA.gmt.gz")
+                      ".All.GSEA.hgnc.gmt.gz")
         
         if(verbose) {
             cat("URL: ", url, "\n")
@@ -566,13 +566,35 @@ pcDirections <- function() {
 #' 
 #' @return a string with base Pathway Commons URL
 #' 
-#' @details paxtoolsr will support versions Pathway Commons 5 and later
+#' @details paxtoolsr will support versions Pathway Commons 5 and later. Old 
+#' versions of the webservice will not be not be operational. Users can parse
+#' older BioPAX outputs as an alternative. 
+#' 
+#' @examples 
+#' url <- getPcUrl()
 #' 
 #' @concept paxtoolsr
-#' @keywords internal
-#' @noRd
+#' @export
 getPcUrl <- function() {
-    return(paste0("http://purl.org/pc2/", getOption("pc.version"), "/"))
+    url <- NULL
+    
+    curUrl <- paste0("http://purl.org/pc2/", getOption("pc.version"), "/")
+    tmpVersion <- as.numeric(getOption("pc.version")) + 1 
+    nextUrl <- paste0("http://purl.org/pc2/", tmpVersion, "/")
+    
+    if(url.exists(curUrl)) {
+        url <- curUrl
+    } 
+    
+    if(url.exists(nextUrl)) {
+        url <- nextUrl
+    }     
+    
+    if(is.null(url)) {
+        stop(paste("ERROR: Pathway Commons webservice cannot be reached. URLs tried:", curUrl, nextUrl))
+    }
+    
+    return(url)
 }
 
 #' Get Error Message for a Pathway Commons Error 
@@ -666,8 +688,10 @@ splitSifnx <- function(con, verbose=FALSE) {
     close(nodesCon)
     close(con)
     
-    edges <- read.table(edgesFile, header=TRUE, sep="\t", quote="", stringsAsFactors=FALSE)
-    nodes <- read.table(nodesFile, header=TRUE, sep="\t", quote="", stringsAsFactors=FALSE)
+    edges <- read.table(edgesFile, header=TRUE, sep="\t", quote="", 
+                        stringsAsFactors=FALSE, fill=TRUE)
+    nodes <- read.table(nodesFile, header=TRUE, sep="\t", quote="", 
+                        stringsAsFactors=FALSE, fill=TRUE)
     
     return(list(edges=edges, nodes=nodes))
 }

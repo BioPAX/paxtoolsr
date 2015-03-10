@@ -45,6 +45,7 @@ The Paxtools Java library produces that full model of a given BioPAX data set th
 ## Installation 
 
 ```{r installPaxtoolsr, eval=FALSE}
+source("http://bioconductor.org/biocLite.R")
 biocLite("paxtoolsr")
 ```
 
@@ -357,10 +358,11 @@ biopaxFile <- tempfile()
 gseaFile <- tempfile() 
 
 ## Extract the URI for the first pathway in the search results and save into a file  
-uri <- searchResults[1]
+uri <- searchResults[2]
 saveXML(getPc(uri, "BIOPAX"), biopaxFile)
 
 ## Generate a gene set for the BioPAX pathway with gene symbols 
+### NOTE: Not all search results are guaranteed to result in gene sets 
 tmp <- toGSEA(biopaxFile, gseaFile, "HGNC Symbol", FALSE)
 geneSet <- tmp$geneSet
 ```

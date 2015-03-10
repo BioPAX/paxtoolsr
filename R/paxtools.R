@@ -90,7 +90,7 @@ toGSEA <- function(inputFile, outputFile=NULL, database, crossSpeciesCheckFlag) 
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
     .jcheck()
     
-    tmp <- read.table(outputFile, sep="\t", as.is=TRUE)
+    tmp <- read.table(outputFile, sep="\t", as.is=TRUE, fill=TRUE)
     
     # as.vector(unlist()) to remove column names from tmp
     results <- list(name=tmp[,1], 
@@ -336,8 +336,10 @@ toSifnx <- function(inputFile, outputNodesFile=NULL, outputEdgesFile=NULL,
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
     .jcheck() 
     
-    edges <- read.table(outputEdgesFile, sep="\t", as.is=TRUE, quote="")
-    nodes <- read.table(outputNodesFile, sep="\t", as.is=TRUE, quote="")
+    edges <- read.table(outputEdgesFile, sep="\t", as.is=TRUE, quote="", 
+                        fill=TRUE)
+    nodes <- read.table(outputNodesFile, sep="\t", as.is=TRUE, quote="", 
+                        fill=TRUE)
     
     colnames(edges) <- c("PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B", edgeProps)
     colnames(nodes) <- c("PARTICIPANT", nodeProps)

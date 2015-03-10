@@ -7,7 +7,7 @@
 #' @import plyr
 .onLoad <- function(lib, pkg){
     # Set Pathway Commons version
-    options(pc.version="6")
+    options(pc.version="7")
     
     dlp <- Sys.getenv("DYLD_LIBRARY_PATH")
     if (dlp != "") { # for Mac OS X we need to remove X11 from lib-path
@@ -37,3 +37,15 @@
 #jar.paxtools <- "lib/paxtools-jar-with-dependencies.jar"
 #.jinit(classpath=c(jar.paxtools))
 
+#' Skip a test if on Bioconductor
+#' 
+#' Extension on testthat code
+#' 
+#' @noRd
+skip_on_bioc <- function() {
+    if(identical(Sys.getenv("NOT_BIOC"), "true")) return()
+    
+    message <- "On Bioconductor"
+    cond <- structure(list(message = message), class = c("skip", "condition"))
+    stop(cond)
+}
