@@ -46,7 +46,9 @@ Description of SIF interactions: http://www.pathwaycommons.org/pc/sif_interactio
 Description of BioPAX classes: http://www.biopax.org/owldoc/Level3/
 }
 \examples{
+\dontrun{
 downloadPc(format="GMT")
+}
 }
 \seealso{
 \code{\link{downloadPc}}

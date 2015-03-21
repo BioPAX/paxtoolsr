@@ -31,7 +31,9 @@ This is a specific id-mapping (not general-purpose) for reference
   versions if necessary).
 }
 \examples{
+\dontrun{
 idMapping(c("BRCA2", "TP53"))
+}
 }
 \concept{
 paxtoolsr
