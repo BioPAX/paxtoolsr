@@ -43,11 +43,13 @@ With traverse users can explicitly state the paths they would like
   documentation for more details).
 }
 \examples{
+\dontrun{
 traverse(uri="http://identifiers.org/uniprot/P38398",
 path="ProteinReference/organism/displayName")
 }
+}
 \references{
-Paxtools Documentation: \url{http://www.biopax.org/m2site/paxtools-4.2.1/}
+Paxtools Documentation: \url{http://www.biopax.org/m2site/}
 }
 \concept{
 paxtoolsr

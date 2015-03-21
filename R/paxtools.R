@@ -243,7 +243,7 @@ toLevel3 <- function(inputFile, outputFile=NULL) {
 #'
 #' @examples 
 #' outFile <- tempfile()
-#' results <- toSBGN(system.file("extdata", "dna_replication.owl", 
+#' results <- toSBGN(system.file("extdata", "biopax3-short-metabolic-pathway.owl", 
 #'   package="paxtoolsr"), 
 #'   outFile) 
 #' 

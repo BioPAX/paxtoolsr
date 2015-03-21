@@ -18,6 +18,7 @@ output:
 ```{r knitrSetup, include=FALSE}
 library(knitr)
 opts_chunk$set(out.extra='style="display:block; margin: auto"', fig.align="center", tidy=TRUE)
+
 ```
 
 ```{r style, include=FALSE, echo=FALSE, results='asis'}
@@ -179,9 +180,12 @@ Alternatively, these XML results can be converted to data.frames using the **XML
 ```{r convertXmlToDf, message=FALSE}
 library(plyr)
 searchResultsDf <- ldply(xmlToList(searchResults), data.frame)
+
+# Simplified results
+simplifiedSearchResultsDf <- searchResultsDf[, c("name", "uri", "biopaxClass")]
 ```
 
-This type of searching can be used to locallly save BioPAX files retrieved from Pathway Commons. 
+This type of searching can be used to locally save BioPAX files retrieved from Pathway Commons. 
 
 ```{r saveBiopaxFileFromPcQuery, message=FALSE, results='hide'}
 ## Use an XPath expression to extract the results of interest. In this case, the URIs (IDs) for the pathways from the results

@@ -55,7 +55,9 @@ searches. Search strings are case insensitive unless put inside quotes.
 BioPAX classes can be found at \url{http://www.pathwaycommons.org/pc2/#biopax_types}
 }
 \examples{
+\dontrun{
 results <- searchPc("Q06609")
+}
 }
 \concept{
 paxtoolsr

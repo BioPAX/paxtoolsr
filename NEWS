@@ -1,3 +1,6 @@
+# Version 1.1.9
+Documentation update
+
 # Version 1.1.8
 Removed PC dependent tests for paxtools functions
 Added skip_on_bioc()
