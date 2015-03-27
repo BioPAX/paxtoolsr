@@ -38,11 +38,15 @@ test_that("toGSEA", {
 })
 
 test_that("validate", {
+<<<<<<< HEAD
     rawDoc <- validate(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), onlyErrors=TRUE)                             
+=======
+    rawDoc <- validate(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), onlyErrors=TRUE)                             
+>>>>>>> 8b82f805a58d4b3deb3b89ead4aaf1f1a708fbac
     expect_is(rawDoc, "XMLInternalDocument")
 
     outFile <- tempfile()
-    rawDoc <- validate(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), 
+    rawDoc <- validate(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), 
                        type="html", outputFile=outFile, onlyErrors=TRUE) 
     expect_is(rawDoc, "character")
 })
@@ -61,7 +65,7 @@ test_that("getNeighbors", {
 test_that("toLevel3", {
     outFile <- tempfile()
     
-    results <- toLevel3(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), 
+    results <- toLevel3(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), 
                                     outFile) 
     
     expect_is(results, "XMLInternalDocument")
@@ -84,7 +88,7 @@ test_that("toSifnx", {
     nodeProps <- c("EntityReference/name", "EntityReference/xref")
     edgeProps <- "Interaction/dataSource/displayName"
     
-    results <- toSifnx(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), 
+    results <- toSifnx(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), 
                        nodesFile, 
                        edgesFile,
                        nodeProps,
@@ -98,7 +102,7 @@ test_that("toSifnx", {
 test_that("toSif", {
     outFile <- tempfile()
     
-    results <- toSif(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), 
+    results <- toSif(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), 
                                             outFile) 
     
     expect_that(colnames(results), equals(c("PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"))) 
@@ -107,8 +111,8 @@ test_that("toSif", {
 test_that("integrateBioPax", {
     outFile <- tempfile()
     
-    results <- integrateBiopax(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), 
-                                            system.file("extdata", "circadian_clock.owl", package="paxtoolsr"), 
+    results <- integrateBiopax(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), 
+                                            system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="paxtoolsr"), 
                                             outFile) 
     
     expect_is(results, "XMLInternalDocument")
@@ -117,15 +121,15 @@ test_that("integrateBioPax", {
 test_that("mergeBiopax", {
     outFile <- tempfile()
     
-    results <- mergeBiopax(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), 
-                                            system.file("extdata", "circadian_clock.owl", package="paxtoolsr"), 
+    results <- mergeBiopax(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), 
+                                            system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="paxtoolsr"), 
                                             outFile) 
     
     expect_is(results, "XMLInternalDocument")
 })
 
 test_that("summarize", {
-    summary <- summarize(system.file("extdata", "dna_replication.owl", package="paxtoolsr")) 
+    summary <- summarize(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")) 
     
     expect_true(is.list(summary))
 })

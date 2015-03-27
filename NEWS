@@ -1,9 +1,15 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 # Version 1.1.9
 Documentation update
 
 >>>>>>> c6afadaedede6d990fc76a5d364f7bef52c800ab
+=======
+# Version 1.1.9
+Documentation update
+
+>>>>>>> 8b82f805a58d4b3deb3b89ead4aaf1f1a708fbac
 # Version 1.1.8
 Removed PC dependent tests for paxtools functions
 Added skip_on_bioc()

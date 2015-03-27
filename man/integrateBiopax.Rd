@@ -27,7 +27,7 @@ This method is deprecated. Use mergeBiopax instead.
 outFile <- tempfile()
 results <- integrateBiopax(system.file("extdata", "raf_map_kinase_cascade_reactome.owl",
   package="paxtoolsr"),
-  system.file("extdata", "circadian_clock.owl", package="paxtoolsr"),
+  system.file("extdata", "dna_replication.owl", package="paxtoolsr"),
   outFile)
 }
 \seealso{

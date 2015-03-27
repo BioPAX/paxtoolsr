@@ -57,6 +57,8 @@ BioPAX classes can be found at \url{http://www.pathwaycommons.org/pc2/#biopax_ty
 \examples{
 \dontrun{
 results <- searchPc("Q06609")
+results <- searchPc("glycolysis", type="Pathway")
+}
 }
 }
 \concept{

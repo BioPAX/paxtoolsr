@@ -30,7 +30,7 @@ Only entities that share IDs will be merged. No additional merging
 outFile <- tempfile()
 results <- mergeBiopax(system.file("extdata", "raf_map_kinase_cascade_reactome.owl",
                        package="paxtoolsr"),
-                       system.file("extdata", "circadian_clock.owl",
+                       system.file("extdata", "dna_replication.owl",
                        package="paxtoolsr"),
                        outFile)
 }
