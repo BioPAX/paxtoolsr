@@ -8,6 +8,16 @@
 .onLoad <- function(lib, pkg){
     # Set Pathway Commons version
     options(pc.version="7")
+
+    # Create cache directory in user home directory 
+    cacheDir <- file.path(Sys.getenv("HOME"), ".paxtoolsRCache")
+    dir.create(file.path(cacheDir, showWarnings=FALSE)
+    
+    if(file.exists(cacheDir)) {
+        Sys.setenv("PAXTOOLSR_CACHE" = cacheDir)
+    } else {
+        Sys.setenv("PAXTOOLSR_CACHE" = "")
+    }
     
     dlp <- Sys.getenv("DYLD_LIBRARY_PATH")
     if (dlp != "") { # for Mac OS X we need to remove X11 from lib-path

@@ -10,9 +10,11 @@ Depends:
     R (>= 3.1.1),
     rJava (>= 0.9-4),
     XML,
-    RCurl,
     rjson,
-    plyr
+    plyr,
+    R.utils, 
+    httr,
+    data.table
 Suggests:
     testthat,
     knitr,

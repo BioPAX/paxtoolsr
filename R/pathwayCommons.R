@@ -228,8 +228,8 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
         write(tmp, file=filename)
 
         if(file.info(filename)$size > 0) {
-            con <- file(filename) 
-            result <- splitSifnx(con, verbose) 
+            #con <- file(filename) 
+            result <- splitSifnx(filename, verbose) 
         } else {
             result <- list(edges=NULL, nodes=NULL)   
         }
@@ -459,26 +459,11 @@ downloadPc <- function(format=c("SIFNX", "GMT"), verbose=FALSE) {
         
         download.file(url, orgFile)
         
-        con <- gzcon(file(orgFile, "r"))
-
-        results <- splitSifnx(con, verbose)
+        #con <- gzcon(file(orgFile, "r"))
+        results <- splitSifnx(orgFile, verbose)
     }
 
     if(format == "BIOPAX") {
-        orgFile <- tempfile("biopax", fileext=".gz")
-        
-        url <- paste0(getPcUrl(), "downloads/Pathway%20Commons.", getOption("pc.version"), 
-                      ".All.BIOPAX.owl.gz")
-        
-        if(verbose) {
-            cat("URL: ", url, "\n")
-        }
-        
-        download.file(url, orgFile)
-        
-        con <- gzcon(file(orgFile, "r"))
-        
-        results <- splitSifnx(con, verbose)
     }  
     
     if(format == "GMT") {
@@ -639,79 +624,6 @@ getErrorMessage <- function(code) {
     } else {
         return("Unknown Error")
     }
-}
-
-#' Split Extended SIF File
-#' 
-#' Split an extended SIF file into nodes and edges 
-#' 
-#' @param con an opened file connection 
-#' @param verbose a boolean, display debugging information
-#' @return a list with nodes and edges entries 
-#' 
-#' @details SIFNX files from Pathway Commons commonly come a single file that 
-#' includes a tab-delimited sections for nodes and another for edges. The 
-#' sections are separated by an empty lines. These sections must be split before
-#' they are read. 
-#' 
-#' @examples
-#' con <- file(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
-#' results <- splitSifnx(con, verbose=TRUE)
-#' 
-#' @concept paxtoolsr
-#' @export 
-splitSifnx <- function(con, verbose=FALSE) {
-    edgesFile <- tempfile("edges", fileext=".txt")
-    nodesFile <- tempfile("nodes", fileext=".txt")
-
-    # Open file connections
-    edgesCon <- file(edgesFile, "w")
-    nodesCon <- file(nodesFile, "w")
-    
-    newLineFlag <- FALSE
-    currentLine <- 1 
-    
-    # Read single lines
-    lineTmp <- readLines(con, warn=FALSE)
-
-    if(verbose) {
-        pb <- txtProgressBar(min=1, max=length(lineTmp), style=3)        
-    }
-
-    for (i in 1:length(lineTmp)) {
-        if(verbose) {
-            setTxtProgressBar(pb, i)
-        }
-
-        line <- lineTmp[i]
-        
-        if(verbose) {
-            cat("Current Line: ", currentLine, "\n")
-        }
-        currentLine <- currentLine + 1
-        
-        if(grepl("^$", line)) {
-            newLineFlag <- TRUE
-            next
-        }
-        
-        if(!newLineFlag) {
-            writeLines(line, edgesCon)
-        } else {
-            writeLines(line, nodesCon)        
-        }
-    }
-    
-    close(edgesCon)
-    close(nodesCon)
-    close(con)
-    
-    edges <- read.table(edgesFile, header=TRUE, sep="\t", quote="", 
-                        stringsAsFactors=FALSE, fill=TRUE)
-    nodes <- read.table(nodesFile, header=TRUE, sep="\t", quote="", 
-                        stringsAsFactors=FALSE, fill=TRUE)
-    
-    return(list(edges=edges, nodes=nodes))
 }
 
 #' Get a Pathway Commons Webservice Request 

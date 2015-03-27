@@ -633,26 +633,6 @@ validate <- function(inputFile, outputFile=NULL,
     }
 }
 
-#' Read in gene sets from GMT files 
-#'
-#' This function will read in gene sets in the GMT format into a named list. 
-#' 
-#' @param inputFile an inputFile in the GMT format
-#' @return a named list where each entry corresponds to a gene set
-#' 
-#' @examples 
-#' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
-#' 
-#' @concept paxtoolsr
-#' @export
-readGmt <- function(inputFile) {
-    f <- readLines(inputFile)
-    lst <- sapply(f, function(x) unlist(strsplit(x, "\t", fixed = TRUE)))
-    names(lst) <- sapply(lst, function(x) x[1])
-    lst <- lapply(lst, function(x) x[-(1:2)])
-    return(lst)
-}
- 
 #' Utility method; create temporary file if necessary
 #' 
 #' @param file a string or XMLInternalDocument
