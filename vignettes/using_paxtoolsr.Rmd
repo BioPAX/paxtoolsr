@@ -85,7 +85,7 @@ We illustrate how to merge two BioPAX files. Only entities that share IDs will b
 
 ```{r paxtoolsMergeExample}
 file1 <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")
-file2 <- system.file("extdata", "circadian_clock.owl", package="paxtoolsr")
+file2 <- system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="paxtoolsr")
 
 mergedFile <- mergeBiopax(file1, file2)
 ```
@@ -137,7 +137,7 @@ Often analysis requires additional items of information, this could be the liter
 nodeProps <- c("EntityReference/name", "EntityReference/xref")
 edgeProps <- "Interaction/dataSource/displayName"
     
-results <- toSifnx(inputFile=system.file("extdata", "dna_replication.owl", package="paxtoolsr"), nodeProps=nodeProps, edgeProps=edgeProps) 
+results <- toSifnx(inputFile=system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), nodeProps=nodeProps, edgeProps=edgeProps) 
 ```
 
 The **results** object is a list with two entries: nodes and edges. **nodes** will be a **data.frame** where each row corresponds to a biological entity, an **EntityReference**, and will contain any user-selected node properties as additional columns. Similarly, **edges** will be a **data.frame** with a SIF extended with any user-selected properties for an **Interaction** as additional columns. Information on possible properties for an EntityReference or Interaction is available through the [BioPAX ontology](http://www.biopax.org/owldoc/Level3/). It is also possible to download a pre-computed extended SIF representation for the entire [Pathway Commons database](http://www.pathwaycommons.org) that includes information about the data sources for interactions and identifiers for nodes; refer to documentation of the method for more details about the returned entries.  
@@ -152,14 +152,16 @@ results <- downloadPc(format="SIFNX")
 
 Networks can also be loaded using Pathway Commons rather than from local BioPAX files. First, we show how Pathway Commons can be searched. 
 
-```{r searchResultsExample}
-searchResults <- searchPc("Q06609")
+```{r searchResultsExample, eval=FALSE}
+## Search Pathway Commons for "glycolysis"-related pathways 
+searchResults <- searchPc(q="glycolysis", type="pathway")
 ```
 
 All functions that query Pathway Commons include a flag **verbose** that allows users to see the query URL sent to Pathway Commons for debugging purposes.
 
 ```{r searchResultsExampleVerbose}
-searchResults <- searchPc("Q06609", verbose=TRUE)
+## Search Pathway Commons for "glycolysis"-related pathways 
+searchResults <- searchPc(q="glycolysis", type="pathway", verbose=TRUE)
 ```
 
 Pathway Commons search results are returned as an XML object. 
@@ -194,8 +196,10 @@ searchResults <- xpathSApply(searchResults, "/searchResponse/searchHit/uri", xml
 ## Generate temporary file to save content into
 biopaxFile <- tempfile() 
 
-## Extract the URI for the first pathway in the search results and save into a file  
-uri <- searchResults[1]
+## Extract a URI for a pathway in the search results and save into a file  
+idx <- which(grepl("panther", simplifiedSearchResultsDf$uri) & 
+             grepl("glycolysis", simplifiedSearchResultsDf$name, ignore.case=TRUE))
+uri <- simplifiedSearchResultsDf$uri[idx]
 saveXML(getPc(uri, "BIOPAX"), biopaxFile) 
 ```
 
@@ -253,12 +257,12 @@ Next, we show how to perform graph search using Pathway Commons useful for findi
 ```{r graphQueryExample}
 genes <- c("AKT1", "IRS1", "MTOR", "IGF1R")
 t1 <- graphPc(source=genes,
-               kind="PATHSBETWEEN",
-               format="BIOPAX")
-t2 <- toSif(t1)
-t3 <- t2[which(t2[,2] == "controls-state-change-of"),]
+              kind="PATHSBETWEEN",
+              format="BINARY_SIF",
+              verbose=TRUE)
+t2 <- t1[which(t1[,2] == "controls-state-change-of"),]
 
-g <- graph.edgelist(as.matrix(t3[,c(1,3)]), directed=FALSE)
+g <- graph.edgelist(as.matrix(t2[,c(1,3)]), directed=FALSE)
 plot(g, layout=layout.fruchterman.reingold)
 ```
 
@@ -347,9 +351,9 @@ library(hgu95av2cdf)
 library(XML) # To parse XML files
 ```
 
-We then retrieve a pathway of interest using the the Pathway Commons search functionality and convert this pathway to a gene set. 
+We then retrieve a pathway of interest using the the Pathway Commons search functionality. 
 
-```{r gseaExampleGenGeneSet, results='hide'}
+```{r gseaExampleGenGeneSet, results='hide', eval=FALSE}
 # Generate a Gene Set 
 ## Search Pathway Commons for "glycolysis"-related pathways 
 searchResults <- searchPc(q="glycolysis", type="pathway")
@@ -359,11 +363,17 @@ searchResults <- xpathSApply(searchResults, "/searchResponse/searchHit/uri", xml
 
 ## Generate temporary files to save content into
 biopaxFile <- tempfile() 
-gseaFile <- tempfile() 
 
 ## Extract the URI for the first pathway in the search results and save into a file  
 uri <- searchResults[2]
 saveXML(getPc(uri, "BIOPAX"), biopaxFile)
+```
+
+And then, we convert this pathway to a gene set. 
+
+```{r gseaExampleGenGeneSetSave, results='hide'}
+## Generate temporary files to save content into
+gseaFile <- tempfile() 
 
 ## Generate a gene set for the BioPAX pathway with gene symbols 
 ### NOTE: Not all search results are guaranteed to result in gene sets 
