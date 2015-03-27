@@ -202,7 +202,7 @@ fetch <- function(inputFile, outputFile=NULL, idList) {
 #' 
 #' @examples
 #' outFile <- tempfile()
-#' results <- toLevel3(system.file("extdata", "dna_replication.owl", 
+#' results <- toLevel3(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
 #'   package="paxtoolsr"), 
 #'   outFile) 
 #' 
@@ -408,7 +408,7 @@ toSif <- function(inputFile, outputFile=NULL) {
 #' outFile <- tempfile()
 #' results <- integrateBiopax(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
 #'   package="paxtoolsr"), 
-#'   system.file("extdata", "circadian_clock.owl", package="paxtoolsr"), 
+#'   system.file("extdata", "dna_replication.owl", package="paxtoolsr"), 
 #'   outFile) 
 #' 
 #' @concept paxtoolsr
@@ -454,7 +454,7 @@ integrateBiopax <- function(inputFile1, inputFile2, outputFile=NULL) {
 #' outFile <- tempfile()
 #' results <- mergeBiopax(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
 #'                        package="paxtoolsr"), 
-#'                        system.file("extdata", "circadian_clock.owl", 
+#'                        system.file("extdata", "dna_replication.owl", 
 #'                        package="paxtoolsr"), 
 #'                        outFile) 
 #' 

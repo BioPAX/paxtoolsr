@@ -19,7 +19,7 @@ This file will convert older BioPAX objects to BioPAX Level 3
 }
 \examples{
 outFile <- tempfile()
-results <- toLevel3(system.file("extdata", "dna_replication.owl",
+results <- toLevel3(system.file("extdata", "raf_map_kinase_cascade_reactome.owl",
   package="paxtoolsr"),
   outFile)
 }
