@@ -426,7 +426,7 @@ geneSetTest(genesOnChip,fit2$t[,1],"two.sided")
 
 Functions and results from **paxtoolsr** functions can be used in conjunction with the ID mapping functions of the [**biomaRt** Bioconductor package](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html); users should check the the **biomaRt** package documentation for a list of possible ID types. 
 
-```{r idMapping}
+```{r idMapping, eval=FALSE}
 sif <- toSif(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"))
 
 # Generate a mapping between the HGNC symbols in the SIF to the Uniprot IDs
@@ -439,8 +439,6 @@ output <- getBM(attributes=c('hgnc_symbol', 'uniprot_sptrembl'), filters='hgnc_s
 
 # Remove blank entries
 output <- output[output[,2] != "",] 
-
-head(output)
 ```
 
 # Troubleshooting 

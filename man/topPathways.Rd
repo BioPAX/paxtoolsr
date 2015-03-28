@@ -32,9 +32,8 @@ Pathways that are neither 'controlled' nor 'pathwayComponent' of
   another process.
 }
 \examples{
-\dontrun{
-results <- topPathways(datasource="panther")
-}
+datasource <- "panther"
+#results <- topPathways(datasource=datasource)
 }
 \concept{
 paxtoolsr

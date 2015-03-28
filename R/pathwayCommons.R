@@ -38,10 +38,11 @@
 #' BioPAX classes can be found at \url{http://www.pathwaycommons.org/pc2/#biopax_types}
 #' 
 #' @examples
-#' \dontrun{
-#' results <- searchPc("Q06609")
-#' results <- searchPc("glycolysis", type="Pathway")
-#' }
+#' query <- "Q06609"
+#' #results <- searchPc(query)
+#' 
+#' query <- "glycolysis"
+#' #results <- searchPc(query, type="Pathway")
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -98,13 +99,11 @@ searchPc <- function(q, page=0, datasource=NULL, organism=NULL, type=NULL,
 #' @seealso \code{\link{pcFormats}}
 #' 
 #' @examples 
-#' \dontrun{
-#' results <- getPc("http://identifiers.org/uniprot/O14503")
+#' uri <- "http://identifiers.org/uniprot/O14503"
+#' #results <- getPc(uri)
 #' 
-#' results <- getPc(c("http://identifiers.org/uniprot/O14503", 
-#'                    "http://identifiers.org/uniprot/Q9P2X7"), 
-#'                  verbose=TRUE)
-#' }
+#' uri <- c("http://identifiers.org/uniprot/O14503", "http://identifiers.org/uniprot/Q9P2X7")
+#' #results <- getPc(uri, verbose=TRUE)
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -152,11 +151,8 @@ getPc <- function(uri, format=NULL, verbose=FALSE) {
 #' @seealso \code{\link{pcFormats}, \link{pcDirections}}
 #' 
 #' @examples
-#' \dontrun{
-#' results <- graphPc(source="http://identifiers.org/uniprot/O14503", 
-#'  kind="neighborhood", 
-#'  format="EXTENDED_BINARY_SIF")
-#' }
+#' source <- "http://identifiers.org/uniprot/O14503"
+#' #results <- graphPc(source=, kind="neighborhood", format="EXTENDED_BINARY_SIF")
 #' 
 #' @concept paxtoolsr
 #' @export 
@@ -298,10 +294,8 @@ processPcRequest <- function(content, format) {
 #'   documentation for more details).
 #' 
 #' @examples
-#' \dontrun{
-#' traverse(uri="http://identifiers.org/uniprot/P38398", 
-#' path="ProteinReference/organism/displayName")
-#' }
+#' uri <- "http://identifiers.org/uniprot/P38398"
+#' #results <- traverse(uri=uri, path="ProteinReference/organism/displayName")
 #' 
 #' @references Paxtools Documentation: \url{http://www.biopax.org/m2site/}
 #' 
@@ -344,9 +338,8 @@ traverse <- function(uri, path, verbose=FALSE) {
 #'   another process.
 #' 
 #' @examples
-#' \dontrun{
-#' results <- topPathways(datasource="panther")
-#' }
+#' datasource <- "panther"
+#' #results <- topPathways(datasource=datasource)
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -396,9 +389,8 @@ topPathways <- function(datasource=NULL, organism=NULL, verbose=FALSE) {
 #'   versions if necessary).
 #' 
 #' @examples
-#' \dontrun{
-#' idMapping(c("BRCA2", "TP53"))
-#' }
+#' genes <- c("BRCA2", "TP53")
+#' #results <- idMapping(genes)
 #' 
 #' @concept paxtoolsr
 #' @export 
