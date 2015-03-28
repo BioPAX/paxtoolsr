@@ -38,11 +38,7 @@ test_that("toGSEA", {
 })
 
 test_that("validate", {
-<<<<<<< HEAD
-    rawDoc <- validate(system.file("extdata", "dna_replication.owl", package="paxtoolsr"), onlyErrors=TRUE)                             
-=======
     rawDoc <- validate(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), onlyErrors=TRUE)                             
->>>>>>> 8b82f805a58d4b3deb3b89ead4aaf1f1a708fbac
     expect_is(rawDoc, "XMLInternalDocument")
 
     outFile <- tempfile()

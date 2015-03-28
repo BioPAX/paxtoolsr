@@ -38,10 +38,11 @@
 #' BioPAX classes can be found at \url{http://www.pathwaycommons.org/pc2/#biopax_types}
 #' 
 #' @examples
-#' \dontrun{
-#' results <- searchPc("Q06609")
-#' results <- searchPc("glycolysis", type="Pathway")
-#' }
+#' query <- "Q06609"
+#' #results <- searchPc(query)
+#' 
+#' query <- "glycolysis"
+#' #results <- searchPc(query, type="Pathway")
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -99,13 +100,11 @@ searchPc <- function(q, page=0, datasource=NULL, organism=NULL, type=NULL,
 #' @seealso \code{\link{pcFormats}}
 #' 
 #' @examples 
-#' \dontrun{
-#' results <- getPc("http://identifiers.org/uniprot/O14503")
+#' uri <- "http://identifiers.org/uniprot/O14503"
+#' #results <- getPc(uri)
 #' 
-#' results <- getPc(c("http://identifiers.org/uniprot/O14503", 
-#'                    "http://identifiers.org/uniprot/Q9P2X7"), 
-#'                  verbose=TRUE)
-#' }
+#' uri <- c("http://identifiers.org/uniprot/O14503", "http://identifiers.org/uniprot/Q9P2X7")
+#' #results <- getPc(uri, verbose=TRUE)
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -155,11 +154,8 @@ getPc <- function(uri, format=NULL, verbose=FALSE) {
 #' @seealso \code{\link{pcFormats}, \link{pcDirections}}
 #' 
 #' @examples
-#' \dontrun{
-#' results <- graphPc(source="http://identifiers.org/uniprot/O14503", 
-#'  kind="neighborhood", 
-#'  format="EXTENDED_BINARY_SIF")
-#' }
+#' source <- "http://identifiers.org/uniprot/O14503"
+#' #results <- graphPc(source=, kind="neighborhood", format="EXTENDED_BINARY_SIF")
 #' 
 #' @concept paxtoolsr
 #' @export 
@@ -277,10 +273,8 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
 #'   documentation for more details).
 #' 
 #' @examples
-#' \dontrun{
-#' traverse(uri="http://identifiers.org/uniprot/P38398", 
-#' path="ProteinReference/organism/displayName")
-#' }
+#' uri <- "http://identifiers.org/uniprot/P38398"
+#' #results <- traverse(uri=uri, path="ProteinReference/organism/displayName")
 #' 
 #' @references Paxtools Documentation: \url{http://www.biopax.org/m2site/}
 #' 
@@ -325,9 +319,8 @@ traverse <- function(uri, path, verbose=FALSE) {
 #'   another process.
 #' 
 #' @examples
-#' \dontrun{
-#' results <- topPathways(datasource="panther")
-#' }
+#' datasource <- "panther"
+#' #results <- topPathways(datasource=datasource)
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -378,9 +371,8 @@ topPathways <- function(datasource=NULL, organism=NULL, verbose=FALSE) {
 #'   versions if necessary).
 #' 
 #' @examples
-#' \dontrun{
-#' idMapping(c("BRCA2", "TP53"))
-#' }
+#' genes <- c("BRCA2", "TP53")
+#' #results <- idMapping(genes)
 #' 
 #' @concept paxtoolsr
 #' @export 
@@ -439,9 +431,8 @@ idMapping <- function(ids, verbose=FALSE) {
 #' Description of BioPAX classes: http://www.biopax.org/owldoc/Level3/
 #' 
 #' @examples 
-#' \dontrun{
-#' downloadPc(format="GMT") 
-#' }
+#' format <- "GMT"
+#' #downloadPc(format=format) 
 #' 
 #' @concept paxtoolsr
 #' @seealso \code{\link{downloadPc}}
@@ -593,24 +584,12 @@ pcDirections <- function() {
 getPcUrl <- function() {
     url <- NULL
     
-<<<<<<< HEAD
-<<<<<<< HEAD
-    curUrl <- paste0("http://purl.org/pc2/", getOption("pc.version"), "/")
-    tmpVersion <- as.numeric(getOption("pc.version")) + 1 
-    nextUrl <- paste0("http://purl.org/pc2/", tmpVersion, "/")
-=======
-=======
->>>>>>> 8b82f805a58d4b3deb3b89ead4aaf1f1a708fbac
     #baseUrl <- "http://www.pathwaycommons.org/pc2"
     baseUrl <- "http://purl.org/pc2/"
     
     curUrl <- paste0(baseUrl, getOption("pc.version"), "/")
     tmpVersion <- as.numeric(getOption("pc.version")) + 1 
     nextUrl <- paste0(baseUrl, tmpVersion, "/")
-<<<<<<< HEAD
->>>>>>> c6afadaedede6d990fc76a5d364f7bef52c800ab
-=======
->>>>>>> 8b82f805a58d4b3deb3b89ead4aaf1f1a708fbac
     
     if(url.exists(curUrl)) {
         url <- curUrl
