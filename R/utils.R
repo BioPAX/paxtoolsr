@@ -123,7 +123,7 @@ convertToPathwayObject <- function() {
 splitSifnxByPathway <- function() {
 }
 
-#' Filter Binary SIF network by interaction type 
+#' Filter binary SIF network by interaction type 
 #' 
 #' @param sif a binary SIF as a data.frame with three columns: 
 #'   "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"
@@ -134,7 +134,7 @@ splitSifnxByPathway <- function() {
 #' 
 #' @examples 
 #' results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
-#' intTypes <- c("controls-state-change-of", "controls-phosphorylation-of", "controls-transport-of", "controls-expression-of", "catalysis-precedes", "in-complex-with")
+#' intTypes <- c("controls-state-change-of", "controls-expression-of", "catalysis-precedes")
 #' filteredNetwork <- filterSif(results, intTypes)
 #' 
 #' @concept paxtoolsr
@@ -289,19 +289,18 @@ downloadFile <- function(baseUrl, fileName, cacheEnv="PAXTOOLSR_CACHE", destDir=
 
 #' Download Pathway Commons files (uses menu and cache)
 #' 
-#' @param choice a number, skip the menu selection process
 #' @param destDir a string, the destination directory for the file to be 
 #'   downloaded (Default: NULL). If NULL, then file will be downloaded to cache
 #'   directory ~/.paxtoolsRCache
 #'   
 #' @examples 
 #' \dontrun {
-#'   downloadPc2(1, tempdir())
+#'   downloadPc2(tempdir())
 #' }
 #'   
 #' @concept paxtoolsr
 #' @export
-downloadPc2 <- function(choice=NULL, destDir=NULL) {
+downloadPc2 <- function(cdestDir=NULL) {
     baseUrl <- "http://www.pathwaycommons.org"
     downloadsSubDir <- "/pc2/downloads/"
     
@@ -329,7 +328,7 @@ downloadPc2 <- function(choice=NULL, destDir=NULL) {
     
     # Download file
     selectedFileName <- select.list(filenames)
-    
+
     if(is.null(destDir)) {
         stopifnot(Sys.getenv("PAXTOOLSR_CACHE") != "")
         selectedFilePath <- file.path(Sys.getenv("PAXTOOLSR_CACHE"), selectedFileName)

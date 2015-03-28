@@ -612,6 +612,11 @@ getPcUrl <- function() {
 #' @param code a three digit numerical error code
 #' @return an error message for the code 
 #' 
+#' @examples 
+#' \dontrun{
+#'   results <- getErrorMessage("300")
+#' }
+#' 
 #' @concept paxtoolsr
 #' @keywords internal
 #' @noRd

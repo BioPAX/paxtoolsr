@@ -160,26 +160,68 @@ test_that("readSifnx", {
     expect_equal(length(names(results)), 2)
 })
 
-test_that("getErrorMessage") {})
+test_that("readBiopax", {
+    results <- readBiopax(system.file("extdata", "test_biopax.owl", package="paxtoolsr"))
+    expect_is(results, "XMLInternalDocument")
+})
 
-
-test_that("processPcRequest") {})
-test_that("readBiopax") {})
-test_that("readSbgn") {})
+test_that("readSbgn", {
+    results <- readSbgn(system.file("extdata", "test_sbgn.xml", package="paxtoolsr"))
+    expect_is(results, "XMLInternalDocument")
+})
 
 test_that("readGmt", {
     results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
     expect_is(results, "list")
 })
 
-test_that("readSif") {})
-test_that("convertToPathwayObject") {})
-test_that("splitSifnxByPathway") {})
-test_that("filterSif") {})
-test_that("sifInteractionCategories") {})
-test_that("loadSifInIgraph") {})
-test_that("summarizeSif") {})
-test_that("downloadFile") {})
-test_that("downloadPc2") {})
+test_that("readSif", {
+    results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
+    expect_is(results, "data.frame")
+})
 
+test_that("summarizeSif", {
+    sif <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
+    results <- summarizeSif(sif)
+    expect_is(results, "list")
+})
 
+test_that("loadSifInIgraph", {
+    sif <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
+    results <- loadSifInIgraph(sif)
+    expect_is(results, "igraph")    
+})
+
+test_that("sifInteractionCategories", {
+    results <- sifInteractionCategories()
+    expect_is(results, "list")    
+})
+
+test_that("processPcRequest", {
+    fileName <- system.file("extdata", "test_biopax.owl", package="paxtoolsr")
+    content <- readChar(fileName, file.info(fileName)$size)
+    results <- processPcRequest(content, "BIOPAX")
+    expect_is(results, "XMLInternalDocument")   
+})
+
+test_that("downloadFile", {
+    skip_on_bioc()
+    
+    results <- downloadFile("http://google.com/", fileName="index.html", destDir=tempdir())
+    expect_true(results)
+})
+
+test_that("downloadPc2", {
+    skip("NA")
+})
+
+test_that("filterSif", {
+    results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
+    intTypes <- c("controls-state-change-of", "controls-expression-of", "catalysis-precedes")
+    filteredNetwork <- filterSif(results, intTypes)
+    ints <- summarizeSif(filteredNetwork)
+    expect_equal(ints$totalInteractions, 0)
+})
+
+test_that("convertToPathwayObject", {})
+test_that("splitSifnxByPathway", {})
