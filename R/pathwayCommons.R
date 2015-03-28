@@ -66,8 +66,7 @@ searchPc <- function(q, page=0, datasource=NULL, organism=NULL, type=NULL,
     }
 
     tmp <- getPcRequest(url, verbose)
-    
-    results <- xmlTreeParse(tmp, useInternalNodes=TRUE)
+    results <- processPcRequest(tmp, "XML")
     
     return(results)
 }
@@ -118,13 +117,11 @@ getPc <- function(uri, format=NULL, verbose=FALSE) {
     stopifnot(format %in% pcFormats())
     
     if(!is.null(format)) {
-        url <- paste(url, "&format=", format, sep="")
+        url <- paste0(url, "&format=", format)
     }
     
     tmp <- getPcRequest(url, verbose)
-    
-    results <- xmlTreeParse(tmp, useInternalNodes=TRUE)
-    
+    results <- processPcRequest(tmp, format)
     return(results) 
 }
 
@@ -218,31 +215,55 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
     }
 
     tmp <- getPcRequest(url, verbose)
-    
-    if(format == "EXTENDED_BINARY_SIF") {
-        filename <- tempfile() 
-        
-        #DEBUG 
-        cat("FILENAME: ", filename, "\n") 
-        
-        write(tmp, file=filename)
+    results <- processPcRequest(tmp, format)
+    return(results)
+}
 
-        if(file.info(filename)$size > 0) {
-            #con <- file(filename) 
-            result <- splitSifnx(filename, verbose) 
-        } else {
-            result <- list(edges=NULL, nodes=NULL)   
-        }
-    } else if(format == "BINARY_SIF") {
-        result <- read.table(textConnection(tmp), sep="\t", header=FALSE)           
-        colnames(result) <- c("PARTICIPANT_A",  "INTERACTION_TYPE", "PARTICIPANT_B")
-    } else if(format == "BIOPAX") {     
-        result <- xmlTreeParse(tmp, useInternalNodes=TRUE)
-    } else {
-        result <- read.table(textConnection(tmp), sep="\t", header=FALSE)   
+#' Process Pathway Commons request in various formats
+#' 
+#' @param content a string, content to be processed
+#' @param format a string, the type of format
+#' 
+#' @examples 
+#' fileName <- system.file("extdata", "test_biopax.owl", package="paxtoolsr")
+#' content <- readChar(fileName, file.info(fileName)$size)
+#' results <- processPcRequest(content, "BIOPAX")
+#' 
+#' @seealso \code{\link{pcFormats}}
+#' 
+#' @concept paxtoolsr
+#' @export 
+processPcRequest <- function(content, format) {
+    if(format == "JSON") {     
+        results <- fromJSON(content)
+        return(results)
+    } else if(format == "XML") {
+        results <- xmlTreeParse(content, useInternalNodes=TRUE)
+        return(results)
     }
     
-    return(result) 
+    filename <- tempfile() 
+    write(content, file=filename) 
+    stopifnot(file.info(filename)$size > 0)
+    
+    #DEBUG 
+    #cat("FILENAME: ", filename, "\n") 
+
+    if(format == "EXTENDED_BINARY_SIF") {
+        results <- readSifnx(filename) 
+    } else if(format == "BINARY_SIF") {
+        results <- readSif(filename)           
+    } else if(format == "BIOPAX") {     
+        results <- readBiopax(filename)
+    } else if(format == "SBGN") {     
+        results <- readSbgn(filename)
+    } else if(format == "GSEA") {     
+        results <- readGmt(filename)
+    } else {
+        results <- tmp 
+    }
+    
+    return(results)
 }
 
 #' Access Pathway Commons using XPath-type expressions 
@@ -298,9 +319,7 @@ traverse <- function(uri, path, verbose=FALSE) {
     url <- paste(url, "&path=", path, sep="") 
 
     tmp <- getPcRequest(url, verbose)
-    
-    results <- xmlTreeParse(tmp, useInternalNodes=TRUE)
-
+    results <- processPcRequest(tmp, "XML")
     return(results) 
 }
 
@@ -344,8 +363,7 @@ topPathways <- function(datasource=NULL, organism=NULL, verbose=FALSE) {
     }
 
     tmp <- getPcRequest(url, verbose)
-    
-    results <- xmlTreeParse(tmp, useInternalNodes=TRUE)
+    results <- processPcRequest(tmp, "XML")
     
     #DEBUG
     #return(results)
@@ -395,13 +413,11 @@ idMapping <- function(ids, verbose=FALSE) {
     }
     
     tmp <- getPcRequest(url, verbose)
-    
-    result <- fromJSON(tmp)
-    
-    return(result)
+    results <- processPcRequest(tmp, "JSON")
+    return(results)
 }
 
-#' Download Pathway Commons data
+#' Download Pathway Commons data (DEPRECATED)
 #' 
 #' Download Pathway Commons data in various formats
 #' 
@@ -435,8 +451,7 @@ idMapping <- function(ids, verbose=FALSE) {
 #'  
 #' @details 
 #' 
-#' Description of SIF interactions: http://www.pathwaycommons.org/pc/sif_interaction_rules.do
-#' Description of BioPAX classes: http://www.biopax.org/owldoc/Level3/
+#' Use \code{\link{downloadPc2}}
 #' 
 #' @examples 
 #' \dontrun{
@@ -444,7 +459,7 @@ idMapping <- function(ids, verbose=FALSE) {
 #' }
 #' 
 #' @concept paxtoolsr
-#' @seealso \code{\link{downloadPc}}
+#' @seealso \code{\link{downloadPc2}}
 #' @export 
 downloadPc <- function(format=c("SIFNX", "GMT"), verbose=FALSE) {    
     if(format == "SIFNX") {
@@ -460,7 +475,7 @@ downloadPc <- function(format=c("SIFNX", "GMT"), verbose=FALSE) {
         download.file(url, orgFile)
         
         #con <- gzcon(file(orgFile, "r"))
-        results <- splitSifnx(orgFile, verbose)
+        results <- readSifnx(orgFile)
     }
 
     if(format == "BIOPAX") {
@@ -659,12 +674,16 @@ getPcRequest <- function(url, verbose) {
 #                         result <- paste("ERROR: Code:", code, "Message:", message)
 #                         result
 #                     })
-    
-    statusCode <- url.exists(url, .opts=list(followlocation=TRUE), .header=TRUE)["status"]
+#    
+#    statusCode <- url.exists(url, .opts=list(followlocation=TRUE), .header=TRUE)["status"]
+    statusCode <- HEAD(url)$status
     
     # Check HTTP status code; 200 is success 
     if(statusCode == "200") {
-        tmp <- getURLContent(url, .opts=list(followlocation=TRUE))
+        #tmp <- getURLContent(url, .opts=list(followlocation=TRUE))
+        
+        #Set preference order of accept types
+        tmp <- content(GET(url, accept("text/xml,text/plain,application/json")), as="text")
     } else {
         # Make sure the statusCode is numeric
         if(grepl("^\\d+$", statusCode)) {

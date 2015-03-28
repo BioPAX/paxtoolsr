@@ -155,8 +155,31 @@ test_that("idMapping", {
     expect_equal(results$TP53, "P04637")
 })
 
-test_that("splitSifnx", {
-    con <- file(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
-    results <- splitSifnx(con)
+test_that("readSifnx", {
+    results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
     expect_equal(length(names(results)), 2)
 })
+
+test_that("getErrorMessage") {})
+
+
+test_that("processPcRequest") {})
+test_that("readBiopax") {})
+test_that("readSbgn") {})
+
+test_that("readGmt", {
+    results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
+    expect_is(results, "list")
+})
+
+test_that("readSif") {})
+test_that("convertToPathwayObject") {})
+test_that("splitSifnxByPathway") {})
+test_that("filterSif") {})
+test_that("sifInteractionCategories") {})
+test_that("loadSifInIgraph") {})
+test_that("summarizeSif") {})
+test_that("downloadFile") {})
+test_that("downloadPc2") {})
+
+

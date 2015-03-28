@@ -136,10 +136,11 @@ test_that("xmlInternalDocumentInput", {
     expect_is(results, "data.frame")
 })
 
-test_that("readGmt", {
-    results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
-    expect_is(results, "list")
+test_that("checkInputFile") {
+    
 })
+
+test_that("checkOutputFile") {})
 
 #DEBUG 
 #test_that("FAIL", {    

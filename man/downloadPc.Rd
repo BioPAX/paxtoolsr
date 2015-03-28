@@ -2,7 +2,7 @@
 % Please edit documentation in R/pathwayCommons.R
 \name{downloadPc}
 \alias{downloadPc}
-\title{Download Pathway Commons data}
+\title{Download Pathway Commons data (DEPRECATED)}
 \usage{
 downloadPc(format = c("SIFNX", "GMT"), verbose = FALSE)
 }
@@ -42,8 +42,7 @@ a named list with named pathways, each entry contains a vector of gene
 Download Pathway Commons data in various formats
 }
 \details{
-Description of SIF interactions: http://www.pathwaycommons.org/pc/sif_interaction_rules.do
-Description of BioPAX classes: http://www.biopax.org/owldoc/Level3/
+Use \code{\link{downloadPc2}}
 }
 \examples{
 \dontrun{
@@ -51,7 +50,7 @@ downloadPc(format="GMT")
 }
 }
 \seealso{
-\code{\link{downloadPc}}
+\code{\link{downloadPc2}}
 }
 \concept{
 paxtoolsr
