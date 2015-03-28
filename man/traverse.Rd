@@ -43,10 +43,8 @@ With traverse users can explicitly state the paths they would like
   documentation for more details).
 }
 \examples{
-\dontrun{
-traverse(uri="http://identifiers.org/uniprot/P38398",
-path="ProteinReference/organism/displayName")
-}
+uri <- "http://identifiers.org/uniprot/P38398"
+#results <- traverse(uri=uri, path="ProteinReference/organism/displayName")
 }
 \references{
 Paxtools Documentation: \url{http://www.biopax.org/m2site/}

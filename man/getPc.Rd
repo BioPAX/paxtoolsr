@@ -36,13 +36,11 @@ Get commands only retrieve the BioPAX elements that are directly
   \url{http://www.pathwaycommons.org/pc2/#miriam}
 }
 \examples{
-\dontrun{
-results <- getPc("http://identifiers.org/uniprot/O14503")
+uri <- "http://identifiers.org/uniprot/O14503"
+#results <- getPc(uri)
 
-results <- getPc(c("http://identifiers.org/uniprot/O14503",
-                   "http://identifiers.org/uniprot/Q9P2X7"),
-                 verbose=TRUE)
-}
+uri <- c("http://identifiers.org/uniprot/O14503", "http://identifiers.org/uniprot/Q9P2X7")
+#results <- getPc(uri, verbose=TRUE)
 }
 \seealso{
 \code{\link{pcFormats}}
