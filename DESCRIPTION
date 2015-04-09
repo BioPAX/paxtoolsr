@@ -1,8 +1,14 @@
 Package: paxtoolsr
 Type: Package
+<<<<<<< HEAD
 Title: PaxtoolsR: Access Pathways from Multiple Databases through BioPAX and Pathway Commons 
 Version: 1.1.11
 Date: 2015-03-28
+=======
+Title: PaxtoolsR: Access Pathways from Multiple Databases through BioPAX and Pathway Commons
+Version: 1.1.13
+Date: 2015-04-08
+>>>>>>> 5a468543540a61d1bd2c762aa7c2275985721717
 Author: Augustin Luna
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
 Depends:
@@ -27,6 +33,7 @@ Suggests:
     limma
 SystemRequirements: Java (>= 1.5)
 License: LGPL-3
+<<<<<<< HEAD
 Description: The package provides a set of R functions for interacting with BioPAX OWL 
     files using Paxtools and the querying Pathway Commons (PC) molecular interaction 
     database that are hosted by the Computational Biology Center at Memorial Sloan-Kettering Cancer
@@ -35,5 +42,15 @@ Description: The package provides a set of R functions for interacting with BioP
 VignetteBuilder: knitr
 LazyData: true
 biocViews: GeneSetEnrichment, GraphAndNetwork, Pathways, Software, SystemsBiology, NetworkEnrichment, 
+=======
+Description: The package provides a set of R functions for interacting with BioPAX OWL
+    files using Paxtools and the querying Pathway Commons (PC) molecular interaction
+    database that are hosted by the Computational Biology Center at Memorial Sloan-Kettering Cancer
+    Center (MSKCC). Pathway Commons databases include: BIND, BioGRID, CORUM, CTD, DIP, DrugBank, HPRD, HumanCyc,
+    IntAct, KEGG, MirTarBase, Panther, PhosphoSitePlus, Reactome, RECON, TRANSFAC.
+VignetteBuilder: knitr
+LazyData: true
+biocViews: GeneSetEnrichment, GraphAndNetwork, Pathways, Software, SystemsBiology, NetworkEnrichment,
+>>>>>>> 5a468543540a61d1bd2c762aa7c2275985721717
     Network
 URL: https://bitbucket.org/cbio_mskcc/paxtoolsr
