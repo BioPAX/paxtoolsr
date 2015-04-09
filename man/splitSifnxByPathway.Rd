@@ -4,9 +4,21 @@
 \alias{splitSifnxByPathway}
 \title{Splits SIFNX files}
 \usage{
-splitSifnxByPathway()
+splitSifnxByPathway(edges)
+}
+\arguments{
+\item{inputFile}{an inputFile}
+}
+\value{
+an XMLInternalDocument
 }
 \description{
 Splits SIFNX files
+}
+\details{
+This method can be slow
+}
+\concept{
+paxtoolsr
 }
 

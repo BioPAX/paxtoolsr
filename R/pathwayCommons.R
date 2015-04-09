@@ -361,9 +361,12 @@ topPathways <- function(datasource=NULL, organism=NULL, verbose=FALSE) {
     #DEBUG
     #return(results)
     
-    resultsDf <- ldply(xmlToList(results), data.frame)
+    resultsDf <- ldply(xmlToList(results), data.frame, stringsAsFactors=FALSE)
     resultsDf <- resultsDf[,c("uri", "biopaxClass", "name", 
                               "dataSource", "organism")]
+    
+    # Remove NAs
+    resultsDf <- resultsDf[which(!is.na(resultsDf[,"uri"])),]
     
     return(resultsDf) 
 }

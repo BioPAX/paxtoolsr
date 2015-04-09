@@ -56,12 +56,18 @@ readSifnx <- function(inputFile) {
     # A warning on discarded content is expected because of the 2-files in 1 nature of the file
     suppressWarnings(tmp <- fread(inputFile, sep="\n", header=FALSE, stringsAsFactors=FALSE))
     nodes <- fread(inputFile, sep="\t", header=TRUE, stringsAsFactors=FALSE, skip="PARTICIPANT\tPARTICIPANT_TYPE")
+
     tmp2 <- paste(tmp$V1, collapse="\n")
-    
     edges <- fread(tmp2, sep="\t", header=TRUE, stringsAsFactors=FALSE)
     
-    nodes <- as.data.frame(nodes)
+    # EDGES
     edges <- as.data.frame(edges)
+
+    edgesPathwayNames <- strsplit(edges$PATHWAY_NAMES, ";")
+    names(edgesPathwayNames) <- nodes$PARTICIPANT
+    
+    # NODES    
+    nodes <- as.data.frame(nodes)
     
     nodesUniXref <- strsplit(nodes$UNIFICATION_XREF, ";")
     names(nodesUniXref) <- nodes$PARTICIPANT
@@ -120,10 +126,110 @@ convertToPathwayObject <- function() {
 
 #' Splits SIFNX files 
 #'  
-splitSifnxByPathway <- function() {
+#' @param inputFile an inputFile
+#' @return an XMLInternalDocument
+#' 
+#' @details 
+#' This method can be slow 
+#' 
+#' @concept paxtoolsr
+#' @export
+splitSifnxByPathway <- function(edges) {
+    stopifnot("PATHWAY_NAMES" %in% colnames(edges))
+    
+    tmp <- strsplit(edges$PATHWAY_NAMES, ";")
+    tmp2 <- unique(tmp)
+    pathwayNames <- unique(unlist(tmp2))
+
+    results <-  sapply(pathwayNames, function(y) { 
+        beta <- lapply(tmp, function(x) { match(y, x, nomatch=0) > 0 })
+        idx <- which(unlist(beta))
+    })             
+    
+    return(results)
+
+    #edgesAll <- results$edges
+    #edges <- edgesAll
+    #edges <- edgesAll[1:10000,]
+    
+#     t1 <- data.table(x=1:length(tmp), y=tmp)
+#     
+#     system.time({
+#         f <- function(ids) { any(pathwayNames %in% ids) }
+#         r1 <- t1[sapply(y, f), list(x=x, y=y)]
+#         #r1 <- unique(t1[sapply(y, f), list(x=x, y=unlist(y))])
+#     })
+#     
+#     #user  system elapsed 
+#     #0.141   0.007   0.148 
+#     
+#     r1[y == "Metabolism"]
+#     
+#     system.time({
+#         w1 <- lapply(pathwayNames, function(x){t1$x[sapply(t1$y, function(y){x %in% y})]})
+#     })
+#     
+# 
+#     
+#     #user  system elapsed 
+#     #16.186   0.134  16.315
+#     
+#     
+#     
+#     AB.dt <- setkey(tmp, id)[J(sampleIDs)][, list(bIDs = list(bID)),
+#                                             by = list(aid = id)]
+#     
+#     
+#         pathway <- "Purine metabolism"
+#         beta <- lapply(tmp, function(x) { pathway %in% x })
+#         b2 <- unlist(beta)
+#         idx <- which(b2)
+#         b3 <- edges[idx,]
+
+#     a <- list(1:3, 4:5, 6:9)
+#     b <- c(2, 3, 5, 8)
+#     g <- rep(seq_along(tmp), sapply(tmp, length))
+#     g[match(pathwayNames, unlist(tmp))]
+# 
+#     t3 <- NULL 
+#     
+#     for(i in 1:length(tmp)) {
+#         flag <- FALSE
+#         
+#         for(j in 1:length(pathwayNames)) {
+#             if(pathwayNames[j] %in% tmp[[i]]) {
+#                 flag <- TRUE
+#             }
+#         }
+#         
+#         t3 <- c(t3, flag)
+#     }
+#     
+#     b3 <- lapply(tmp, function(x) { 
+#         flag <- FALSE 
+#         
+#         sapply(pathwayNames, function(y) {
+#             if(y %in% x) {
+#                 flag <- TRUE
+#             }  
+#         })
+#         
+#         flag
+#     })
+#     
+#     
+    #b2 <- sapply(pathwayNames, function(x) { 
+    #    any(lapply(tmp, function(y) { x %in% y })) 
+    #})
+    #
+    #pathwayIdx <- list()
+    #resultsX <- sapply(pathwayNames, function(x) { 
+    #    pathwayIdx[[x]] <- which(grepl(x, edges$PATHWAY_NAMES))
+    #    #pathwayIdx[[x]] <- vector('numeric')
+    #})
 }
 
-#' Filter binary SIF network by interaction type 
+#' Keep interactions in SIF network of certain interaction types
 #' 
 #' @param sif a binary SIF as a data.frame with three columns: 
 #'   "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"
@@ -159,12 +265,12 @@ filterSif <- function(sif, interactionTypes) {
 #'   BetweenSmallMolecules
 #' 
 #' @examples 
-#' sifCat <- sifInteractionCategories()
+#' sifCat <- getSifInteractionCategories()
 #' sifCat[["BetweenProteins"]]
 #' 
 #' @concept paxtoolsr
 #' @export
-sifInteractionCategories <- function() {
+getSifInteractionCategories <- function() {
     protInt <- c("controls-state-change-of", "controls-expression-of", 
                  "controls-degradation-of", "controls-transport-of",
                  "catalysis-precedes", "in-complex-with")
@@ -202,7 +308,6 @@ loadSifInIgraph <- function(sif) {
     return(gWithType)
 }
 
-
 #' Summarize a SIF Network 
 #' 
 #' @param sif a binary SIF as a data.frame with three columns: 
@@ -216,10 +321,10 @@ loadSifInIgraph <- function(sif) {
 #' @concept paxtoolsr
 #' @export
 summarizeSif <- function(sif) {
-    uniqueGenes <- length(unique(c(sif[,1], sif[,3])))
+    uniqueNodes <- length(unique(c(sif[,1], sif[,3])))
     interactionTypeFreq <- table(sif[,2])
     
-    results <- list(uniqueGenes=uniqueGenes, totalInteractions=nrow(sif), interactionTypeFreq=interactionTypeFreq)
+    results <- list(uniqueNodes=uniqueNodes, totalInteractions=nrow(sif), interactionTypeFreq=interactionTypeFreq)
     
     return(results) 
 }  
@@ -300,7 +405,7 @@ downloadFile <- function(baseUrl, fileName, cacheEnv="PAXTOOLSR_CACHE", destDir=
 #'   
 #' @concept paxtoolsr
 #' @export
-downloadPc2 <- function(cdestDir=NULL) {
+downloadPc2 <- function(destDir=NULL) {
     baseUrl <- "http://www.pathwaycommons.org"
     downloadsSubDir <- "/pc2/downloads/"
     
@@ -327,7 +432,7 @@ downloadPc2 <- function(cdestDir=NULL) {
     tmp3 <- paste0(baseUrl, downloadsSubDir, filenames)
     
     # Download file
-    selectedFileName <- select.list(filenames)
+    selectedFileName <- select.list(filenames, graphics=FALSE)
 
     if(is.null(destDir)) {
         stopifnot(Sys.getenv("PAXTOOLSR_CACHE") != "")
@@ -347,24 +452,42 @@ downloadPc2 <- function(cdestDir=NULL) {
     
     stopifnot(downloadResult)
     
+    tmpFile <- gunzip(selectedFilePath, remove=FALSE, temporary=TRUE, skip=TRUE)
+    
     # Parse GMT 
     if(grepl("GSEA", selectedFileName)) {
-        results <- readGmt(gzfile(selectedFilePath))
+        results <- readGmt(tmpFile)
         return(results)
     }      
     
     # Parse EXTENDED_BINARY_SIF
     if(grepl("EXTENDED_BINARY_SIF", selectedFileName)) {
-        tmpFile <- gunzip(selectedFilePath, remove=FALSE)
         results <- readSifnx(tmpFile)
         return(results)
     }      
     
     # Parse BINARY_SIF
     if(grepl("BINARY_SIF", selectedFileName)) {
-        tmpFile <- gunzip(selectedFilePath, remove=FALSE)
         results <- readSif(tmpFile)
         return(results)
-    }      
+    }  
+    
+    # Parse BIOPAX
+    if(grepl("BIOPAX", selectedFileName)) {
+        results <- readBiopax(tmpFile)
+        return(results)
+    }
 }
 
+#' List files in cache directory 
+#' 
+#' @return a vector of the files in the cache directory
+#' 
+#' @examples 
+#' getCacheFiles()
+#' 
+#' @concept paxtoolsr
+#' @export
+getCacheFiles <- function() {
+    return(dir(Sys.getenv("PAXTOOLSR_CACHE")))
+}

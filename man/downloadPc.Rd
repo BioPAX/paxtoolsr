@@ -45,8 +45,9 @@ Download Pathway Commons data in various formats
 Use \code{\link{downloadPc2}}
 }
 \examples{
-format <- "GMT"
-#downloadPc(format=format)
+\dontrun{
+downloadPc(format="GMT")
+}
 }
 \seealso{
 \code{\link{downloadPc2}}

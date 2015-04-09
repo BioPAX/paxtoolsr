@@ -192,8 +192,8 @@ test_that("loadSifInIgraph", {
     expect_is(results, "igraph")    
 })
 
-test_that("sifInteractionCategories", {
-    results <- sifInteractionCategories()
+test_that("getSifInteractionCategories", {
+    results <- getSifInteractionCategories()
     expect_is(results, "list")    
 })
 
@@ -223,5 +223,13 @@ test_that("filterSif", {
     expect_equal(ints$totalInteractions, 0)
 })
 
+test_that("getCacheFiles", {
+    results <- getCacheFiles()
+    expect_is(results, "character")
+})
+
 test_that("convertToPathwayObject", {})
 test_that("splitSifnxByPathway", {})
+
+
+

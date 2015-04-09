@@ -10,19 +10,22 @@
 
     # Create cache directory in user home directory 
     cacheDir <- file.path(Sys.getenv("HOME"), ".paxtoolsRCache")
+    cacheMap <- file.path(cacheDir, "cacheMap.txt")
     dir.create(file.path(cacheDir), showWarnings=FALSE)
     
     if(file.exists(cacheDir)) {
         Sys.setenv("PAXTOOLSR_CACHE" = cacheDir)
         
         #Add cacheMap.txt
-        tmp <- data.frame(fileName=character(),
-                          retrievedDate=character(), 
-                          url=character(), 
-                          stringsAsFactors=FALSE) 
-        
-        write.table(tmp, file=file.path(cacheDir, "cacheMap.txt"), 
-                    quote=FALSE, sep="\t", col.names=TRUE, row.names=FALSE)
+        if(!file.exists(cacheMap)) {
+            tmp <- data.frame(fileName=character(),
+                              retrievedDate=character(), 
+                              url=character(), 
+                              stringsAsFactors=FALSE) 
+            
+            write.table(tmp, file=file.path(cacheDir, "cacheMap.txt"), 
+                        quote=FALSE, sep="\t", col.names=TRUE, row.names=FALSE)
+        }
     } else {
         Sys.setenv("PAXTOOLSR_CACHE" = "")
     }

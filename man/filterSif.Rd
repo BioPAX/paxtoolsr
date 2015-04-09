@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{filterSif}
 \alias{filterSif}
-\title{Filter Binary SIF network by interaction type}
+\title{Keep interactions in SIF network of certain interaction types}
 \usage{
 filterSif(sif, interactionTypes)
 }
@@ -17,11 +17,11 @@ filterSif(sif, interactionTypes)
 a data.frame of filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"
 }
 \description{
-Filter Binary SIF network by interaction type
+Keep interactions in SIF network of certain interaction types
 }
 \examples{
 results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
-intTypes <- c("controls-state-change-of", "controls-phosphorylation-of", "controls-transport-of", "controls-expression-of", "catalysis-precedes", "in-complex-with")
+intTypes <- c("controls-state-change-of", "controls-expression-of", "catalysis-precedes")
 filteredNetwork <- filterSif(results, intTypes)
 }
 \concept{

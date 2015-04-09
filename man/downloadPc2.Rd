@@ -7,12 +7,17 @@
 downloadPc2(destDir = NULL)
 }
 \arguments{
-\item{destDir}{a string the destination directory for the file to be
+\item{destDir}{a string, the destination directory for the file to be
   downloaded (Default: NULL). If NULL, then file will be downloaded to cache
   directory ~/.paxtoolsRCache}
 }
 \description{
 Download Pathway Commons files (uses menu and cache)
+}
+\examples{
+\dontrun {
+  downloadPc2(tempdir())
+}
 }
 \concept{
 paxtoolsr
