@@ -2,8 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{splitSifnxByPathway}
 \alias{splitSifnxByPathway}
-\title{TODO: Make function
-Splits SIFNX entries into individual pathways}
+\title{Splits SIFNX entries into individual pathways}
 \usage{
 splitSifnxByPathway(edges)
 }
@@ -15,7 +14,6 @@ splitSifnxByPathway(edges)
 a list of where each entry is a vector of row indicies for a given pathway
 }
 \description{
-TODO: Make function
 Splits SIFNX entries into individual pathways
 }
 \details{

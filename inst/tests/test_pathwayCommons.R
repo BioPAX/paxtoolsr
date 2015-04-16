@@ -158,6 +158,15 @@ test_that("idMapping", {
 test_that("readSifnx", {
     results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
     expect_true(all(c("nodes", "edges") %in% names(results)))
+
+    results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
+    expect_equal(ncol(results$edges), 6)
+        
+    results <- readSifnx(system.file("extdata", "test_sifnx2.txt", package="paxtoolsr"))
+    expect_equal(ncol(results$edges), 6)
+    
+    results <- readSifnx(system.file("extdata", "test_sifnx_sm.txt", package="paxtoolsr"))
+    expect_equal(ncol(results$edges), 6)
 })
 
 test_that("readBiopax", {

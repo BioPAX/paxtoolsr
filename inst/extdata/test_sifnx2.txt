@@ -1,13 +1,13 @@
-PARTICIPANT_A	INTERACTION_TYPE	PARTICIPANT_B	INTERACTION_DATA_SOURCE	INTERACTION_PUBMED_ID
-&alpha;-D-mannosyl-1,6-(N-acetyl-&beta;-D-glucosaminyl-1,2-&alpha;-D-mannosyl-1,3)-&beta;-D-mannosyl-[glycoprotein]	consumption-controlled-by	MGAT2	HumanCyc	
-&alpha;-D-mannosyl-1,6-(N-acetyl-&beta;-D-glucosaminyl-1,2-&alpha;-D-mannosyl-1,3)-&beta;-D-mannosyl-[glycoprotein]	consumption-controlled-by	MGAT4A	HumanCyc	
+PARTICIPANT_A	INTERACTION_TYPE	PARTICIPANT_B	INTERACTION_DATA_SOURCE	INTERACTION_PUBMED_ID	PATHWAY_NAMES
+&alpha;-D-mannosyl-1,6-(N-acetyl-&beta;-D-glucosaminyl-1,2-&alpha;-D-mannosyl-1,3)-&beta;-D-mannosyl-[glycoprotein]	consumption-controlled-by	MGAT2	HumanCyc		
+&alpha;-D-mannosyl-1,6-(N-acetyl-&beta;-D-glucosaminyl-1,2-&alpha;-D-mannosyl-1,3)-&beta;-D-mannosyl-[glycoprotein]	consumption-controlled-by	MGAT4A	HumanCyc		
 &alpha;-D-mannosyl-1,6-(N-acetyl-&beta;-D-glucosaminyl-1,2-&alpha;-D-mannosyl-1,3)-&beta;-D-mannosyl-[glycoprotein]	used-to-produce	N-acetyl-&beta;-D-glucosaminyl-1,2-&alpha;-D-mannosyl-1,6-(N-acetyl-&beta;-D-glucosaminyl-1,2-&alpha;-D-mannosyl-1,3)-&beta;-D-mannosyl-[glycoprotein]	HumanCyc	
-&alpha;-D-mannosyl-1,6-(N-acetyl-&beta;-D-glucosaminyl-1,2-&alpha;-D-mannosyl-1,3)-&beta;-D-mannosyl-[glycoprotein]	reacts-with	UDP-N-acetyl-alpha-D-glucosamine(2-)	HumanCyc	
-&alpha;-L-fucoside	consumption-controlled-by	FUCA1	HumanCyc	
-&alpha;-L-fucoside	consumption-controlled-by	FUCA2	HumanCyc	
-&alpha;-L-fucoside	used-to-produce	L-fucopyranose	HumanCyc	
-&alpha;-L-fucoside	used-to-produce	ethanol	HumanCyc	
-&alpha;-L-iduronate	controls-production-of	IDUA	HumanCyc	2470345;30407
+&alpha;-D-mannosyl-1,6-(N-acetyl-&beta;-D-glucosaminyl-1,2-&alpha;-D-mannosyl-1,3)-&beta;-D-mannosyl-[glycoprotein]	reacts-with	UDP-N-acetyl-alpha-D-glucosamine(2-)	HumanCyc		
+&alpha;-L-fucoside	consumption-controlled-by	FUCA1	HumanCyc		
+&alpha;-L-fucoside	consumption-controlled-by	FUCA2	HumanCyc		
+&alpha;-L-fucoside	used-to-produce	L-fucopyranose	HumanCyc		
+&alpha;-L-fucoside	used-to-produce	ethanol	HumanCyc		
+&alpha;-L-iduronate	controls-production-of	IDUA	HumanCyc	2470345;30407	
 
 PARTICIPANT	PARTICIPANT_TYPE	PARTICIPANT_NAME	UNIFICATION_XREF	RELATIONSHIP_XREF
 alpha-D-ribofuranose 5-phosphate	SmallMoleculeReference	ChEBI:CHEBI:10270;ChEBI:CHEBI:12331;ChEBI:CHEBI:18189;ChEBI:CHEBI:22413	CHEBI:CHEBI:77746;CHEMBL:CHEMBL605020;CHEMICAL NAME:alpha-d-ribofuranose 5-phosphate;InChIKey:KTVPXOYAKDPRHY-AIHAYLRMSA-N;KEGG COMPOUND:C03736;PUBCHEM-COMPOUND:440101	alpha-D-ribofuranose 5-phosphate

@@ -4,14 +4,10 @@
 \alias{readSifnx}
 \title{Read in a Extended SIF file}
 \usage{
-readSifnx(inputFile, cols = rep("character", 6))
+readSifnx(inputFile)
 }
 \arguments{
 \item{inputFile}{an inputFile}
-
-\item{cols}{a vector of column classes (Default: rep("character", 6)). This
-should only be changed for user-customized SIFNX, and it should be set to
-'rep("character", N)', where N is the number of columns in the SIFNX.}
 }
 \value{
 a list with nodes and edges entries

@@ -41,9 +41,6 @@ readSif <- function(inputFile) {
 #' Read in a Extended SIF file 
 #' 
 #' @param inputFile an inputFile
-#' @param cols a vector of column classes (Default: rep("character", 6)). This
-#'   should only be changed for user-customized SIFNX, and it should be set to
-#'   'rep("character", N)', where N is the number of columns in the SIFNX.
 #' @return a list with nodes and edges entries 
 #' 
 #' @details SIFNX files from Pathway Commons commonly come a single file that 
@@ -59,22 +56,63 @@ readSif <- function(inputFile) {
 #' @export
 #' 
 #' @importFrom data.table fread
-readSifnx <- function(inputFile, cols=rep("character", 6)) {
-    # A warning on discarded content is expected because of the 2-files in 1 nature of the file
-    suppressWarnings(tmp <- fread(inputFile, sep="\n", header=FALSE, stringsAsFactors=FALSE))
-    nodes <- fread(inputFile, sep="\t", header=TRUE, stringsAsFactors=FALSE, skip="PARTICIPANT\tPARTICIPANT_TYPE")
+readSifnx <- function(inputFile) {
+    # Files with small sizes will confuse fread to think there are fewer columns 
+    # in the edges because it scans the 5th row to determine number of columns. 
+    # Two methods of reading are therefore necessary. 
+    if(file.size(inputFile) < 100000) {
+        edgesFile <- tempfile("edges", fileext=".txt")
+        nodesFile <- tempfile("nodes", fileext=".txt")
+        
+        # Open file connections
+        edgesCon <- file(edgesFile, "w")
+        nodesCon <- file(nodesFile, "w")
+        
+        con <- file(inputFile)
 
-    tmp2 <- paste(tmp$V1, collapse="\n")
-    edges <- fread(tmp2, sep="\t", header=TRUE, stringsAsFactors=FALSE, colClasses=cols)
+        newLineFlag <- FALSE
+
+        # Read single lines
+        lineTmp <- readLines(con, warn=FALSE)
+        
+        for (i in 1:length(lineTmp)) {
+            line <- lineTmp[i]
+            
+            if(grepl("^$", line)) {
+                newLineFlag <- TRUE
+                next
+            }
+            
+            if(!newLineFlag) {
+                writeLines(line, edgesCon)
+            } else {
+                writeLines(line, nodesCon)        
+            }
+        }
+        
+        close(edgesCon)
+        close(nodesCon)
+        close(con)
+        
+        edges <- read.table(edgesFile, header=TRUE, sep="\t", quote="", 
+                            stringsAsFactors=FALSE, fill=TRUE)
+        nodes <- read.table(nodesFile, header=TRUE, sep="\t", quote="", 
+                            stringsAsFactors=FALSE, fill=TRUE)        
+    } else {
+        # A warning on discarded content is expected because of the 2-files in 1 nature of the file
+        suppressWarnings(tmp <- fread(inputFile, sep="\n", header=FALSE, stringsAsFactors=FALSE))
+        nodes <- fread(inputFile, sep="\t", header=TRUE, stringsAsFactors=FALSE, skip="PARTICIPANT\tPARTICIPANT_TYPE", 
+                       data.table=FALSE)
+        
+        tmp2 <- paste(tmp$V1, collapse="\n")
+        edges <- fread(tmp2, sep="\t", header=TRUE, stringsAsFactors=FALSE,  data.table=FALSE)
+    }
+    
     
     # EDGES
-    edges <- as.data.frame(edges)
-
     edgesPathwayNames <- strsplit(as.character(edges$PATHWAY_NAMES), ";")
     
     # NODES    
-    nodes <- as.data.frame(nodes)
-    
     nodesUniXref <- strsplit(as.character(nodes$UNIFICATION_XREF), ";")
     names(nodesUniXref) <- nodes$PARTICIPANT
     
@@ -126,8 +164,59 @@ readSbgn <- function(inputFile) {
     return(results)
 }
 
-#' TODO: Make function 
-# convertToPathwayObject <- function() {
+#' Convert Results from readSifnx to data.table
+#' 
+#' @param lst a list returned from readSifnx
+#' @return lst list entries converted to data.table
+#' 
+#' @concept paxtoolsr
+#' @export
+#' 
+#' @importFrom data.table setDT
+convertToDT <- function(lst) {
+    nodes <- lst$nodes
+    nodes <- setDT(nodes)
+    nodes$UNIFICATION_XREF <- strsplit(nodes$UNIFICATION_XREF, ";")
+    nodes$RELATIONSHIP_XREF <- strsplit(nodes$RELATIONSHIP_XREF, ";")
+    
+    edges <- lst$edges
+    edges <- setDT(edges)
+    edges$INTERACTION_DATA_SOURCE <- strsplit(edges$INTERACTION_DATA_SOURCE, ";")
+    edges$INTERACTION_PUBMED_ID <- strsplit(as.character(edges$INTERACTION_PUBMED_ID), ";")
+    edges$PATHWAY_NAMES <- strsplit(as.character(edges$PATHWAY_NAMES), ";")  
+    
+    lst$edges <- edges
+    lst$nodes <- nodes
+    
+    return(lst)
+}
+
+# # Convert to graphite Pathway Object 
+# # 
+# # @param lst list returned from 
+# # 
+# # @concept paxtoolsr
+# # @export
+# convertToPathwayList <- function(id="kegg", title="kegg", ident="DISPLAYNAME", 
+#                                  species="hsapiens", lst) {
+#     database <- unique(dbResults$edges$INTERACTION_DATA_SOURCE)
+#     
+#     edges <- data.frame(src=lst$edges$PARTICIPANT_A, 
+#                         dest=lst$edges$PARTICIPANT_B, 
+#                         direction=nrow(lst$edges), 
+#                         type=lst$edges$INTERACTION_TYPE)
+#     timestamp <- Sys.Date()
+#     
+#     pathway <- new("Pathway", 
+#               id=id, 
+#               title=title,
+#               edges=edges,
+#               database=database,
+#               species=species,
+#               identifier=ident,
+#               timestamp=timestamp)
+#     
+#     return(pathway)
 # }
 
 #' Splits SIFNX entries into individual pathways 
@@ -416,7 +505,7 @@ downloadPc2 <- function(destDir=NULL) {
     
     # Parse EXTENDED_BINARY_SIF
     if(grepl("EXTENDED_BINARY_SIF", selectedFileName)) {
-        results <- readSifnx(tmpFile)
+        results <- readSifnx(tmpFile, rep("character", 6))
         return(results)
     }      
     
