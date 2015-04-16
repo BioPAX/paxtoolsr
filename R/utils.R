@@ -41,6 +41,7 @@ readSif <- function(inputFile) {
 #' Read in a Extended SIF file 
 #' 
 #' @param inputFile an inputFile
+#' @param cols a vector of column classes (Default: rep("character", 6))
 #' @return a list with nodes and edges entries 
 #' 
 #' @details SIFNX files from Pathway Commons commonly come a single file that 
@@ -56,13 +57,13 @@ readSif <- function(inputFile) {
 #' @export
 #' 
 #' @importFrom data.table fread
-readSifnx <- function(inputFile) {
+readSifnx <- function(inputFile, cols=rep("character", 6)) {
     # A warning on discarded content is expected because of the 2-files in 1 nature of the file
     suppressWarnings(tmp <- fread(inputFile, sep="\n", header=FALSE, stringsAsFactors=FALSE))
     nodes <- fread(inputFile, sep="\t", header=TRUE, stringsAsFactors=FALSE, skip="PARTICIPANT\tPARTICIPANT_TYPE")
 
     tmp2 <- paste(tmp$V1, collapse="\n")
-    edges <- fread(tmp2, sep="\t", header=TRUE, stringsAsFactors=FALSE)
+    edges <- fread(tmp2, sep="\t", header=TRUE, stringsAsFactors=FALSE, colClasses=cols)
     
     # EDGES
     edges <- as.data.frame(edges)
