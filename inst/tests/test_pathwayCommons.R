@@ -48,7 +48,7 @@ test_that("graphPc", {
                        kind="neighborhood", 
                        format="EXTENDED_BINARY_SIF", 
                        verbose=TRUE)
-    expect_equal(length(names(results)), 2)
+    expect_true(all(c("nodes", "edges") %in% names(results)))
     
     # Test Against Error Code 460
     expect_error(graphPc(source="http://identifiers.org/uniprot/PXXXXX", 
@@ -66,7 +66,7 @@ test_that("graphPc", {
                        kind="PATHSFROMTO", 
                        format="EXTENDED_BINARY_SIF", 
                        verbose=TRUE)
-    expect_equal(length(names(results)), 2)
+    expect_true(all(c("nodes", "edges") %in% names(results)))
     
     expect_is(graphPc(source=c("http://identifiers.org/uniprot/Q06609", 
                                "http://identifiers.org/uniprot/Q96EB6"), 
@@ -93,7 +93,7 @@ test_that("outputFormatsSupported", {
                                  format="EXTENDED_BINARY_SIF", 
                                  verbose=TRUE)
     
-    expect_equal(length(names(results)), 2)
+    expect_true(all(c("nodes", "edges") %in% names(results)))
     
     results <- graphPc(source=genes, 
                                  kind="PATHSBETWEEN", 
@@ -157,7 +157,7 @@ test_that("idMapping", {
 
 test_that("readSifnx", {
     results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
-    expect_equal(length(names(results)), 2)
+    expect_true(all(c("nodes", "edges") %in% names(results)))
 })
 
 test_that("readBiopax", {

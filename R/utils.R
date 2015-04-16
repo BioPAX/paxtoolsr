@@ -28,6 +28,8 @@ readGmt <- function(inputFile) {
 #' 
 #' @concept paxtoolsr
 #' @export
+#' 
+#' @importFrom data.table fread
 readSif <- function(inputFile) {
     results <- fread(inputFile, sep="\t", header=TRUE, stringsAsFactors=FALSE)
     results <- as.data.frame(results)
@@ -52,6 +54,8 @@ readSif <- function(inputFile) {
 #' 
 #' @concept paxtoolsr
 #' @export
+#' 
+#' @importFrom data.table fread
 readSifnx <- function(inputFile) {
     # A warning on discarded content is expected because of the 2-files in 1 nature of the file
     suppressWarnings(tmp <- fread(inputFile, sep="\n", header=FALSE, stringsAsFactors=FALSE))
@@ -63,22 +67,21 @@ readSifnx <- function(inputFile) {
     # EDGES
     edges <- as.data.frame(edges)
 
-    edgesPathwayNames <- strsplit(edges$PATHWAY_NAMES, ";")
-    names(edgesPathwayNames) <- nodes$PARTICIPANT
+    edgesPathwayNames <- strsplit(as.character(edges$PATHWAY_NAMES), ";")
     
     # NODES    
     nodes <- as.data.frame(nodes)
     
-    nodesUniXref <- strsplit(nodes$UNIFICATION_XREF, ";")
+    nodesUniXref <- strsplit(as.character(nodes$UNIFICATION_XREF), ";")
     names(nodesUniXref) <- nodes$PARTICIPANT
     
-    nodesRelXref <- strsplit(nodes$RELATIONSHIP_XREF, ";")
+    nodesRelXref <- strsplit(as.character(nodes$RELATIONSHIP_XREF), ";")
     names(nodesRelXref) <- nodes$PARTICIPANT
     
     nodesType <- nodes$PARTICIPANT_TYPE
     names(nodesType) <- nodes$PARTICIPANT
     
-    nodesName <- strsplit(nodes$PARTICIPANT_NAME, ";")
+    nodesName <- strsplit(as.character(nodes$PARTICIPANT_NAME), ";")
     names(nodesName) <- nodes$PARTICIPANT
     
     results <- list(nodes=nodes, 
@@ -121,16 +124,17 @@ readSbgn <- function(inputFile) {
 }
 
 #' TODO: Make function 
-convertToPathwayObject <- function() {
-}
+# convertToPathwayObject <- function() {
+# }
 
-#' Splits SIFNX files 
+#' Splits SIFNX entries into individual pathways 
 #'  
-#' @param inputFile an inputFile
-#' @return an XMLInternalDocument
+#' @param edges a data.frame with SIF content with the additional column "PATHWAY_NAMES".
+#'   "PATHWAY_NAMES" should include pathway names delimited with a semi-colon: ";".
+#' @return a list of where each entry is a vector of row indicies for a given pathway
 #' 
 #' @details 
-#' This method can be slow 
+#' This method can be slow; ~1.5 minutes for 150K+ rows
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -141,92 +145,30 @@ splitSifnxByPathway <- function(edges) {
     tmp2 <- unique(tmp)
     pathwayNames <- unique(unlist(tmp2))
 
-    results <-  sapply(pathwayNames, function(y) { 
-        beta <- lapply(tmp, function(x) { match(y, x, nomatch=0) > 0 })
-        idx <- which(unlist(beta))
-    })             
+    results <-  searchListOfVectors(pathwayNames, tmp)
     
     return(results)
+}
 
-    #edgesAll <- results$edges
-    #edges <- edgesAll
-    #edges <- edgesAll[1:10000,]
-    
-#     t1 <- data.table(x=1:length(tmp), y=tmp)
-#     
-#     system.time({
-#         f <- function(ids) { any(pathwayNames %in% ids) }
-#         r1 <- t1[sapply(y, f), list(x=x, y=y)]
-#         #r1 <- unique(t1[sapply(y, f), list(x=x, y=unlist(y))])
-#     })
-#     
-#     #user  system elapsed 
-#     #0.141   0.007   0.148 
-#     
-#     r1[y == "Metabolism"]
-#     
-#     system.time({
-#         w1 <- lapply(pathwayNames, function(x){t1$x[sapply(t1$y, function(y){x %in% y})]})
-#     })
-#     
-# 
-#     
-#     #user  system elapsed 
-#     #16.186   0.134  16.315
-#     
-#     
-#     
-#     AB.dt <- setkey(tmp, id)[J(sampleIDs)][, list(bIDs = list(bID)),
-#                                             by = list(aid = id)]
-#     
-#     
-#         pathway <- "Purine metabolism"
-#         beta <- lapply(tmp, function(x) { pathway %in% x })
-#         b2 <- unlist(beta)
-#         idx <- which(b2)
-#         b3 <- edges[idx,]
-
-#     a <- list(1:3, 4:5, 6:9)
-#     b <- c(2, 3, 5, 8)
-#     g <- rep(seq_along(tmp), sapply(tmp, length))
-#     g[match(pathwayNames, unlist(tmp))]
-# 
-#     t3 <- NULL 
-#     
-#     for(i in 1:length(tmp)) {
-#         flag <- FALSE
-#         
-#         for(j in 1:length(pathwayNames)) {
-#             if(pathwayNames[j] %in% tmp[[i]]) {
-#                 flag <- TRUE
-#             }
-#         }
-#         
-#         t3 <- c(t3, flag)
-#     }
-#     
-#     b3 <- lapply(tmp, function(x) { 
-#         flag <- FALSE 
-#         
-#         sapply(pathwayNames, function(y) {
-#             if(y %in% x) {
-#                 flag <- TRUE
-#             }  
-#         })
-#         
-#         flag
-#     })
-#     
-#     
-    #b2 <- sapply(pathwayNames, function(x) { 
-    #    any(lapply(tmp, function(y) { x %in% y })) 
-    #})
-    #
-    #pathwayIdx <- list()
-    #resultsX <- sapply(pathwayNames, function(x) { 
-    #    pathwayIdx[[x]] <- which(grepl(x, edges$PATHWAY_NAMES))
-    #    #pathwayIdx[[x]] <- vector('numeric')
-    #})
+#' Search List of Vectors 
+#' 
+#' @param q query vector
+#' @param lst list of vectors to search
+#' 
+#' @return a list of vectors with the same length as the query vector, each list
+#'   entry will have indicies for lst where there was a match with the query 
+#'   vector
+#' 
+#' @examples 
+#' lst <- list(1:3, 3:5, 3:7)
+#' q <- c(3, 5)
+#' results <- searchListOfVectors(q, lst)
+#' 
+#' @concept paxtoolsr
+#' @export
+searchListOfVectors <- function(q, lst) {
+    tmp <- rep(seq_along(lst), sapply(lst, length))
+    resultsSe <- sapply(q, function(x) tmp[which(unlist(lst) %in% x)])
 }
 
 #' Keep interactions in SIF network of certain interaction types
@@ -301,6 +243,8 @@ getSifInteractionCategories <- function() {
 #' 
 #' @concept paxtoolsr
 #' @export
+#' 
+#' @importFrom igraph graph.edgelist E E<-
 loadSifInIgraph <- function(sif) {
     gWithType <- graph.edgelist(as.matrix(sif[, c(1, 3)]), directed=TRUE)
     E(gWithType)$type <- sif[, 2]
@@ -346,6 +290,8 @@ summarizeSif <- function(sif) {
 #' @concept paxtoolsr
 #' @seealso \code{\link{readSif}, \link{readBiopax}, \link{readSbgn}, \link{readSifnx}, \link{readGmt}}
 #' @export
+#' 
+#' @importFrom httr HEAD GET http_status write_disk progress add_headers http_date
 downloadFile <- function(baseUrl, fileName, cacheEnv="PAXTOOLSR_CACHE", destDir=NULL) {
     cacheMapPath <- file.path(Sys.getenv(cacheEnv), "cacheMap.txt")
     cacheMap <- read.table(cacheMapPath, sep="\t", header=TRUE, stringsAsFactors=FALSE)
@@ -396,15 +342,20 @@ downloadFile <- function(baseUrl, fileName, cacheEnv="PAXTOOLSR_CACHE", destDir=
 #' 
 #' @param destDir a string, the destination directory for the file to be 
 #'   downloaded (Default: NULL). If NULL, then file will be downloaded to cache
-#'   directory ~/.paxtoolsRCache
+#'   directory file.path(Sys.getenv("HOME"), ".paxtoolsRCache")
+#'   
+#' @return an R object using one of the read* methods provided in this package 
+#'   corresponding to the file downloaded 
 #'   
 #' @examples 
-#' \dontrun {
+#' \dontrun{
 #'   downloadPc2(tempdir())
 #' }
 #'   
 #' @concept paxtoolsr
 #' @export
+#' 
+#' @importFrom R.utils gunzip
 downloadPc2 <- function(destDir=NULL) {
     baseUrl <- "http://www.pathwaycommons.org"
     downloadsSubDir <- "/pc2/downloads/"

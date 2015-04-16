@@ -2,21 +2,24 @@
 % Please edit documentation in R/utils.R
 \name{splitSifnxByPathway}
 \alias{splitSifnxByPathway}
-\title{Splits SIFNX files}
+\title{TODO: Make function
+Splits SIFNX entries into individual pathways}
 \usage{
 splitSifnxByPathway(edges)
 }
 \arguments{
-\item{inputFile}{an inputFile}
+\item{edges}{a data.frame with SIF content with the additional column "PATHWAY_NAMES".
+"PATHWAY_NAMES" should include pathway names delimited with a semi-colon: ";".}
 }
 \value{
-an XMLInternalDocument
+a list of where each entry is a vector of row indicies for a given pathway
 }
 \description{
-Splits SIFNX files
+TODO: Make function
+Splits SIFNX entries into individual pathways
 }
 \details{
-This method can be slow
+This method can be slow; ~1.5 minutes for 150K+ rows
 }
 \concept{
 paxtoolsr

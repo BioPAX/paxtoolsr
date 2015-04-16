@@ -11,6 +11,10 @@ processPcRequest(content, format)
 
 \item{format}{a string, the type of format}
 }
+\value{
+an R object using one of the read* methods provided in this package
+  corresponding to the format
+}
 \description{
 Process Pathway Commons request in various formats
 }

@@ -136,11 +136,9 @@ test_that("xmlInternalDocumentInput", {
     expect_is(results, "data.frame")
 })
 
-test_that("checkInputFile") {
-    
-})
-
-test_that("checkOutputFile") {})
+# TODO
+#test_that("checkInputFile") {})
+#test_that("checkOutputFile") {})
 
 #DEBUG 
 #test_that("FAIL", {    

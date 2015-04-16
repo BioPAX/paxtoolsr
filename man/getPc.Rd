@@ -4,7 +4,7 @@
 \alias{getPc}
 \title{Get Pathway Commons BioPAX elements}
 \usage{
-getPc(uri, format = NULL, verbose = FALSE)
+getPc(uri, format = "BIOPAX", verbose = FALSE)
 }
 \arguments{
 \item{uri}{a vector that includes valid/existing BioPAX element's URI (RDF
@@ -15,7 +15,7 @@ c("http://identifiers.org/uniprot/Q06609",
 "http://identifiers.org/uniprot/Q549Z0") See also about MIRIAM and
 Identifiers.org in details.}
 
-\item{format}{output format. Valid options can be found using
+\item{format}{output format (Default: BIOPAX). Valid options can be found using
 \code{\link{pcFormats}}}
 
 \item{verbose}{a boolean, display the command used to query Pathway Commons}

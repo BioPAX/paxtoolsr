@@ -161,12 +161,10 @@ getNeighbors <- function(inputFile, outputFile=NULL, idList) {
 #' 
 #' @examples 
 #' outFile <- tempfile()
-#' tmp <- getPc(uri="http://identifiers.org/reactome/REACT_12034.3", 
-#'              format="BIOPAX", 
-#'              verbose=TRUE)
 #' ids <- c("http://identifiers.org/uniprot/P36894", 
 #'          "http://identifiers.org/uniprot/Q13873")
-#' results <- fetch(tmp, outFile, ids)
+#' results <- fetch(system.file("extdata", "REACT_12034-3.owl", package="paxtoolsr"), 
+#'                  outFile, ids)
 #' 
 #' @concept paxtoolsr
 #' @export

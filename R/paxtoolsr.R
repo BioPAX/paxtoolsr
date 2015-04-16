@@ -2,8 +2,6 @@
 
 #' @import rJava
 #' @import XML
-#' @import rjson
-#' @import plyr
 .onLoad <- function(lib, pkg){
     # Set Pathway Commons version
     options(pc.version="7")
@@ -39,7 +37,14 @@
     #  sep=.Platform$file.sep)
     #.jinit(classpath=c(jar.paxtools))
     #.jpackage(pkg, jars=c("paxtools-jar-with-dependencies.jar"))
+    jars <- list.files(path=paste(lib, pkg, "java", sep=.Platform$file.sep),
+                       pattern="jar$", full.names=TRUE)
+    
+    #.jaddClassPath(jars) 
+    #.jpackage(pkg, jars=jars)
     .jpackage(pkg, jars=c("paxtools-4.3.0.jar"))
+    #.jpackage(pkg, lib)
+    #print(.jclassPath())
     
     #DEBUG
     #packageStartupMessage(paste("paxtoolsr loaded. The classpath is: ", 

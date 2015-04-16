@@ -9,13 +9,17 @@ downloadPc2(destDir = NULL)
 \arguments{
 \item{destDir}{a string, the destination directory for the file to be
   downloaded (Default: NULL). If NULL, then file will be downloaded to cache
-  directory ~/.paxtoolsRCache}
+  directory file.path(Sys.getenv("HOME"), ".paxtoolsRCache")}
+}
+\value{
+an R object using one of the read* methods provided in this package
+  corresponding to the file downloaded
 }
 \description{
 Download Pathway Commons files (uses menu and cache)
 }
 \examples{
-\dontrun {
+\dontrun{
   downloadPc2(tempdir())
 }
 }

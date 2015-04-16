@@ -84,7 +84,7 @@ searchPc <- function(q, page=0, datasource=NULL, organism=NULL, type=NULL,
 #'   c("http://identifiers.org/uniprot/Q06609",
 #'   "http://identifiers.org/uniprot/Q549Z0") See also about MIRIAM and
 #'   Identifiers.org in details. 
-#' @param format output format. Valid options can be found using 
+#' @param format output format (Default: BIOPAX). Valid options can be found using 
 #'   \code{\link{pcFormats}}
 #' @param verbose a boolean, display the command used to query Pathway Commons
 #' @return a XMLInternalDocument object
@@ -107,7 +107,7 @@ searchPc <- function(q, page=0, datasource=NULL, organism=NULL, type=NULL,
 #' 
 #' @concept paxtoolsr
 #' @export
-getPc <- function(uri, format=NULL, verbose=FALSE) {
+getPc <- function(uri, format="BIOPAX", verbose=FALSE) {
     uris <- paste(paste0("uri=", uri), collapse="&")
     
     baseUrl <- paste0(getPcUrl(), "get?")
@@ -220,6 +220,9 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
 #' @param content a string, content to be processed
 #' @param format a string, the type of format
 #' 
+#' @return an R object using one of the read* methods provided in this package 
+#'   corresponding to the format
+#' 
 #' @examples 
 #' fileName <- system.file("extdata", "test_biopax.owl", package="paxtoolsr")
 #' content <- readChar(fileName, file.info(fileName)$size)
@@ -229,6 +232,8 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
 #' 
 #' @concept paxtoolsr
 #' @export 
+#' 
+#' @importFrom rjson fromJSON
 processPcRequest <- function(content, format) {
     if(format == "JSON") {     
         results <- fromJSON(content)
@@ -256,7 +261,7 @@ processPcRequest <- function(content, format) {
     } else if(format == "GSEA") {     
         results <- readGmt(filename)
     } else {
-        results <- tmp 
+        results <- content
     }
     
     return(results)
@@ -343,6 +348,8 @@ traverse <- function(uri, path, verbose=FALSE) {
 #' 
 #' @concept paxtoolsr
 #' @export
+#' 
+#' @importFrom plyr ldply
 topPathways <- function(datasource=NULL, organism=NULL, verbose=FALSE) {
     baseUrl <- paste0(getPcUrl(), "top_pathways?")
     url <- baseUrl
@@ -585,6 +592,8 @@ pcDirections <- function() {
 #' 
 #' @concept paxtoolsr
 #' @export
+#' 
+#' @importFrom httr url_success
 getPcUrl <- function() {
     url <- NULL
     
@@ -595,11 +604,11 @@ getPcUrl <- function() {
     tmpVersion <- as.numeric(getOption("pc.version")) + 1 
     nextUrl <- paste0(baseUrl, tmpVersion, "/")
     
-    if(url.exists(curUrl)) {
+    if(url_success(curUrl)) {
         url <- curUrl
     } 
     
-    if(url.exists(nextUrl)) {
+    if(url_success(nextUrl)) {
         url <- nextUrl
     }     
     
@@ -649,6 +658,7 @@ getErrorMessage <- function(code) {
 #' @concept paxtoolsr
 #' @keywords internal
 #' @noRd
+#' @importFrom httr HEAD GET content accept
 getPcRequest <- function(url, verbose) {
     url <- URLencode(url)
     
