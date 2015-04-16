@@ -67,7 +67,8 @@
 #' 
 #' Extension on testthat code
 #' 
-#' @noRd
+#' @concept paxtoolsr
+#' @export
 skip_on_bioc <- function() {
     if(identical(Sys.getenv("NOT_BIOC"), "true")) return()
     
