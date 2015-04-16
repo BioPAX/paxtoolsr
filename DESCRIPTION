@@ -13,7 +13,7 @@ Imports:
     R.utils, 
     data.table
 Depends:
-    R (>= 3.2),
+    R (>= 3.1.1),
     rJava (>= 0.9-4), 
     XML
 Suggests:
