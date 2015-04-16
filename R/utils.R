@@ -505,7 +505,7 @@ downloadPc2 <- function(destDir=NULL) {
     
     # Parse EXTENDED_BINARY_SIF
     if(grepl("EXTENDED_BINARY_SIF", selectedFileName)) {
-        results <- readSifnx(tmpFile, rep("character", 6))
+        results <- readSifnx(tmpFile)
         return(results)
     }      
     
