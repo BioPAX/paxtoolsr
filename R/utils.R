@@ -41,7 +41,9 @@ readSif <- function(inputFile) {
 #' Read in a Extended SIF file 
 #' 
 #' @param inputFile an inputFile
-#' @param cols a vector of column classes (Default: rep("character", 6))
+#' @param cols a vector of column classes (Default: rep("character", 6)). This
+#'   should only be changed for user-customized SIFNX, and it should be set to
+#'   'rep("character", N)', where N is the number of columns in the SIFNX.
 #' @return a list with nodes and edges entries 
 #' 
 #' @details SIFNX files from Pathway Commons commonly come a single file that 
