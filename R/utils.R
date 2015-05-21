@@ -56,7 +56,6 @@ readSif <- function(inputFile) {
 #' @export
 #' 
 #' @importFrom data.table fread
-#' @importFrom file.size base
 readSifnx <- function(inputFile) {
     # Files with small sizes will confuse fread to think there are fewer columns 
     # in the edges because it scans the 5th row to determine number of columns. 
