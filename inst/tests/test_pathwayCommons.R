@@ -155,6 +155,10 @@ test_that("idMapping", {
     expect_equal(results$TP53, "P04637")
 })
 
+test_that("DEL", {
+    expect_true(exists("file.size"))
+})
+
 test_that("readSifnx", {
     results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
     expect_true(all(c("nodes", "edges") %in% names(results)))
