@@ -61,7 +61,7 @@ readSifnx <- function(inputFile) {
     # Files with small sizes will confuse fread to think there are fewer columns 
     # in the edges because it scans the 5th row to determine number of columns. 
     # Two methods of reading are therefore necessary. 
-    if(file.size(inputFile) < 100000) {
+    if(base::file.size(inputFile) < 100000) {
         edgesFile <- tempfile("edges", fileext=".txt")
         nodesFile <- tempfile("nodes", fileext=".txt")
         
