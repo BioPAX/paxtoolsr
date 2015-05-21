@@ -56,6 +56,7 @@ readSif <- function(inputFile) {
 #' @export
 #' 
 #' @importFrom data.table fread
+#' @importFrom file.size base
 readSifnx <- function(inputFile) {
     # Files with small sizes will confuse fread to think there are fewer columns 
     # in the edges because it scans the 5th row to determine number of columns. 
@@ -452,7 +453,9 @@ downloadPc2 <- function(destDir=NULL) {
     baseUrl <- "http://www.pathwaycommons.org"
     downloadsSubDir <- "/pc2/downloads/"
     
-    if(FALSE) {
+    doHack <- FALSE
+    
+    if(!doHack) {
         # Parse webpage
         doc <- htmlParse(paste0(baseUrl, downloadsSubDir)) 
         
