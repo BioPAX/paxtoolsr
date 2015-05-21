@@ -155,10 +155,6 @@ test_that("idMapping", {
     expect_equal(results$TP53, "P04637")
 })
 
-test_that("DEL", {
-    expect_true(exists("mean"))
-})
-
 test_that("readSifnx", {
     results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
     expect_true(all(c("nodes", "edges") %in% names(results)))
@@ -225,7 +221,8 @@ test_that("downloadFile", {
 })
 
 test_that("downloadPc2", {
-    skip("NA")
+    # Skip still results in error using TAP reporter
+    #skip("NA")
 })
 
 test_that("filterSif", {
