@@ -157,6 +157,7 @@ test_that("idMapping", {
 
 test_that("DEL", {
     expect_true(exists("file.size"))
+    expect_true(exists("mean"))
 })
 
 test_that("readSifnx", {
