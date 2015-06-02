@@ -169,7 +169,7 @@ readSbgn <- function(inputFile) {
 #' Convert Results from readSifnx to data.table
 #' 
 #' @param lst a list returned from readSifnx
-#' @return lst list entries converted to data.table
+#' @return a list entries converted to data.table
 #' 
 #' @concept paxtoolsr
 #' @export
