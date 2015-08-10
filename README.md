@@ -24,7 +24,7 @@ This package is primarily directed towards R users who wish to work with binary 
 
 #### OS X (tested on Mavericks OSX 10.9)
 
-Java needs to be installed. If it is not installed, you will be prompted to install Java the first time you load the paxtoolsr package.
+Java needs to be installed. If it is not installed, you will be prompted to install Java the first time you load the paxtoolsr package (NOTE: This prompt may crash RStudio).
 
 #### Ubuntu (tested on Ubuntu 14.04)
 
