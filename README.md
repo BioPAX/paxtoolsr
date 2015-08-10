@@ -34,6 +34,7 @@ Run these commands in the Terminal:
     sudo apt-add-repository -y ppa:marutter/rrutter
     sudo apt-get -y update
     sudo apt-get -y upgrade
+    sudo apt-get -y install r-base
     # For plyr
     sudo apt-get -y install g++
     # For RCurl
