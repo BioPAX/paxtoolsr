@@ -30,19 +30,23 @@ Java needs to be installed. If it is not installed, you will be prompted to inst
 
 Run these commands in the Terminal:
 
+    # For latest R version
+    sudo apt-add-repository -y ppa:marutter/rrutter
+    sudo apt-get -y update
+    sudo apt-get -y upgrade
     # For plyr
-    sudo apt-get install g++
+    sudo apt-get -y install g++
     # For RCurl
-    sudo apt-get install libcurl4-openssl-dev
+    sudo apt-get -y install libcurl4-openssl-dev
     # For rJava
-    sudo apt-get install liblzma-dev
-    sudo apt-get install libbz2-dev
-    sudo apt-get install libpcre++-dev
-    sudo apt-get install openjdk-7-jdk  
+    sudo apt-get -y install liblzma-dev
+    sudo apt-get -y install libbz2-dev
+    sudo apt-get -y install libpcre++-dev
+    sudo apt-get -y install openjdk-7-jdk  
+    # For XML
+    sudo apt-get -y install libxml2-dev
     # To let R find Java
     sudo R CMD javareconf
-    # For XML
-    sudo apt-get install libxml2-dev
 
 ### Install Bioconductor and PaxtoolsR
 
