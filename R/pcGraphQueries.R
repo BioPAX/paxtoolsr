@@ -24,8 +24,7 @@
 #' @concept paxtoolsr
 #' @export 
 pcGraphQueries <- function() {
-    pcGraphQueries <- c("COMMONSTREAM", "NEIGHBORHOOD", "PATHSBETWEEN", 
-                        "PATHSBETWEEN", "PATHSFROMTO")
+    pcGraphQueries <- c("COMMONSTREAM", "NEIGHBORHOOD", "PATHSBETWEEN", "PATHSFROMTO")
     
     return(pcGraphQueries)
 }

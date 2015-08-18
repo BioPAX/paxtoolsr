@@ -28,7 +28,7 @@
 #' 
 #' @examples
 #' source <- "http://identifiers.org/uniprot/O14503"
-#' #results <- graphPc(source=, kind="neighborhood", format="EXTENDED_BINARY_SIF")
+#' #results <- graphPc(source=source, kind="neighborhood", format="EXTENDED_BINARY_SIF")
 #' 
 #' @concept paxtoolsr
 #' @export 

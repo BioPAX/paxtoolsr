@@ -34,7 +34,17 @@ getPcRequest <- function(url, verbose) {
     #                     })
     #    
     #    statusCode <- url.exists(url, .opts=list(followlocation=TRUE), .header=TRUE)["status"]
-    statusCode <- HEAD(url)$status
+    statusCode <- ""
+    
+    maxTries <- 2 
+    counter <- 0
+    
+    # Retry a couple of times after a few seconds
+    while(statusCode != "200" && counter <= maxTries) {
+        statusCode <- HEAD(url)$status   
+        counter <- counter + 1
+        Sys.sleep(3)
+    }
     
     # Check HTTP status code; 200 is success 
     if(statusCode == "200") {
