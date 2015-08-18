@@ -14,12 +14,15 @@ convertSifnxIds(sifnx, participantType = "ProteinReference",
 Important because not all ID types apply to all entities and otherwise those entities
 would be labeled as missing an ID.}
 
-\item{idType}{an ID type for conversion}
+\item{idType}{an ID type for conversion (not used if mapping parameter used)}
 
-\item{naRm}{remove}
+\item{mapping}{a two column data.frame with columns mapping$PARTICIPANT (old
+IDs to convert from) and mapping$ID (new IDs to convert to)}
+
+\item{naRm}{remove edges where NA's were introduced due to failed conversions}
 }
 \value{
-a SIFNX list with nodes and edges. Only edges
+a SIFNX list with nodes and edges. Only edges will have converted IDs
 }
 \description{
 Convert IDs in a SIFNX
