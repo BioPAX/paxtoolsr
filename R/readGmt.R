@@ -12,7 +12,13 @@
 #' @export
 readGmt <- function(inputFile) {
     f <- readLines(inputFile)
-    results <- sapply(f, function(x) unlist(strsplit(x, "\t", fixed = TRUE)))
+    
+    # NOTE: Removing empty strings is necessary
+    results <- sapply(f, function(x) { 
+      tmp <- unlist(strsplit(x, "\t", fixed = TRUE)) 
+      tmp[tmp != ""]
+    })
+    
     names(results) <- sapply(results, function(x) x[1])
     results <- lapply(results, function(x) x[-(1:2)])
     return(results)

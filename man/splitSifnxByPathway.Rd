@@ -4,11 +4,13 @@
 \alias{splitSifnxByPathway}
 \title{Splits SIFNX entries into individual pathways}
 \usage{
-splitSifnxByPathway(edges, parallel = TRUE)
+splitSifnxByPathway(edges, parallel = FALSE)
 }
 \arguments{
 \item{edges}{a data.frame with SIF content with the additional column "PATHWAY_NAMES".
 "PATHWAY_NAMES" should include pathway names delimited with a semi-colon: ";".}
+
+\item{parallel}{a boolean that will parallelize the process; requires foreach/doSNOW/parallel packages}
 }
 \value{
 a list of where each entry is a vector of row indicies for a given pathway

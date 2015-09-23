@@ -2,6 +2,7 @@
 #'  
 #' @param edges a data.frame with SIF content with the additional column "PATHWAY_NAMES".
 #'   "PATHWAY_NAMES" should include pathway names delimited with a semi-colon: ";".
+#' @param parallel a boolean that will parallelize the process; requires foreach/doSNOW/parallel packages  
 #' @return a list of where each entry is a vector of row indicies for a given pathway
 #' 
 #' @details 
@@ -10,7 +11,7 @@
 #' 
 #' @concept paxtoolsr
 #' @export
-splitSifnxByPathway <- function(edges, parallel=TRUE) {
+splitSifnxByPathway <- function(edges, parallel=FALSE) {
     stopifnot("PATHWAY_NAMES" %in% colnames(edges))
     
     #tmp <- strsplit(edges$PATHWAY_NAMES, ";", fixed=TRUE)

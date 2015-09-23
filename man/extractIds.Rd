@@ -26,7 +26,6 @@ IMPORTANT: Only the first matching ID will be returned. In some cases, multiple 
 }
 \examples{
 tmp <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
-tmp <- convertToDT(tmp)
 results <- extractIds(tmp$nodes)
 }
 \concept{

@@ -14,7 +14,7 @@ searchListOfVectors(q, lst)
 \value{
 a list of vectors with the same length as the query vector, each list
   entry will have indicies for lst where there was a match with the query
-  vector
+  vector. Return NA if there were no matches.
 }
 \description{
 Search List of Vectors

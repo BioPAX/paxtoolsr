@@ -11,7 +11,6 @@
 #' 
 #' @examples 
 #' tmp <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
-#' tmp <- convertToDT(tmp)
 #' results <- extractIds(tmp$nodes)
 #' 
 #' @concept paxtoolsr

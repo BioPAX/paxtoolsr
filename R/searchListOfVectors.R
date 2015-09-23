@@ -5,7 +5,7 @@
 #' 
 #' @return a list of vectors with the same length as the query vector, each list
 #'   entry will have indicies for lst where there was a match with the query 
-#'   vector
+#'   vector. Return NA if there were no matches.
 #'   
 #' @details 
 #' Taken from: http://stackoverflow.com/questions/11002391/fast-way-of-getting-index-of-match-in-list
@@ -21,4 +21,12 @@
 searchListOfVectors <- function(q, lst) {
     tmp <- rep(seq_along(lst), sapply(lst, length))
     resultsSe <- sapply(q, function(x) tmp[which(unlist(lst) %in% x)])
+    
+    if(class(resultsSe) == "list") {
+        return(NA)
+    } else {
+        return(resultsSe)
+    }
+    
+    return(resultsSe)
 }
