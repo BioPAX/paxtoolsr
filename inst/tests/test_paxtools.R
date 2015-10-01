@@ -15,13 +15,11 @@ test_that("fetch", {
 test_that("fromPsimi", {
     skip("fromPsimi removed from Paxtools 4.3.1")
 
+    inputFile <- system.file("extdata", "10523676-compact.xml", package="paxtoolsr")
     outFile <- tempfile()
     
-    results <- fromPsimi(system.file("extdata", "10523676-compact.xml", package="paxtoolsr"), 
-                                     outFile, 
-                                     3)
-    
-    expect_is(results, "XMLInternalDocument")
+    results <- fromPsimi(inputFile, outFile, 3)
+    #expect_is(results, "XMLInternalDocument")
 })
 
 test_that("toGSEA", {
