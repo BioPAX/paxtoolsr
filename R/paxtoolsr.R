@@ -67,6 +67,11 @@
 #' 
 #' Extension on testthat code
 #' 
+#' @return A boolean or NULL is returned
+#' 
+#' @example
+#' skip_on_bioc()
+#' 
 #' @concept paxtoolsr
 #' @export
 skip_on_bioc <- function() {
