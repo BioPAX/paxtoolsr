@@ -6,6 +6,9 @@
 \usage{
 skip_on_bioc()
 }
+\value{
+A boolean or NULL is returned
+}
 \description{
 Extension on testthat code
 }
