@@ -2,12 +2,34 @@
 
 #' @import rJava
 #' @import XML
-#' @importFrom RCurl getURLContent url.exists
-#' @import rjson
-#' @import plyr
 .onLoad <- function(lib, pkg){
     # Set Pathway Commons version
     options(pc.version="7")
+<<<<<<< HEAD
+=======
+
+    # Create cache directory in user home directory 
+    cacheDir <- file.path(Sys.getenv("HOME"), ".paxtoolsRCache")
+    cacheMap <- file.path(cacheDir, "cacheMap.txt")
+    dir.create(file.path(cacheDir), showWarnings=FALSE)
+    
+    if(file.exists(cacheDir)) {
+        Sys.setenv("PAXTOOLSR_CACHE" = cacheDir)
+        
+        #Add cacheMap.txt
+        if(!file.exists(cacheMap)) {
+            tmp <- data.frame(fileName=character(),
+                              retrievedDate=character(), 
+                              url=character(), 
+                              stringsAsFactors=FALSE) 
+            
+            write.table(tmp, file=file.path(cacheDir, "cacheMap.txt"), 
+                        quote=FALSE, sep="\t", col.names=TRUE, row.names=FALSE)
+        }
+    } else {
+        Sys.setenv("PAXTOOLSR_CACHE" = "")
+    }
+>>>>>>> devel
     
     dlp <- Sys.getenv("DYLD_LIBRARY_PATH")
     if (dlp != "") { # for Mac OS X we need to remove X11 from lib-path
@@ -18,7 +40,14 @@
     #  sep=.Platform$file.sep)
     #.jinit(classpath=c(jar.paxtools))
     #.jpackage(pkg, jars=c("paxtools-jar-with-dependencies.jar"))
-    .jpackage(pkg, jars=c("paxtools-4.3.0.jar"))
+    jars <- list.files(path=paste(lib, pkg, "java", sep=.Platform$file.sep),
+                       pattern="jar$", full.names=TRUE)
+    
+    #.jaddClassPath(jars) 
+    #.jpackage(pkg, jars=jars)
+    .jpackage(pkg, jars=c("paxtools-4.3.1.jar"))
+    #.jpackage(pkg, lib)
+    #print(.jclassPath())
     
     #DEBUG
     #packageStartupMessage(paste("paxtoolsr loaded. The classpath is: ", 
@@ -41,7 +70,12 @@
 #' 
 #' Extension on testthat code
 #' 
+<<<<<<< HEAD
 #' @noRd
+=======
+#' @concept paxtoolsr
+#' @export
+>>>>>>> devel
 skip_on_bioc <- function() {
     if(identical(Sys.getenv("NOT_BIOC"), "true")) return()
     

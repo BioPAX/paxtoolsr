@@ -2,6 +2,38 @@
 
 context("Pathway Commons Functionality")
 
+test_that("getPcUrl", {
+    expect_is(getPcUrl(), "character")
+})
+
+test_that("getErrorMessage", {
+    expect_is(getErrorMessage("452"), "character")
+})
+
+test_that("pcDirections", {
+    expect_is(pcDirections(), "character")
+})
+
+test_that("pcGraphQueries", {
+    expect_is(pcGraphQueries(), "character")
+})
+
+test_that("pcFormats", {
+    expect_is(pcFormats(), "character")
+})
+
+test_that("getPc", {
+    outFile <- tempfile()   
+    results <- getPc("http://identifiers.org/uniprot/Q06609")
+    expect_is(results, "XMLInternalDocument")
+    
+    outFile <- tempfile()   
+    results <- getPc(c("http://identifiers.org/uniprot/Q06609", 
+                       "http://identifiers.org/uniprot/Q96EB6"), 
+                     verbose=TRUE)
+    expect_is(results, "XMLInternalDocument")
+})
+
 test_that("searchPc", {
     skip_on_bioc()
     
@@ -48,7 +80,7 @@ test_that("graphPc", {
                        kind="neighborhood", 
                        format="EXTENDED_BINARY_SIF", 
                        verbose=TRUE)
-    expect_equal(length(names(results)), 2)
+    expect_true(all(c("nodes", "edges") %in% names(results)))
     
     # Test Against Error Code 460
     expect_error(graphPc(source="http://identifiers.org/uniprot/PXXXXX", 
@@ -66,7 +98,7 @@ test_that("graphPc", {
                        kind="PATHSFROMTO", 
                        format="EXTENDED_BINARY_SIF", 
                        verbose=TRUE)
-    expect_equal(length(names(results)), 2)
+    expect_true(all(c("nodes", "edges") %in% names(results)))
     
     expect_is(graphPc(source=c("http://identifiers.org/uniprot/Q06609", 
                                "http://identifiers.org/uniprot/Q96EB6"), 
@@ -93,7 +125,7 @@ test_that("outputFormatsSupported", {
                                  format="EXTENDED_BINARY_SIF", 
                                  verbose=TRUE)
     
-    expect_equal(length(names(results)), 2)
+    expect_true(all(c("nodes", "edges") %in% names(results)))
     
     results <- graphPc(source=genes, 
                                  kind="PATHSBETWEEN", 
@@ -155,8 +187,91 @@ test_that("idMapping", {
     expect_equal(results$TP53, "P04637")
 })
 
-test_that("splitSifnx", {
-    con <- file(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
-    results <- splitSifnx(con)
-    expect_equal(length(names(results)), 2)
+test_that("readSifnx", {
+    results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
+    expect_true(all(c("nodes", "edges") %in% names(results)))
+
+    results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
+    expect_equal(ncol(results$edges), 6)
+        
+    results <- readSifnx(system.file("extdata", "test_sifnx2.txt", package="paxtoolsr"))
+    expect_equal(ncol(results$edges), 6)
+    
+    results <- readSifnx(system.file("extdata", "test_sifnx_sm.txt", package="paxtoolsr"))
+    expect_equal(ncol(results$edges), 6)
 })
+
+test_that("readBiopax", {
+    results <- readBiopax(system.file("extdata", "test_biopax.owl", package="paxtoolsr"))
+    expect_is(results, "XMLInternalDocument")
+})
+
+test_that("readSbgn", {
+    results <- readSbgn(system.file("extdata", "test_sbgn.xml", package="paxtoolsr"))
+    expect_is(results, "XMLInternalDocument")
+})
+
+test_that("readGmt", {
+    results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
+    expect_is(results, "list")
+})
+
+test_that("readSif", {
+    results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
+    expect_is(results, "data.frame")
+})
+
+test_that("summarizeSif", {
+    sif <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
+    results <- summarizeSif(sif)
+    expect_is(results, "list")
+})
+
+test_that("loadSifInIgraph", {
+    sif <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
+    results <- loadSifInIgraph(sif)
+    expect_is(results, "igraph")    
+})
+
+test_that("getSifInteractionCategories", {
+    results <- getSifInteractionCategories()
+    expect_is(results, "list")    
+})
+
+test_that("processPcRequest", {
+    fileName <- system.file("extdata", "test_biopax.owl", package="paxtoolsr")
+    content <- readChar(fileName, file.info(fileName)$size)
+    results <- processPcRequest(content, "BIOPAX")
+    expect_is(results, "XMLInternalDocument")   
+})
+
+test_that("downloadFile", {
+    skip_on_bioc()
+    
+    results <- downloadFile("http://google.com/", fileName="index.html", destDir=tempdir())
+    expect_true(results)
+})
+
+test_that("downloadPc2", {
+    # Skip still results in error using TAP reporter
+    #skip("NA")
+})
+
+test_that("filterSif", {
+    results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
+    intTypes <- c("controls-state-change-of", "controls-expression-of", "catalysis-precedes")
+    filteredNetwork <- filterSif(results, intTypes)
+    ints <- summarizeSif(filteredNetwork)
+    expect_equal(ints$totalInteractions, 0)
+})
+
+test_that("getCacheFiles", {
+    results <- getCacheFiles()
+    expect_is(results, "character")
+})
+
+test_that("convertToPathwayObject", {})
+test_that("splitSifnxByPathway", {})
+
+
+

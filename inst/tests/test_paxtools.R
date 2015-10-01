@@ -12,15 +12,15 @@ test_that("fetch", {
     expect_is(results, "XMLInternalDocument")
 })
 
-test_that("fromPsimi", {
-    outFile <- tempfile()
-    
-    results <- fromPsimi(system.file("extdata", "10523676-compact.xml", package="paxtoolsr"), 
-                                     outFile, 
-                                     3)
-    
-    expect_is(results, "XMLInternalDocument")
-})
+# test_that("fromPsimi", {
+#     skip("fromPsimi removed from Paxtools 4.3.1")
+# 
+#     inputFile <- system.file("extdata", "10523676-compact.xml", package="paxtoolsr")
+#     outFile <- tempfile()
+#     
+#     results <- fromPsimi(inputFile, outFile, 3)
+#     expect_is(results, "XMLInternalDocument")
+# })
 
 test_that("toGSEA", {
     outFile <- tempfile()
@@ -77,10 +77,13 @@ test_that("toSBGN", {
 })
 
 test_that("toSifnx", {
-    nodesFile <- tempfile()
-    edgesFile <- tempfile()
+    inputFile <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")
+    outputFile <- tempfile()
     
+    # New SIF converter does not support extra properties
     #nodeProps <- c("EntityReference/name", "EntityReference/xref")
+    #nodeProps <- c("EntityReference/name", "EntityReference/xref")
+<<<<<<< HEAD
     nodeProps <- c("EntityReference/name", "EntityReference/xref")
     edgeProps <- "Interaction/dataSource/displayName"
     
@@ -93,6 +96,18 @@ test_that("toSifnx", {
     expect_equal(names(results), c("edges", "nodes"))
     expect_equal(length(colnames(results$edges)), (3 + length(edgeProps)))
     expect_equal(length(colnames(results$nodes)), (1 + length(nodeProps)))
+=======
+    #edgeProps <- "Interaction/dataSource/displayName"
+    
+    results <- toSifnx(inputFile, outputFile)
+#                        nodeProps,
+#                        edgeProps) 
+
+    expect_equal(names(results), c("nodes", "edges"))
+    
+    #expect_equal(length(colnames(results$edges)), (3 + length(edgeProps)))
+    #expect_equal(length(colnames(results$nodes)), (1 + length(nodeProps)))
+>>>>>>> devel
 })
 
 test_that("toSif", {
@@ -136,10 +151,9 @@ test_that("xmlInternalDocumentInput", {
     expect_is(results, "data.frame")
 })
 
-test_that("readGmt", {
-    results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
-    expect_is(results, "list")
-})
+# TODO
+#test_that("checkInputFile") {})
+#test_that("checkOutputFile") {})
 
 #DEBUG 
 #test_that("FAIL", {    

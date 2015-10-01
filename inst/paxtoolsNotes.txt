@@ -1,0 +1,3 @@
+java -jar ./inst/java/paxtools-4.3.1.jar merge ./inst/extdata/raf_map_kinase_cascade_reactome.owl ./inst/extdata/biopax3-short-metabolic-pathway.owl DEL.TXT
+java -jar ./inst/java/paxtools-4.3.1.jar toSif ./inst/extdata/raf_map_kinase_cascade_reactome.owl DEL.TXT
+java -jar ./inst/java/paxtools-4.3.1.jar toSifnx ./inst/extdata/raf_map_kinase_cascade_reactome.owl DEL.TXT
