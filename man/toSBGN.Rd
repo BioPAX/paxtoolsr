@@ -12,7 +12,7 @@ toSBGN(inputFile, outputFile = NULL)
 \item{outputFile}{a string of the name of the output SBGNML file}
 }
 \value{
-an XMLInternalDocument representing a SBGNML file
+see readSbgn()
 }
 \description{
 This function will convert a BioPAX OWL file into the Systems Biology Graphical

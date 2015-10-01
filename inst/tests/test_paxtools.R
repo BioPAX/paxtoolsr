@@ -13,6 +13,8 @@ test_that("fetch", {
 })
 
 test_that("fromPsimi", {
+    skip("fromPsimi removed from Paxtools 4.3.1")
+
     outFile <- tempfile()
     
     results <- fromPsimi(system.file("extdata", "10523676-compact.xml", package="paxtoolsr"), 
@@ -77,22 +79,22 @@ test_that("toSBGN", {
 })
 
 test_that("toSifnx", {
-    nodesFile <- tempfile()
-    edgesFile <- tempfile()
+    inputFile <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")
+    outputFile <- tempfile()
     
+    # New SIF converter does not support extra properties
     #nodeProps <- c("EntityReference/name", "EntityReference/xref")
-    nodeProps <- c("EntityReference/name", "EntityReference/xref")
-    edgeProps <- "Interaction/dataSource/displayName"
+    #nodeProps <- c("EntityReference/name", "EntityReference/xref")
+    #edgeProps <- "Interaction/dataSource/displayName"
     
-    results <- toSifnx(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), 
-                       nodesFile, 
-                       edgesFile,
-                       nodeProps,
-                       edgeProps) 
+    results <- toSifnx(inputFile, outputFile)
+#                        nodeProps,
+#                        edgeProps) 
 
-    expect_equal(names(results), c("edges", "nodes"))
-    expect_equal(length(colnames(results$edges)), (3 + length(edgeProps)))
-    expect_equal(length(colnames(results$nodes)), (1 + length(nodeProps)))
+    expect_equal(names(results), c("nodes", "edges"))
+    
+    #expect_equal(length(colnames(results$edges)), (3 + length(edgeProps)))
+    #expect_equal(length(colnames(results$nodes)), (1 + length(nodeProps)))
 })
 
 test_that("toSif", {

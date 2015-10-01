@@ -42,7 +42,7 @@
     
     #.jaddClassPath(jars) 
     #.jpackage(pkg, jars=jars)
-    .jpackage(pkg, jars=c("paxtools-4.3.0.jar"))
+    .jpackage(pkg, jars=c("paxtools-4.3.1.jar"))
     #.jpackage(pkg, lib)
     #print(.jclassPath())
     

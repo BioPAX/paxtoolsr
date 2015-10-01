@@ -9,7 +9,7 @@
 #'   (e.g. "HGNC Symbol")
 #' @param crossSpeciesCheckFlag a boolean that ensures participant protein is 
 #'   from same species
-#' @return a vector with the GSEA content
+#' @return see readGmt()
 #' 
 #' @details The GSEA GMT format is a tab-delimited format where each row 
 #' represents a gene set. The first column is the gene set name. The second 
@@ -48,12 +48,14 @@ toGSEA <- function(inputFile, outputFile=NULL, database, crossSpeciesCheckFlag) 
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
     .jcheck()
     
-    tmp <- read.table(outputFile, sep="\t", as.is=TRUE, fill=TRUE)
+#     tmp <- read.table(outputFile, sep="\t", as.is=TRUE, fill=TRUE)
+#     
+#     # as.vector(unlist()) to remove column names from tmp
+#     results <- list(name=tmp[,1], 
+#                     description=tmp[,2], 
+#                     geneSet=as.vector(unlist(tmp[,3:length(tmp)])))
     
-    # as.vector(unlist()) to remove column names from tmp
-    results <- list(name=tmp[,1], 
-                    description=tmp[,2], 
-                    geneSet=as.vector(unlist(tmp[,3:length(tmp)])))
+    results <- readGmt(outputFile)
     
     return(results)
 }

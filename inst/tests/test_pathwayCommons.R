@@ -2,6 +2,38 @@
 
 context("Pathway Commons Functionality")
 
+test_that("getPcUrl", {
+    expect_is(getPcUrl(), "character")
+})
+
+test_that("getErrorMessage", {
+    expect_is(getErrorMessage("452"), "character")
+})
+
+test_that("pcDirections", {
+    expect_is(pcDirections(), "character")
+})
+
+test_that("pcGraphQueries", {
+    expect_is(pcGraphQueries(), "character")
+})
+
+test_that("pcFormats", {
+    expect_is(pcFormats(), "character")
+})
+
+test_that("getPc", {
+    outFile <- tempfile()   
+    results <- getPc("http://identifiers.org/uniprot/Q06609")
+    expect_is(results, "XMLInternalDocument")
+    
+    outFile <- tempfile()   
+    results <- getPc(c("http://identifiers.org/uniprot/Q06609", 
+                       "http://identifiers.org/uniprot/Q96EB6"), 
+                     verbose=TRUE)
+    expect_is(results, "XMLInternalDocument")
+})
+
 test_that("searchPc", {
     skip_on_bioc()
     

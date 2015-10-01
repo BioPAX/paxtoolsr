@@ -12,8 +12,7 @@ toSif(inputFile, outputFile = NULL)
 \item{outputFile}{a string of the name of the output SIF file (Optional)}
 }
 \value{
-a 3-column data.frame where the columns are named: PARTICIPANT_A,
-  INTERACTION_TYPE, PARTICIPANT_B
+see readSif()
 }
 \description{
 Convert a BioPAX OWL file to a binary SIF file

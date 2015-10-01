@@ -13,6 +13,8 @@
 #' 
 #' @concept paxtoolsr
 #' @export
+#' 
+#' @importFrom data.table data.table
 convertSifnxIds <- function(sifnx, participantType="ProteinReference", idType="NCBI Gene", mapping=NULL, naRm=TRUE) {
 
     if(is.null(mapping)) {

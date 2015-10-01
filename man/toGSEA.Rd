@@ -18,7 +18,7 @@ toGSEA(inputFile, outputFile = NULL, database, crossSpeciesCheckFlag)
 from same species}
 }
 \value{
-a vector with the GSEA content
+see readGmt()
 }
 \description{
 This function converts pathway information stored as BioPAX files into the

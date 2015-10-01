@@ -22,10 +22,8 @@ searchListOfVectors <- function(q, lst) {
     tmp <- rep(seq_along(lst), sapply(lst, length))
     resultsSe <- sapply(q, function(x) tmp[which(unlist(lst) %in% x)])
     
-    if(class(resultsSe) == "list") {
+    if(class(resultsSe) != "list") {
         return(NA)
-    } else {
-        return(resultsSe)
     }
     
     return(resultsSe)

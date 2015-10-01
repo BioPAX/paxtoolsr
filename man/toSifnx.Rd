@@ -4,33 +4,16 @@
 \alias{toSifnx}
 \title{Converts BioPAX OWL file to extended binary SIF representation}
 \usage{
-toSifnx(inputFile, outputNodesFile = NULL, outputEdgesFile = NULL,
-  nodeProps, edgeProps)
+toSifnx(inputFile, outputFile = tempfile())
 }
 \arguments{
 \item{inputFile}{a string with the name of the input BioPAX OWL file}
 
-\item{outputNodesFile}{a string with the name of the output file for node
-information}
-
-\item{outputEdgesFile}{a string with the name of the output file for edge
-information}
-
-\item{nodeProps}{a string node properties to be saved; these are set up as XPath like
-expressions of data in BioPAX files (e.g. c("EntityReference/name", "EntityReference/xref"))}
-
-\item{edgeProps}{a string edge properties to be saved; these are set up as XPath like
-  expressions of data in BioPAX files (e.g. "Interaction/dataSource/displayName")}
+\item{outputFile}{a string with the name of the output file for SIFNX
+  information}
 }
 \value{
-a list with two entries
-\itemize{
-  \item nodes a data.frame with interaction participant information specified
-    in nodeProps
-  \item edges a data.frame with SIF formatted data (i.e. an edgelist with a
-    additional middle column denoting interaction type) and any additional
-    columns specified in edgeProps.
-}
+see readSifnx()
 }
 \description{
 Converts BioPAX OWL file to extended binary SIF representation
@@ -40,14 +23,8 @@ Information on SIF conversion is provided on the Pathway Commons
   site: \url{http://www.pathwaycommons.org/pc2/}
 }
 \examples{
-edgesFile <- tempfile()
-nodesFile <- tempfile()
-results <- toSifnx(system.file("extdata", "raf_map_kinase_cascade_reactome.owl",
-  package="paxtoolsr"),
-  nodesFile,
-  edgesFile,
-  c("EntityReference/name", "EntityReference/xref"),
-  "Interaction/dataSource/displayName")
+inputFile <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")
+results <- toSifnx(inputFile=inputFile)
 }
 \concept{
 paxtoolsr

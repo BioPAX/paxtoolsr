@@ -24,16 +24,16 @@ splitSifnxByPathway <- function(edges, parallel=FALSE) {
     
     # Make sure the necessary packages are available 
     if(all(parallel,
-           require(foreach), 
-           require(doSNOW), 
-           require(parallel))) {
-        numCores <- detectCores()
-        cl <- makeCluster(numCores, outfile="") # number of cores. Notice 'outfile'
-        registerDoSNOW(cl)
+           requireNamespace("foreach"), 
+           requireNamespace("doSNOW"), 
+           requireNamespace("parallel"))) {
+        numCores <- parallel::detectCores()
+        cl <- parallel::makeCluster(numCores, outfile="") # number of cores. Notice 'outfile'
+        doSNOW::registerDoSNOW(cl)
         
         pb <- txtProgressBar(min = 1, max = iterations, style = 3)
         
-        results <- foreach(i=1:iterations, .packages=c("paxtoolsr")) %dopar% {
+        results <- foreach::foreach(i=1:iterations, .packages=c("paxtoolsr")) %dopar% {
             setTxtProgressBar(pb, i) 
             pathwayName <- pathwayNames[i]
             
@@ -44,7 +44,7 @@ splitSifnxByPathway <- function(edges, parallel=FALSE) {
         names(results) <- pathwayNames
         
         close(pb)
-        stopCluster(cl) 
+        parallel::stopCluster(cl) 
     } else {
         pb <- txtProgressBar(min = 1, max = iterations, style = 3)
         

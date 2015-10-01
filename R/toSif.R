@@ -4,8 +4,7 @@
 #' 
 #' @param inputFile a string of the name of the input BioPAX OWL file
 #' @param outputFile a string of the name of the output SIF file (Optional)
-#' @return a 3-column data.frame where the columns are named: PARTICIPANT_A, 
-#'   INTERACTION_TYPE, PARTICIPANT_B
+#' @return see readSif()
 #'   
 #' @details Information on SIF conversion is provided on the Pathway Commons 
 #'   site: \url{http://www.pathwaycommons.org/pc2/}
@@ -35,8 +34,10 @@ toSif <- function(inputFile, outputFile=NULL) {
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
     .jcheck() 
     
-    results <- read.table(outputFile, sep="\t", as.is=TRUE, quote="")
-    colnames(results) <- c("PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B")
+#     results <- read.table(outputFile, sep="\t", as.is=TRUE, quote="")
+#     colnames(results) <- c("PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B")
+    
+    results <- readSif(outputFile)
     
     return(results)        
 }

@@ -1,16 +1,16 @@
-#' Convert a BioPAX OWL file to BioPAX Level 3
+#' Convert a PSIMI or older BioPAX OWL file to BioPAX Level 3
 #' 
-#' This file will convert older BioPAX objects to BioPAX Level 3
+#' This file will convert PSIMI or older BioPAX objects to BioPAX Level 3
 #' 
-#' @param inputFile a string of the name of the input BioPAX OWL file
+#' @param inputFile a string of the name of the input file
 #' @param outputFile a string of the name of the output BioPAX OWL file
 #' @return an XMLInternalDocument representing a BioPAX OWL file
 #' 
 #' @examples
+#' inputFile <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
+#'   package="paxtoolsr")
 #' outFile <- tempfile()
-#' results <- toLevel3(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", 
-#'   package="paxtoolsr"), 
-#'   outFile) 
+#' results <- toLevel3(inputFile, outFile) 
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -29,6 +29,8 @@ toLevel3 <- function(inputFile, outputFile=NULL) {
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
     .jcheck() 
     
-    results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
+    #results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
+    results <- readBiopax(inputFile)
+
     return(results) 
 }

@@ -4,13 +4,10 @@
 #' @return an error message for the code 
 #' 
 #' @examples 
-#' \dontrun{
-#'   results <- getErrorMessage("300")
-#' }
+#' results <- getErrorMessage("452")
 #' 
 #' @concept paxtoolsr
-#' @keywords internal
-#' @noRd
+#' @export
 getErrorMessage <- function(code) {
     codes <- c("452", "460", "500", "503")
     messages <- c("Bad Request (illegal or no arguments)", 

@@ -5,7 +5,7 @@
 #' 
 #' @param inputFile a string of the name of the input BioPAX OWL file
 #' @param outputFile a string of the name of the output SBGNML file
-#' @return an XMLInternalDocument representing a SBGNML file
+#' @return see readSbgn()
 #'
 #' @details Objects in the SBGNML format are laid out using a Compound Spring 
 #' Embedder (CoSE) layout
@@ -34,6 +34,8 @@ toSBGN <- function(inputFile, outputFile=NULL) {
     .jcall("org/biopax/paxtools/PaxtoolsMain","V",command,.jarray(argsList, "java/lang/String"))
     .jcheck() 
     
-    results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
+#    results <- xmlTreeParse(outputFile, useInternalNodes=TRUE)
+    results <- readSbgn(outputFile)
+    
     return(results) 
 }

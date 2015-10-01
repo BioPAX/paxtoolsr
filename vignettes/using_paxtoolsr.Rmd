@@ -134,13 +134,14 @@ Often analysis requires additional items of information, this could be the liter
 
 ```{r toSifnxExample, tidy=TRUE} 
 # Select additional node and edge properties
-nodeProps <- c("EntityReference/name", "EntityReference/xref")
-edgeProps <- "Interaction/dataSource/displayName"
-    
-results <- toSifnx(inputFile=system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), nodeProps=nodeProps, edgeProps=edgeProps) 
+inputFile <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")
+
+results <- toSifnx(inputFile=inputFile) 
 ```
 
-The **results** object is a list with two entries: nodes and edges. **nodes** will be a **data.frame** where each row corresponds to a biological entity, an **EntityReference**, and will contain any user-selected node properties as additional columns. Similarly, **edges** will be a **data.frame** with a SIF extended with any user-selected properties for an **Interaction** as additional columns. Information on possible properties for an EntityReference or Interaction is available through the [BioPAX ontology](http://www.biopax.org/owldoc/Level3/). It is also possible to download a pre-computed extended SIF representation for the entire [Pathway Commons database](http://www.pathwaycommons.org) that includes information about the data sources for interactions and identifiers for nodes; refer to documentation of the method for more details about the returned entries.  
+The **results** object is a list with two entries: nodes and edges. **nodes** will be a **data.table** where each row corresponds to a biological entity, an **EntityReference**, and will contain any user-selected node properties as additional columns. Similarly, **edges** will be a **data.table** with a SIF extended with any user-selected properties for an **Interaction** as additional columns. Information on possible properties for an EntityReference or Interaction is available through the [BioPAX ontology](http://www.biopax.org/owldoc/Level3/). It is also possible to download a pre-computed extended SIF representation for the entire [Pathway Commons database](http://www.pathwaycommons.org) that includes information about the data sources for interactions and identifiers for nodes; refer to documentation of the method for more details about the returned entries.  
+
+**NOTE:** Conversion of **results** entries from **data.table** to **data.frame** can be done using **setDF** in the **data.table** package. 
 
 **NOTE:** **downloadPc** may take several minutes to complete. It is suggested that the results of this command be saved locally rather than using this command frequently. 
 
