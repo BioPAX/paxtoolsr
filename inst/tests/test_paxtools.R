@@ -83,20 +83,6 @@ test_that("toSifnx", {
     # New SIF converter does not support extra properties
     #nodeProps <- c("EntityReference/name", "EntityReference/xref")
     #nodeProps <- c("EntityReference/name", "EntityReference/xref")
-<<<<<<< HEAD
-    nodeProps <- c("EntityReference/name", "EntityReference/xref")
-    edgeProps <- "Interaction/dataSource/displayName"
-    
-    results <- toSifnx(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), 
-                       nodesFile, 
-                       edgesFile,
-                       nodeProps,
-                       edgeProps) 
-
-    expect_equal(names(results), c("edges", "nodes"))
-    expect_equal(length(colnames(results$edges)), (3 + length(edgeProps)))
-    expect_equal(length(colnames(results$nodes)), (1 + length(nodeProps)))
-=======
     #edgeProps <- "Interaction/dataSource/displayName"
     
     results <- toSifnx(inputFile, outputFile)
@@ -107,7 +93,6 @@ test_that("toSifnx", {
     
     #expect_equal(length(colnames(results$edges)), (3 + length(edgeProps)))
     #expect_equal(length(colnames(results$nodes)), (1 + length(nodeProps)))
->>>>>>> devel
 })
 
 test_that("toSif", {

@@ -14,10 +14,7 @@ export(getErrorMessage)
 export(getNeighbors)
 export(getPc)
 export(getPcUrl)
-<<<<<<< HEAD
-=======
 export(getSifInteractionCategories)
->>>>>>> devel
 export(graphPc)
 export(idMapping)
 export(integrateBiopax)

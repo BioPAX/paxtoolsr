@@ -5,8 +5,6 @@
 .onLoad <- function(lib, pkg){
     # Set Pathway Commons version
     options(pc.version="7")
-<<<<<<< HEAD
-=======
 
     # Create cache directory in user home directory 
     cacheDir <- file.path(Sys.getenv("HOME"), ".paxtoolsRCache")
@@ -29,7 +27,6 @@
     } else {
         Sys.setenv("PAXTOOLSR_CACHE" = "")
     }
->>>>>>> devel
     
     dlp <- Sys.getenv("DYLD_LIBRARY_PATH")
     if (dlp != "") { # for Mac OS X we need to remove X11 from lib-path
@@ -70,12 +67,10 @@
 #' 
 #' Extension on testthat code
 #' 
-<<<<<<< HEAD
-#' @noRd
-=======
+#' @return A boolean or NULL is returned
+#' 
 #' @concept paxtoolsr
 #' @export
->>>>>>> devel
 skip_on_bioc <- function() {
     if(identical(Sys.getenv("NOT_BIOC"), "true")) return()
     
