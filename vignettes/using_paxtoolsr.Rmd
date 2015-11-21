@@ -253,7 +253,18 @@ plot(g, layout=layout.fruchterman.reingold)
 
 ## Pathway Commons Graph Query 
 
-Next, we show how to perform graph search using Pathway Commons useful for finding connections and neighborhoods of elements. The example below shows the extraction of a sub-network connecting a set of proteins that is then filtered for a specific interaction type: "controls-state-change-of". State change here indicates a modification of another molecule (e.g. post-translational modifications). This interaction type is directed, and it is read as "A controls a state change of B".
+Next, we show how to perform graph search using Pathway Commons useful for finding connections and neighborhoods of elements. This can be used to extract the neighborhood of a single gene that is then filtered for a specific interaction type: "controls-state-change-of". State change here indicates a modification of another molecule (e.g. post-translational modifications). This interaction type is directed, and it is read as "A controls a state change of B".
+
+```{r graphQueryExampleSingle}
+gene <- "SIRT1"
+t1 <- results <- graphPc(source=gene, kind="neighborhood", format="BINARY_SIF")
+t2 <- t1[which(t1[,2] == "controls-state-change-of"),]
+
+g <- graph.edgelist(as.matrix(t2[,c(1,3)]), directed=FALSE)
+plot(g, layout=layout.fruchterman.reingold)
+```
+
+The example below shows the extraction of a sub-network connecting a set of proteins:
 
 ```{r graphQueryExample}
 genes <- c("AKT1", "IRS1", "MTOR", "IGF1R")

@@ -14,9 +14,9 @@
 #' 
 #' @importFrom httr url_success
 getPcUrl <- function() {
-    url <- NULL
+    #url <- NULL
     
-    baseUrl <- "http://www.pathwaycommons.org/pc2/"
+    baseUrl <- Sys.getenv("PC_URL")
     
     # TODO: Need to get old files from archives 
     #baseUrl <- "http://purl.org/pc2/"

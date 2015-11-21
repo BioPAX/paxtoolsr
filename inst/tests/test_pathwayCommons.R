@@ -113,6 +113,13 @@ test_that("graphPc", {
                       kind="PATHSFROMTO", 
                       format="EXTENDED_BINARY_SIF", 
                       verbose=TRUE), "list")
+    
+    # Multiple datasources
+    expect_is(graphPc(source="http://identifiers.org/uniprot/O14503", 
+                      kind="neighborhood", 
+                      format="EXTENDED_BINARY_SIF", 
+                      datasource=c("DIP","Reactome","HumanCyc"),
+                      verbose=TRUE), "list")
 })
 
 test_that("outputFormatsSupported", {
