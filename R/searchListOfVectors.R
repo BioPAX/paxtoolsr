@@ -16,11 +16,31 @@
 #' results <- searchListOfVectors(q, lst)
 #' names(results) <- q
 #' 
+#' lst <- list(LETTERS[1:3], LETTERS[3:5], LETTERS[3:7])
+#' q <- c("C", "E")
+#' searchListOfVectors(q, lst)
+#' 
+#' lst <- list(LETTERS[3], LETTERS[4:6])
+#' q <- "C"
+#' searchListOfVectors(q, lst)
+#' 
+#' lst <- list(LETTERS[3], LETTERS[4:6])
+#' q <- c("C")
+#' searchListOfVectors(q, lst)
+#' 
+#' lst <- list(LETTERS[3], LETTERS[4:6])
+#' q <- c("C", "E")
+#' searchListOfVectors(q, lst)
+#' 
+#' lst <- list(LETTERS[3], LETTERS[4:6])
+#' q <- "Z"
+#' searchListOfVectors(q, lst)
+#' 
 #' @concept paxtoolsr
 #' @export
 searchListOfVectors <- function(q, lst) {
     tmp <- rep(seq_along(lst), sapply(lst, length))
-    resultsSe <- sapply(q, function(x) tmp[which(unlist(lst) %in% x)])
+    resultsSe <- sapply(q, function(x) tmp[which(unlist(lst) %in% x)], simplify=FALSE)
     
     if(class(resultsSe) != "list") {
         return(NA)
