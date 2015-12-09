@@ -4,6 +4,8 @@
 #' @param destDir a string, the destination directory for the file to be 
 #'   downloaded (Default: NULL). If NULL, then file will be downloaded to cache
 #'   directory file.path(Sys.getenv("HOME"), ".paxtoolsRCache")
+#' @param version a version number for a previous version of Pathway Commons data; 
+#'   versions 3 and above  
 #'   
 #' @return an R object using one of the read* methods provided in this package 
 #'   corresponding to the file downloaded 
