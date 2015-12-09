@@ -1,5 +1,3 @@
-
-
 #' Get Pathway Commons BioPAX elements
 #' 
 #' This function will retrieve a set of BioPAX elements given a graph query match. 

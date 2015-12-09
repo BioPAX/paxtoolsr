@@ -1,5 +1,5 @@
 ---
-title: "Using PaxtoolsR"
+title: "Using PaxtoolsR: A BioPAX and Pathway Commons Tutorial in R"
 output:
   BiocStyle::html_document:
     toc: true
@@ -81,7 +81,7 @@ help(graphPc)
 
 ## Merging BioPAX Files
 
-We illustrate how to merge two BioPAX files. Only entities that share IDs will be merged; no additional merging occurs on cross-references. The merging occurs as described further in the Java library [documentation](http://sourceforge.net/projects/biopax/files/paxtools/paxtools.pdf/download). Throughout this tutorial we use the system.file() command to access sample BioPAX files included with the **paxtoolsr** package. Merging may result in warning messages caused as a result of redundant actions being checked against by the Java library; these messages may be ignored. 
+We illustrate how to merge two BioPAX files. Only entities that share IDs will be merged; no additional merging occurs on cross-references. The merging occurs as described further in the Java library [documentation](http://sourceforge.net/projects/biopax/files/paxtools/paxtools.pdf/download). Throughout this BioPAX and Pathway Commons tutorial we use the system.file() command to access sample BioPAX files included with the **paxtoolsr** package. Merging may result in warning messages caused as a result of redundant actions being checked against by the Java library; these messages may be ignored. 
 
 ```{r paxtoolsMergeExample}
 file1 <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")
@@ -256,7 +256,7 @@ plot(g, layout=layout.fruchterman.reingold)
 Next, we show how to perform graph search using Pathway Commons useful for finding connections and neighborhoods of elements. This can be used to extract the neighborhood of a single gene that is then filtered for a specific interaction type: "controls-state-change-of". State change here indicates a modification of another molecule (e.g. post-translational modifications). This interaction type is directed, and it is read as "A controls a state change of B".
 
 ```{r graphQueryExampleSingle}
-gene <- "SIRT1"
+gene <- "BDNF"
 t1 <- results <- graphPc(source=gene, kind="neighborhood", format="BINARY_SIF")
 t2 <- t1[which(t1[,2] == "controls-state-change-of"),]
 

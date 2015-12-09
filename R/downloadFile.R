@@ -40,7 +40,7 @@ downloadFile <- function(baseUrl, fileName, cacheEnv="PAXTOOLSR_CACHE", destDir=
     httpStatus <- http_status(headResp)
     
     if(httpStatus$category == "success") {
-        getResp <- GET(url, write_disk(filePath, overwrite=TRUE), progress())
+        getResp <- suppressWarnings(GET(url=url, write_disk(filePath, overwrite=TRUE), progress()))
         
         # Current date
         retrievedDate <- http_date(as.POSIXlt(Sys.time(), "GMT"))

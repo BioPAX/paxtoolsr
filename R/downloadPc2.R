@@ -17,15 +17,29 @@
 #' @export
 #' 
 #' @importFrom R.utils gunzip
-downloadPc2 <- function(selectedFileName=NULL, destDir=NULL) {
-    baseUrl <- "http://www.pathwaycommons.org"
-    downloadsSubDir <- "/pc2/downloads/"
+downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, version=NULL) {
+    if(!is.null(version)) {
+        baseUrl <- Sys.getenv("PC_ARCHIVE_URL")
+        
+        doc <- htmlParse(baseUrl) 
+        links <- xpathSApply(doc, "//a/@href")
+        
+        idx <- grepl(paste0("^v", version), links)
+        
+        downloadsSubDir <- unname(links[idx])
+    } else {
+        baseUrl <- Sys.getenv("PC_URL")
+        #baseUrl <- "http://www.pathwaycommons.org/pc2/"
+        downloadsSubDir <- "downloads/"
+    }
+    
+    url <- paste0(baseUrl, downloadsSubDir)
     
     # Parse webpage
-    doc <- htmlParse(paste0(baseUrl, downloadsSubDir)) 
+    doc <- htmlParse(url) 
     
     # Extract links
-    links <- xpathSApply(doc, "//a/@href")
+    links <- xpathSApply(doc, "//a/@href")    
     
     # Process links; get only gzipped files
     idx <- grepl(".gz", links)
@@ -33,7 +47,15 @@ downloadPc2 <- function(selectedFileName=NULL, destDir=NULL) {
     tmp2 <- lapply(tmp, function(x) { x[1] }) 
     tmp3 <- unname(unlist(tmp2))        
     
-    filenames <- gsub(downloadsSubDir, "", tmp3)
+    #filenames <- gsub(downloadsSubDir, "", tmp3)
+    # Remove any existing starting slash
+    #filenames <- gsub("/", "", filenames)
+    
+    tmp4 <- lapply(strsplit(tmp3, "/"), function(url) {
+        url[length(url)]
+    })
+    
+    filenames <- unlist(tmp4)
     
     # Construct URLs
     tmp3 <- paste0(baseUrl, downloadsSubDir, filenames)
@@ -61,7 +83,9 @@ downloadPc2 <- function(selectedFileName=NULL, destDir=NULL) {
         #str(selectedFileName)
         #str(destDir)
         
-        stopifnot(downloadResult)
+        if(!downloadResult) {
+            stop("ERROR: File was not found.") 
+        }
     }
     
     tmpFile <- gunzip(selectedFilePath, remove=FALSE, temporary=TRUE, skip=TRUE)
