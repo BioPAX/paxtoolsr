@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn xmlns="http://sbgn.org/libsbgn/0.2">
+    <map language="process description">
+        <glyph id="cytoplasm" class="compartment">
+            <label text="cytoplasm"/>
+            <bbox y="18.991945" x="18.925137" h="263.5011" w="316.79065"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExampleATP" class="simple chemical">
+            <label text="Adenosine 5'-triphosphate"/>
+            <bbox y="20.991945" x="222.39253" h="20.0" w="48.0"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExampleADP" class="simple chemical">
+            <label text="Adenosine 5'-diphosphate"/>
+            <bbox y="22.98185" x="142.24223" h="20.0" w="48.0"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExampleProtein_54" class="macromolecule">
+            <label text="glucokinase"/>
+            <bbox y="121.5919" x="285.7158" h="20.0" w="48.0"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExamplebeta-D-fructose_6-phosphate" class="simple chemical">
+            <label text="beta-D-fructose 6-phosphate"/>
+            <bbox y="200.5691" x="163.48988" h="20.0" w="48.0"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExamplephosphoglucose_isomerase" class="macromolecule">
+            <label text="phosphoglucose isomerase"/>
+            <bbox y="260.49304" x="20.925137" h="20.0" w="48.0"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExamplealpha-D-glucose" class="simple chemical">
+            <label text="beta-D-glucose"/>
+            <bbox y="142.0069" x="215.28339" h="20.0" w="48.0"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExamplealpha-D-glucose_6-phosphate" class="simple chemical">
+            <label text="beta-D-glucose 6-phosphate"/>
+            <bbox y="147.0702" x="143.67422" h="20.0" w="48.0"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExamplephosphoglucoisomeraseLEFT_TO_RIGHT" class="process">
+            <bbox y="232.9298" x="120.598335" h="15.0" w="15.0"/>
+            <port y="230.4298" x="128.09833" id="InputPort_http___www.biopax.org_examples_myExamplephosphoglucoisomeraseLEFT_TO_RIGHT"/>
+            <port y="250.4298" x="128.09833" id="OutputPort_http___www.biopax.org_examples_myExamplephosphoglucoisomeraseLEFT_TO_RIGHT"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExamplephosphoglucoisomeraseRIGHT_TO_LEFT" class="process">
+            <bbox y="158.99727" x="88.49516" h="15.0" w="15.0"/>
+            <port y="176.49727" x="95.99516" id="InputPort_http___www.biopax.org_examples_myExamplephosphoglucoisomeraseRIGHT_TO_LEFT"/>
+            <port y="156.49727" x="95.99516" id="OutputPort_http___www.biopax.org_examples_myExamplephosphoglucoisomeraseRIGHT_TO_LEFT"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT" class="process">
+            <bbox y="83.36683" x="229.43239" h="15.0" w="15.0"/>
+            <port y="90.86683" x="246.93239" id="InputPort_http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT"/>
+            <port y="90.86683" x="226.93239" id="OutputPort_http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT"/>
+        </glyph>
+        <glyph compartmentRef="cytoplasm" id="http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT" class="process">
+            <bbox y="86.411095" x="167.09782" h="15.0" w="15.0"/>
+            <port y="93.911095" x="164.59782" id="InputPort_http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT"/>
+            <port y="93.911095" x="184.59782" id="OutputPort_http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT"/>
+        </glyph>
+        <arc target="InputPort_http___www.biopax.org_examples_myExamplephosphoglucoisomeraseRIGHT_TO_LEFT" source="http___www.biopax.org_examples_myExamplebeta-D-fructose_6-phosphate" id="http___www.biopax.org_examples_myExamplebeta-D-fructose_6-phosphate--to--http___www.biopax.org_examples_myExamplephosphoglucoisomeraseRIGHT_TO_LEFT.input" class="consumption">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="http___www.biopax.org_examples_myExampleATP" source="OutputPort_http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT" id="http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT.output--to--http___www.biopax.org_examples_myExampleATP" class="production">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="InputPort_http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT" source="http___www.biopax.org_examples_myExamplealpha-D-glucose_6-phosphate" id="http___www.biopax.org_examples_myExamplealpha-D-glucose_6-phosphate--to--http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT.input" class="consumption">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="http___www.biopax.org_examples_myExamplealpha-D-glucose" source="OutputPort_http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT" id="http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT.output--to--http___www.biopax.org_examples_myExamplealpha-D-glucose" class="production">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="http___www.biopax.org_examples_myExamplebeta-D-fructose_6-phosphate" source="OutputPort_http___www.biopax.org_examples_myExamplephosphoglucoisomeraseLEFT_TO_RIGHT" id="http___www.biopax.org_examples_myExamplephosphoglucoisomeraseLEFT_TO_RIGHT.output--to--http___www.biopax.org_examples_myExamplebeta-D-fructose_6-phosphate" class="production">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="InputPort_http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT" source="http___www.biopax.org_examples_myExampleADP" id="http___www.biopax.org_examples_myExampleADP--to--http___www.biopax.org_examples_myExampleglucokinaseRIGHT_TO_LEFT.input" class="consumption">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT" source="http___www.biopax.org_examples_myExampleProtein_54" id="http___www.biopax.org_examples_myExampleProtein_54--to--http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT" class="catalysis">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="http___www.biopax.org_examples_myExamplealpha-D-glucose_6-phosphate" source="OutputPort_http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT" id="http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT.output--to--http___www.biopax.org_examples_myExamplealpha-D-glucose_6-phosphate" class="production">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="http___www.biopax.org_examples_myExamplephosphoglucoisomeraseLEFT_TO_RIGHT" source="http___www.biopax.org_examples_myExamplephosphoglucose_isomerase" id="http___www.biopax.org_examples_myExamplephosphoglucose_isomerase--to--http___www.biopax.org_examples_myExamplephosphoglucoisomeraseLEFT_TO_RIGHT" class="catalysis">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="http___www.biopax.org_examples_myExamplealpha-D-glucose_6-phosphate" source="OutputPort_http___www.biopax.org_examples_myExamplephosphoglucoisomeraseRIGHT_TO_LEFT" id="http___www.biopax.org_examples_myExamplephosphoglucoisomeraseRIGHT_TO_LEFT.output--to--http___www.biopax.org_examples_myExamplealpha-D-glucose_6-phosphate" class="production">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="InputPort_http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT" source="http___www.biopax.org_examples_myExamplealpha-D-glucose" id="http___www.biopax.org_examples_myExamplealpha-D-glucose--to--http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT.input" class="consumption">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="InputPort_http___www.biopax.org_examples_myExamplephosphoglucoisomeraseLEFT_TO_RIGHT" source="http___www.biopax.org_examples_myExamplealpha-D-glucose_6-phosphate" id="http___www.biopax.org_examples_myExamplealpha-D-glucose_6-phosphate--to--http___www.biopax.org_examples_myExamplephosphoglucoisomeraseLEFT_TO_RIGHT.input" class="consumption">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="InputPort_http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT" source="http___www.biopax.org_examples_myExampleATP" id="http___www.biopax.org_examples_myExampleATP--to--http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT.input" class="consumption">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+        <arc target="http___www.biopax.org_examples_myExampleADP" source="OutputPort_http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT" id="http___www.biopax.org_examples_myExampleglucokinaseLEFT_TO_RIGHT.output--to--http___www.biopax.org_examples_myExampleADP" class="production">
+            <start y="0.0" x="0.0"/>
+            <end y="0.0" x="0.0"/>
+        </arc>
+    </map>
+</sbgn>

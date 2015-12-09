@@ -1,39 +1,48 @@
 Package: paxtoolsr
 Type: Package
-Title: PaxtoolsR: Access Pathways from Multiple Databases through BioPAX and Pathway Commons
-Version: 1.1.13
-Date: 2015-04-08
+Title: PaxtoolsR: Access Pathways from Multiple Databases through BioPAX and
+    Pathway Commons
+Version: 1.4.1
+Date: 2015-12-09
 Author: Augustin Luna
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
-Depends:
-    R (>= 3.1.1),
-    rJava (>= 0.9-4),
-    XML,
-    RCurl,
+Imports:
+    httr,
+    igraph,
+    plyr,
     rjson,
-    plyr
+    R.utils,
+    data.table
+Depends:
+    R (>= 3.2),
+    rJava (>= 0.9-4),
+    XML
 Suggests:
     testthat,
     knitr,
     BiocStyle,
     rmarkdown,
     RColorBrewer,
-    igraph,
     biomaRt,
     estrogen,
     affy,
     hgu95av2,
     hgu95av2cdf,
-    limma
+    limma,
+    foreach,
+    doSNOW,
+    parallel
 SystemRequirements: Java (>= 1.5)
 License: LGPL-3
-Description: The package provides a set of R functions for interacting with BioPAX OWL
-    files using Paxtools and the querying Pathway Commons (PC) molecular interaction
-    database that are hosted by the Computational Biology Center at Memorial Sloan-Kettering Cancer
-    Center (MSKCC). Pathway Commons databases include: BIND, BioGRID, CORUM, CTD, DIP, DrugBank, HPRD, HumanCyc,
-    IntAct, KEGG, MirTarBase, Panther, PhosphoSitePlus, Reactome, RECON, TRANSFAC.
+Description: The package provides a set of R functions for interacting with
+    BioPAX OWL files using Paxtools and the querying Pathway Commons (PC) molecular
+    interaction database that are hosted by the Computational Biology Center at
+    Memorial Sloan-Kettering Cancer Center (MSKCC). Pathway Commons databases
+    include: BIND, BioGRID, CORUM, CTD, DIP, DrugBank, HPRD, HumanCyc, IntAct, KEGG,
+    MirTarBase, Panther, PhosphoSitePlus, Reactome, RECON, TRANSFAC.
 VignetteBuilder: knitr
 LazyData: true
-biocViews: GeneSetEnrichment, GraphAndNetwork, Pathways, Software, SystemsBiology, NetworkEnrichment,
-    Network
+biocViews: GeneSetEnrichment, GraphAndNetwork, Pathways, Software,
+    SystemsBiology, NetworkEnrichment, Network, Reactome, KEGG
 URL: https://bitbucket.org/cbio_mskcc/paxtoolsr
+RoxygenNote: 5.0.1
