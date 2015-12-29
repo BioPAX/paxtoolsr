@@ -1,7 +1,7 @@
 Package: paxtoolsr
 Type: Package
 Title: PaxtoolsR: Access Pathways from Multiple Databases through BioPAX and Pathway Commons
-Version: 1.5.0
+Version: 1.5.1
 Date: 2015-08-28
 Author: Augustin Luna
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
