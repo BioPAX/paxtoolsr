@@ -2,8 +2,8 @@ Package: paxtoolsr
 Type: Package
 Title: PaxtoolsR: Access Pathways from Multiple Databases through BioPAX and
     Pathway Commons
-Version: 1.4.1
-Date: 2015-12-09
+Version: 1.4.3
+Date: 2015-01-26
 Author: Augustin Luna
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
 Imports:
@@ -16,7 +16,8 @@ Imports:
 Depends:
     R (>= 3.2),
     rJava (>= 0.9-4),
-    XML
+    XML,
+    R.utils
 Suggests:
     testthat,
     knitr,

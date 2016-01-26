@@ -262,6 +262,7 @@ test_that("downloadFile", {
 test_that("downloadPc2", {
     # Skip still results in error using TAP reporter
     #skip("NA")
+    #downloadPc2("Pathway Commons.7.pid.GSEA.hgnc.gmt.gz", Sys.getenv("HOME"))
 })
 
 test_that("filterSif", {

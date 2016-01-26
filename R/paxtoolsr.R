@@ -7,6 +7,8 @@
     options(pc.version="7")
     Sys.setenv("PC_URL" = "http://www.pathwaycommons.org/pc2/")
     Sys.setenv("PC_ARCHIVE_URL" = "http://www.pathwaycommons.org/archives/PC2/")
+    Sys.setenv("SIGNED_PC_URL"="http://cbio.mskcc.org/~ozgun/")
+    Sys.setenv("SIGNED_PC_FILE"="SignedPC.sif.gz")
 
     # Create cache directory in user home directory 
     cacheDir <- file.path(Sys.getenv("HOME"), ".paxtoolsRCache")

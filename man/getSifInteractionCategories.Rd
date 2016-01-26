@@ -18,7 +18,8 @@ Categories provided:
   BetweenProteins, 
   BetweenProteinsOther (often from high-throughput experiments),
   BetweenProteinSmallMolecule, 
-  BetweenSmallMolecules
+  BetweenSmallMolecules,
+  SignedInteractions
 }
 \examples{
 sifCat <- getSifInteractionCategories()
