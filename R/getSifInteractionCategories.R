@@ -8,7 +8,8 @@
 #'   BetweenProteins, 
 #'   BetweenProteinsOther (often from high-throughput experiments),
 #'   BetweenProteinSmallMolecule, 
-#'   BetweenSmallMolecules
+#'   BetweenSmallMolecules,
+#'   SignedInteractions
 #' 
 #' @examples 
 #' sifCat <- getSifInteractionCategories()
@@ -28,8 +29,11 @@ getSifInteractionCategories <- function() {
     
     smMolInt <- c("reacts-with", "used-to-produce")
     
+    signedInt <- c("dephosphorylates", "phosphorylates", "downregulates-expression", "upregulates-expression")
+    
     return(list("BetweenProteins"=protInt, 
                 "BetweenProteinsOther"=protOtherInt,
                 "BetweenProteinSmallMolecule"=protSmMolInt, 
-                "BetweenSmallMolecules"=smMolInt))
+                "BetweenSmallMolecules"=smMolInt,
+                "SignedInteractions"=signedInt))
 }

@@ -5,11 +5,8 @@ citEntry(entry="article",
   title =       "{{P}axtools{R}: {P}athway {A}nalysis in {R} {U}sing {P}athway {C}ommons}",
   journal =     "Bioinformatics",
   year =        "2015",
-  volume =      "",
-  number =      "",
-  pages =       "",
   month =       "Dec",
-  textVersion = paste("Luna, A. et al. PaxtoolsR: Pathway Analysis in R Using Pathway Commons. Bioinformatics. 2015 Dec. http://www.ncbi.nlm.nih.gov/pubmed/26685306"))
+  textVersion = paste("Luna, A et al. PaxtoolsR: Pathway Analysis in R Using Pathway Commons. 2015 Dec. http://www.ncbi.nlm.nih.gov/pubmed/26685306"))
 
 citFooter("This free open-source software implements academic research
 by the authors. Its development took a large amount of extra time and

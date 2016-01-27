@@ -20,29 +20,34 @@ This package is primarily directed towards R users who wish to work with binary 
 ### Dependencies
 #### Windows (tested on Windows 8)
 
-[Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) needs to be installed.
+[Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) needs to be installed. NOTE: If using a 64-bit system, make sure to install (or re-install) the 64-bit version. Otherwise, you may encounter an [rJava issue with JAVA_HOME](http://www.r-statistics.com/2012/08/how-to-load-the-rjava-package-after-the-error-java_home-cannot-be-determined-from-the-registry/).
 
 #### OS X (tested on Mavericks OSX 10.9)
 
-Java needs to be installed. If it is not installed, you will be prompted to install Java the first time you load the paxtoolsr package.
+Java needs to be installed. If it is not installed, you will be prompted to install Java the first time you load the paxtoolsr package (NOTE: This prompt may crash RStudio, but installation of Java should not be affected).
 
 #### Ubuntu (tested on Ubuntu 14.04)
 
 Run these commands in the Terminal:
 
+    # For latest R version
+    sudo apt-add-repository -y ppa:marutter/rrutter
+    sudo apt-get -y update
+    sudo apt-get -y upgrade
+    sudo apt-get -y install r-base
     # For plyr
-    sudo apt-get install g++
+    sudo apt-get -y install g++
     # For RCurl
-    sudo apt-get install libcurl4-openssl-dev
+    sudo apt-get -y install libcurl4-openssl-dev
     # For rJava
-    sudo apt-get install liblzma-dev
-    sudo apt-get install libbz2-dev
-    sudo apt-get install libpcre++-dev
-    sudo apt-get install openjdk-7-jdk  
+    sudo apt-get -y install liblzma-dev
+    sudo apt-get -y install libbz2-dev
+    sudo apt-get -y install libpcre++-dev
+    sudo apt-get -y install openjdk-7-jdk  
+    # For XML
+    sudo apt-get -y install libxml2-dev
     # To let R find Java
     sudo R CMD javareconf
-    # For XML
-    sudo apt-get install libxml2-dev
 
 ### Install Bioconductor and PaxtoolsR
 

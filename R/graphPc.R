@@ -1,5 +1,3 @@
-
-
 #' Get Pathway Commons BioPAX elements
 #' 
 #' This function will retrieve a set of BioPAX elements given a graph query match. 
@@ -79,7 +77,11 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
     }
     
     if(!is.null(datasource)) {
-        url <- paste(url, "&datasource=", datasource, sep="")
+        # Put into the correct format
+        datasources <- paste(paste0("datasource=", datasource), collapse="&")
+        url <- paste(url, "&", datasources, sep="")
+        
+        #url <- paste(url, "&datasource=", datasource, sep="")
     }
     
     if(!is.null(organism)) {

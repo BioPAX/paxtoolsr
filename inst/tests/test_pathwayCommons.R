@@ -113,6 +113,13 @@ test_that("graphPc", {
                       kind="PATHSFROMTO", 
                       format="EXTENDED_BINARY_SIF", 
                       verbose=TRUE), "list")
+    
+    # Multiple datasources
+    expect_is(graphPc(source="http://identifiers.org/uniprot/O14503", 
+                      kind="neighborhood", 
+                      format="EXTENDED_BINARY_SIF", 
+                      datasource=c("DIP","Reactome","HumanCyc"),
+                      verbose=TRUE), "list")
 })
 
 test_that("outputFormatsSupported", {
@@ -255,6 +262,7 @@ test_that("downloadFile", {
 test_that("downloadPc2", {
     # Skip still results in error using TAP reporter
     #skip("NA")
+    #downloadPc2("Pathway Commons.7.pid.GSEA.hgnc.gmt.gz", Sys.getenv("HOME"))
 })
 
 test_that("filterSif", {
