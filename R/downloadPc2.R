@@ -13,9 +13,10 @@
 #'   
 #' @examples 
 #' \dontrun{
-#'   downloadPc2(tempdir())
+#'   downloadPc2()
 #' }
 #'   
+#' @aliases downloadPc  
 #' @concept paxtoolsr
 #' @export
 #' 

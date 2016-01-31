@@ -143,10 +143,10 @@ The **results** object is a list with two entries: nodes and edges. **nodes** wi
 
 **NOTE:** Conversion of **results** entries from **data.table** to **data.frame** can be done using **setDF** in the **data.table** package. 
 
-**NOTE:** **downloadPc** may take several minutes to complete. It is suggested that the results of this command be saved locally rather than using this command frequently. 
+**NOTE:** **downloadPc2** may take several minutes to complete. It is suggested that the results of this command be saved locally rather than using this command frequently. 
 
 ```{r downloadSif, eval=FALSE}
-results <- downloadPc(format="SIFNX")
+results <- downloadPc2()
 ```
 
 # Searching Pathway Commons
