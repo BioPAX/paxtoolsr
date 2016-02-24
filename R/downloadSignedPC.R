@@ -14,7 +14,7 @@ downloadSignedPC <- function(destDir=NULL) {
     baseUrl <- Sys.getenv("SIGNED_PC_URL")
     selectedFileName <- Sys.getenv("SIGNED_PC_FILE")
     
-    downloadResult <- downloadFile(baseUrl=baseUrl, fileName=selectedFileName)
+    downloadResult <- paxtoolsr::downloadFile(baseUrl=baseUrl, fileName=selectedFileName)
     
     if(is.null(destDir)) {
         stopifnot(Sys.getenv("PAXTOOLSR_CACHE") != "")

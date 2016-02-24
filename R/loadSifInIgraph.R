@@ -9,6 +9,8 @@
 #' results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
 #' g <- loadSifInIgraph(results)
 #' 
+#' @details Users are likely to run into issues if the input SIF has factor levels
+#' 
 #' @concept paxtoolsr
 #' @export
 #' 
