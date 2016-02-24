@@ -101,7 +101,7 @@ test_that("toSif", {
     results <- toSif(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), 
                                             outFile) 
     
-    expect_that(colnames(results), equals(c("PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"))) 
+    expect_equal(colnames(results), c("PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"))
 })
 
 test_that("integrateBioPax", {

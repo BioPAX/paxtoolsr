@@ -16,6 +16,9 @@ a directed igraph network with interaction types
 \description{
 Load SIF as igraph Network
 }
+\details{
+Users are likely to run into issues if the input SIF has factor levels
+}
 \examples{
 results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
 g <- loadSifInIgraph(results)

@@ -4,17 +4,19 @@
 \alias{downloadFile}
 \title{Check Cache and Download File}
 \usage{
-downloadFile(baseUrl, fileName, cacheEnv = "PAXTOOLSR_CACHE",
-  destDir = NULL)
+downloadFile(baseUrl, fileName, destDir = NULL,
+  cacheEnv = "PAXTOOLSR_CACHE", verbose = FALSE)
 }
 \arguments{
 \item{baseUrl}{a string, entire download URL except filename}
 
 \item{fileName}{a string, the filename of file to be downloaded}
 
+\item{destDir}{a string, the path where a file should be saved}
+
 \item{cacheEnv}{a string, the environment variable that points to the specific cache}
 
-\item{destDir}{a string, the path where a file should be saved}
+\item{verbose}{show debugging information}
 }
 \value{
 a boolean TRUE if the file was downloaded or already exists, FALSE otherwise

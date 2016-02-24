@@ -2,8 +2,8 @@
 #' 
 #' @param baseUrl a string, entire download URL except filename
 #' @param fileName a string, the filename of file to be downloaded 
-#' @param cacheEnv a string, the environment variable that points to the specific cache
 #' @param destDir a string, the path where a file should be saved 
+#' @param cacheEnv a string, the environment variable that points to the specific cache
 #' @param verbose show debugging information
 #' 
 #' @return a boolean TRUE if the file was downloaded or already exists, FALSE otherwise
@@ -19,7 +19,7 @@
 #' @export
 #' 
 #' @importFrom httr HEAD GET http_status write_disk progress add_headers http_date
-downloadFile <- function(baseUrl, fileName, cacheEnv="PAXTOOLSR_CACHE", destDir=NULL, verbose=FALSE) {
+downloadFile <- function(baseUrl, fileName, destDir=NULL, cacheEnv="PAXTOOLSR_CACHE", verbose=FALSE) {
     url <- URLencode(paste0(baseUrl, fileName))
     fileIdx <- NULL
     
@@ -45,8 +45,8 @@ downloadFile <- function(baseUrl, fileName, cacheEnv="PAXTOOLSR_CACHE", destDir=
 
     httpStatus <- http_status(headResp)
     
-    if(httpStatus$category == "success") {
-        getResp <- suppressWarnings(GET(url=url, write_disk(filePath, overwrite=TRUE), progress()))
+    if(grepl("success", httpStatus$category, ignore.case=TRUE)) {
+        getResp <- GET(url=url, write_disk(filePath, overwrite=TRUE), progress())
         
         if(is.null(destDir)) {
             # Current date
@@ -64,9 +64,14 @@ downloadFile <- function(baseUrl, fileName, cacheEnv="PAXTOOLSR_CACHE", destDir=
         }
     }
     
-    if(length(fileIdx) != 0 || httpStatus$category == "success") {
+    if(length(fileIdx) != 0 || grepl("success", httpStatus$category, ignore.case=TRUE)) {
         return(TRUE)
     } else {
+        if(verbose) {
+            cat("fileIdx: ", fileIdx, "\n")   
+            cat("httpStatus$category: ", httpStatus$category, "\n")   
+        }
+        
         return(FALSE)
     }
 }
