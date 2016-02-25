@@ -1,6 +1,6 @@
 [![Travis-CI Build Status](https://travis-ci.org/cannin/paxtoolsr.svg?branch=master)](https://travis-ci.org/cannin/paxtoolsr)
 
-**NOTE:** Users interested in the source code should download the latest code directly from Bioconductor SVN repositories:
+**NOTE:** Users interested in the source code should download the code directly from Bioconductor SVN repositories:
 
 * [Release Version](http://bioconductor.org/packages/devel/bioc/html/paxtoolsr.html)
 * [Development Version](http://bioconductor.org/packages/devel/bioc/html/paxtoolsr.html)
