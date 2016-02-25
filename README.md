@@ -70,7 +70,6 @@ The tutorial describes a number of possible use cases, including network visuali
 and gene set enrichment analysis using this R package. Once installed, view tutorials for
 PaxtoolsR using the following command:
 
-
 ```
 library(paxtoolsr)
 browseVignettes("paxtoolsr")
