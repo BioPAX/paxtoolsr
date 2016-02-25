@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 ^installPackages.R
 ^README.md
+^\.travis\.yml$
