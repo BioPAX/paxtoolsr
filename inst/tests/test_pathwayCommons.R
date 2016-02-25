@@ -128,7 +128,7 @@ test_that("outputFormatsSupported", {
     genes <- c("AKT1", "IRS1")
 
     results <- graphPc(source=genes, 
-                                 kind="PATHSBETWEEN", 
+                                 kind="PATHSBETWN", 
                                  format="EXTENDED_BINARY_SIF", 
                                  verbose=TRUE)
     
