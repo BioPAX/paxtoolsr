@@ -44,5 +44,5 @@ VignetteBuilder: knitr
 LazyData: true
 biocViews: GeneSetEnrichment, GraphAndNetwork, Pathways, Software,
     SystemsBiology, NetworkEnrichment, Network, Reactome, KEGG
-URL: https://bitbucket.org/cbio_mskcc/paxtoolsr
+URL: https://github.com/BioPAX/paxtoolsr
 RoxygenNote: 5.0.1
