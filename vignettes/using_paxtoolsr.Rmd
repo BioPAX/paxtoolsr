@@ -263,7 +263,7 @@ Next, we show how to perform graph search using Pathway Commons useful for findi
 
 ```{r graphQueryExampleSingle}
 gene <- "BDNF"
-t1 <- results <- graphPc(source=gene, kind="neighborhood", format="BINARY_SIF")
+t1 <- graphPc(source=gene, kind="neighborhood", format="BINARY_SIF", verbose=TRUE)
 t2 <- t1[which(t1[,2] == "controls-state-change-of"),]
 
 g <- graph.edgelist(as.matrix(t2[,c(1,3)]), directed=FALSE)
