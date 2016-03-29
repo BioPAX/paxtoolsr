@@ -15,21 +15,48 @@
 #' @export
 #' 
 #' @importFrom igraph graph.edgelist E E<-
+#' @importFrom data.table setDF
 loadSifInIgraph <- function(sif) {
-    gWithType <- graph.edgelist(as.matrix(sif[, c("PARTICIPANT_A", "PARTICIPANT_B")]), directed=TRUE)
-    E(gWithType)$edgeType <- sif[, "INTERACTION_TYPE"]
-
-    pathwayIdx <- which("PATHWAY_NAMES" == colnames(sif))
-
-    if(length(pathwayIdx) == 1) {
-        E(gWithType)$pathwayNames <- sif[, pathwayIdx]
+    if("data.table" %in% class(sif)) {
+        setDF(sif)
     }
 
+    # Handle SIF undirected reactions 
+    tmpSifUndirected <- sif[which(sif$INTERACTION_TYPE %in% "in-complex-with"),]
+    a <- tmpSifUndirected$PARTICIPANT_A
+    b <- tmpSifUndirected$PARTICIPANT_B 
+    tmpSifUndirected$PARTICIPANT_A <- b
+    tmpSifUndirected$PARTICIPANT_B <- a
+    sif <- rbind(sif, tmpSifUndirected)
+
+    # Convert to igraph 
+    tmpSif <- sif[, c("PARTICIPANT_A", "PARTICIPANT_B")]
+    g <- graph.edgelist(as.matrix(tmpSif), directed=TRUE)
+    g <- set_edge_attr(g, "interactionType", index=E(g), sif[, "INTERACTION_TYPE"])
+    
     interactionDataSourceIdx <- which("INTERACTION_DATA_SOURCE" == colnames(sif))
     
-    if(length(pathwayIdx) == 1) {
-        E(gWithType)$interactionDataSource <- sif[, interactionDataSourceIdx]
+    if(length(interactionDataSourceIdx) == 1) {
+        g <- set_edge_attr(g, "interactionDataSource", index=E(g), sif[, interactionDataSourceIdx])
     }
     
-    return(gWithType)
+    interactionPubmedIdIdx <- which("INTERACTION_PUBMED_ID" == colnames(sif))
+    
+    if(length(interactionPubmedIdIdx) == 1) {
+        g <- set_edge_attr(g, "interactionPubmedId", index=E(g), sif[, interactionPubmedIdIdx])
+    }
+    
+    pathwayIdx <- which("PATHWAY_NAMES" == colnames(sif))
+    
+    if(length(pathwayIdx) == 1) {
+        g <- set_edge_attr(g, "pathwayNames", index=E(g), sif[, pathwayIdx])
+    }
+    
+    mediatorIdsIdx <- which("MEDIATOR_IDS" == colnames(sif))
+    
+    if(length(mediatorIdsIdx) == 1) {
+        g <- set_edge_attr(g, "mediatorIds", index=E(g), sif[, mediatorIdsIdx])
+    }
+    
+    return(g)
 }

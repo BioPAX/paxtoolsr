@@ -19,6 +19,7 @@ convertToDT <- function(lst) {
     edges$INTERACTION_DATA_SOURCE <- strsplit(edges$INTERACTION_DATA_SOURCE, ";")
     edges$INTERACTION_PUBMED_ID <- strsplit(as.character(edges$INTERACTION_PUBMED_ID), ";")
     edges$PATHWAY_NAMES <- strsplit(as.character(edges$PATHWAY_NAMES), ";")  
+    edges$MEDIATOR_IDS <- strsplit(as.character(edges$MEDIATOR_IDS), ";")  
     
     lst$edges <- edges
     lst$nodes <- nodes

@@ -4,7 +4,7 @@
 \alias{filterSif}
 \title{Keep interactions in SIF network of certain interaction types}
 \usage{
-filterSif(sif, interactionTypes)
+filterSif(sif, interactionTypes = NULL, dataSources = NULL, ids = NULL)
 }
 \arguments{
 \item{sif}{a binary SIF as a data.frame with three columns: 
@@ -14,7 +14,9 @@ filterSif(sif, interactionTypes)
 (List of interaction types: http://www.pathwaycommons.org/pc2/formats)}
 }
 \value{
-a data.frame of filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"
+filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B". 
+  The intersection of multiple filters is returned. The return class is the same as the input: 
+  data.frame or data.table
 }
 \description{
 Keep interactions in SIF network of certain interaction types
@@ -23,6 +25,11 @@ Keep interactions in SIF network of certain interaction types
 results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
 intTypes <- c("controls-state-change-of", "controls-expression-of", "catalysis-precedes")
 filteredNetwork <- filterSif(results, intTypes)
+
+tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
+results <- filterSif(tmp$edges, dataSources=c("INOH", "KEGG"))
+results <- filterSif(tmp$edges, ids=c("CHEBI:17640", "MCM3"))
+results <- filterSif(tmp$edges, dataSources=c("IntAct"), ids=c("CHEBI:17640", "MCM3"))
 
 }
 \concept{
