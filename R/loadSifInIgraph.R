@@ -14,7 +14,7 @@
 #' @concept paxtoolsr
 #' @export
 #' 
-#' @importFrom igraph graph.edgelist E E<-
+#' @importFrom igraph graph.edgelist E E<- set_edge_attr
 #' @importFrom data.table setDF
 loadSifInIgraph <- function(sif) {
     if("data.table" %in% class(sif)) {
