@@ -16,7 +16,7 @@
 #' 
 #' @importFrom igraph graph.edgelist E E<- set_edge_attr
 #' @importFrom data.table setDF
-loadSifInIgraph <- function(sif) {
+loadSifInIgraph <- function(sif, directed=TRUE) {
     if("data.table" %in% class(sif)) {
         setDF(sif)
     }
@@ -31,7 +31,7 @@ loadSifInIgraph <- function(sif) {
 
     # Convert to igraph 
     tmpSif <- sif[, c("PARTICIPANT_A", "PARTICIPANT_B")]
-    g <- graph.edgelist(as.matrix(tmpSif), directed=TRUE)
+    g <- graph.edgelist(as.matrix(tmpSif), directed=directed)
     g <- set_edge_attr(g, "interactionType", index=E(g), sif[, "INTERACTION_TYPE"])
     
     interactionDataSourceIdx <- which("INTERACTION_DATA_SOURCE" == colnames(sif))

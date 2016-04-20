@@ -4,7 +4,7 @@
 \alias{loadSifInIgraph}
 \title{Load SIF as igraph Network}
 \usage{
-loadSifInIgraph(sif)
+loadSifInIgraph(sif, directed = TRUE)
 }
 \arguments{
 \item{sif}{a binary SIF as a data.frame with three columns: 

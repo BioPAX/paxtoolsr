@@ -1,9 +1,12 @@
-#' Keep interactions in SIF network of certain interaction types
+#' Keep interactions in SIF network based on certain criteria
 #' 
 #' @param sif a binary SIF as a data.frame with three columns: 
 #'   "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"
-#' @param interactionTypes a vector of interaction types 
+#' @param interactionTypes a vector of interaction types to be kept
 #'   (List of interaction types: http://www.pathwaycommons.org/pc2/formats)
+#' @param dataSources a vector of data sources to be kept
+#' @param ids a vector of IDs to be kept
+#' @param edgelist a two-column data.frame where each row is an interaction to be kept
 #'   
 #' @return filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B". 
 #'   The intersection of multiple filters is returned. The return class is the same as the input: 
@@ -19,9 +22,13 @@
 #' results <- filterSif(tmp$edges, ids=c("CHEBI:17640", "MCM3"))
 #' results <- filterSif(tmp$edges, dataSources=c("IntAct"), ids=c("CHEBI:17640", "MCM3"))
 #' 
+#' tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
+#' edgelist <- read.table(system.file("extdata", "test_edgelist.txt", package = "paxtoolsr"), sep="\t", header=FALSE, stringsAsFactors=FALSE)
+#' results <- filterSif(tmp$edges, edgelist=edgelist)
+#' 
 #' @concept paxtoolsr
 #' @export
-filterSif <- function(sif, interactionTypes=NULL, dataSources=NULL, ids=NULL) {
+filterSif <- function(sif, interactionTypes=NULL, dataSources=NULL, ids=NULL, edgelist=NULL) {
     idxList <- NULL
     
     if(!is.null(ids)) {
@@ -32,6 +39,16 @@ filterSif <- function(sif, interactionTypes=NULL, dataSources=NULL, ids=NULL) {
         
         #cat("II: ", paste(idxIds, collapse=","), "\n")
         idxList[["idxIds"]] <- idxIds
+    } 
+    
+    if(!is.null(edgelist)) {
+        aIdx <- which(sif$PARTICIPANT_A %in% edgelist[,1]) 
+        bIdx <- which(sif$PARTICIPANT_B %in% edgelist[,2]) 
+        
+        idxEdgelist <- intersect(aIdx, bIdx)
+        
+        #cat("II: ", paste(idxIds, collapse=","), "\n")
+        idxList[["idxEdgelist"]] <- idxEdgelist
     } 
     
     if(!is.null(dataSources)) {
@@ -53,7 +70,7 @@ filterSif <- function(sif, interactionTypes=NULL, dataSources=NULL, ids=NULL) {
         #cat("IIT: ", paste(idxInteractionTypes, collapse=","), "\n")
         idxList[["idxInteractionTypes"]] <- idxInteractionTypes
     } 
-    
+
     idx <- Reduce(intersect, idxList)
     
     filteredNetwork <- sif[idx, ]

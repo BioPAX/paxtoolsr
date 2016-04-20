@@ -4,12 +4,21 @@
 \alias{getShortestPathSif}
 \title{Get the shortest between two IDs (HGNC or CHEBI)}
 \usage{
-getShortestPathSif(g, idA, idB, mode = c("all", "out", "in"), weights = NA)
+getShortestPathSif(g, idA, idB, mode = c("all", "out", "in"),
+  weights = NULL, filterFun, ...)
 }
 \arguments{
 \item{idA}{HGNC or CHEBI (CHEBI:XXXXX) ID}
 
 \item{idB}{HGNC or CHEBI (CHEBI:XXXXX) ID}
+
+\item{mode}{see shortest_paths() in igraph}
+
+\item{weights}{see shortest_paths() in igraph}
+
+\item{filterFun}{a function to filter multiple paths of the same length}
+
+\item{...}{additional arguments passed on to filterFun}
 
 \item{sif}{a SIF network}
 }
