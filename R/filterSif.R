@@ -6,7 +6,8 @@
 #'   (List of interaction types: http://www.pathwaycommons.org/pc2/formats)
 #' @param dataSources a vector of data sources to be kept
 #' @param ids a vector of IDs to be kept
-#' @param edgelist a two-column data.frame where each row is an interaction to be kept
+#' @param edgelist a two-column data.frame where each row is an interaction to be kept.
+#'   Directionality is ignored (e.g. Edge A B will return interactions A B and B A from SIF)
 #'   
 #' @return filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B". 
 #'   The intersection of multiple filters is returned. The return class is the same as the input: 
@@ -44,8 +45,14 @@ filterSif <- function(sif, interactionTypes=NULL, dataSources=NULL, ids=NULL, ed
     if(!is.null(edgelist)) {
         aIdx <- which(sif$PARTICIPANT_A %in% edgelist[,1]) 
         bIdx <- which(sif$PARTICIPANT_B %in% edgelist[,2]) 
+        idxEdgelist1 <- intersect(aIdx, bIdx)
         
-        idxEdgelist <- intersect(aIdx, bIdx)
+        # Same in reverse
+        aIdx <- which(sif$PARTICIPANT_A %in% edgelist[,2]) 
+        bIdx <- which(sif$PARTICIPANT_B %in% edgelist[,1]) 
+        idxEdgelist2 <- intersect(aIdx, bIdx)
+        
+        idxEdgelist <- intersect(idxEdgelist1, idxEdgelist2)
         
         #cat("II: ", paste(idxIds, collapse=","), "\n")
         idxList[["idxEdgelist"]] <- idxEdgelist

@@ -18,7 +18,8 @@ filterSif(sif, interactionTypes = NULL, dataSources = NULL, ids = NULL,
 
 \item{ids}{a vector of IDs to be kept}
 
-\item{edgelist}{a two-column data.frame where each row is an interaction to be kept}
+\item{edgelist}{a two-column data.frame where each row is an interaction to be kept.
+Directionality is ignored (e.g. Edge A B will return interactions A B and B A from SIF)}
 }
 \value{
 filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B". 

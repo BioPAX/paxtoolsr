@@ -498,6 +498,8 @@ cat("Max Memory: ", maxMemoryMb, "\n")
 sessionInfo()
 ```
 
+<iframe class="analytics" src="https://ga-beacon-lunean.appspot.com/UA-43341809-5/using-paxtoolsr?pixel" width="1" height="1" frameBorder="0"></iframe>
+
 # References
 
 * Cerami EG, Gross BE, Demir E, Rodchenkov I, Babur O, Anwar N, Schultz N, Bader GD, Sander C. Pathway Commons, a web resource for biological pathway data. Nucleic Acids Res. 2011 Jan;39(Database issue):D685-90. doi: 10.1093/nar/gkq1039. Epub 2010 Nov 10.
