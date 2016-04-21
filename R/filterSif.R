@@ -52,7 +52,7 @@ filterSif <- function(sif, interactionTypes=NULL, dataSources=NULL, ids=NULL, ed
         bIdx <- which(sif$PARTICIPANT_B %in% edgelist[,1]) 
         idxEdgelist2 <- intersect(aIdx, bIdx)
         
-        idxEdgelist <- intersect(idxEdgelist1, idxEdgelist2)
+        idxEdgelist <- c(idxEdgelist1, idxEdgelist2)
         
         #cat("II: ", paste(idxIds, collapse=","), "\n")
         idxList[["idxEdgelist"]] <- idxEdgelist
