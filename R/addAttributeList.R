@@ -2,12 +2,14 @@
 #' 
 #' @param g an igraph object
 #' @param attr the name of the attribute
-#' @param the list of vectors 
+#' @param l the list of vectors 
 #' 
 #' @return the modified igraph object
 #' 
 #' @concept paxtoolsr
 #' @export
+#' 
+#' @importFrom igraph V V<- set_vertex_attr 
 addAttributeList <- function(g, attr, l) {
     for(i in 1:length(l)) {
         #cat("i", i, "\n")

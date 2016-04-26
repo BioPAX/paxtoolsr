@@ -9,6 +9,8 @@ loadSifInIgraph(sif, directed = TRUE)
 \arguments{
 \item{sif}{a binary SIF as a data.frame with three columns: 
 "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"}
+
+\item{directed}{a boolean weather the returned graph should be directed (DEFAULT: TRUE)}
 }
 \value{
 a directed igraph network with interaction types

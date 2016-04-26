@@ -12,11 +12,13 @@
 #' 
 #' @concept paxtoolsr
 #' @export
-getShortestPathSif <- function(g, idA, idB, mode=c("all", "out", "in"), weights=NULL, filterFun, ...) {
+#' 
+#' @importFrom igraph V V<- all_shortest_paths are.connected ends list.edge.attributes
+getShortestPathSif <- function(sif, idA, idB, mode=c("all", "out", "in"), weights=NULL, filterFun, ...) {
     #idA <- "CCND1"
     #idB <- "MAZ"
     
-    #g <- loadSifInIgraph(sif)
+    g <- loadSifInIgraph(sif)
     
     aIdx <- match(idA, V(g)$name)
     bIdx <- match(idB, V(g)$name)    
@@ -36,19 +38,19 @@ getShortestPathSif <- function(g, idA, idB, mode=c("all", "out", "in"), weights=
     e1 <- NULL 
     
     for(i in 1:(length(v1)-1)) {
-        if(are.connected(g1, v1[i], v1[i+1])) {
-            r1 <- E(g1, P=c(v1[i], v1[i+1]))
+        if(are.connected(g, v1[i], v1[i+1])) {
+            r1 <- E(g, P=c(v1[i], v1[i+1]))
         } else {
-            r1 <- E(g1, P=c(v1[i+1], v1[i]))
+            r1 <- E(g, P=c(v1[i+1], v1[i]))
         }
         
         e1 <- c(e1, r1)
     }
     
-    #E(g1)[e1]
-    #E(g1)[e1]$interactionType
+    #E(g)[e1]
+    #E(g)[e1]$interactionType
     
-    epath <- E(g1)[e1]
+    epath <- E(g)[e1]
     
     results <- data.frame(PARTICIPANT_A=character(), 
                           INTERACTION_TYPE=character(), 

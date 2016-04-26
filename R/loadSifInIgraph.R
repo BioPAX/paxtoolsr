@@ -2,6 +2,7 @@
 #' 
 #' @param sif a binary SIF as a data.frame with three columns: 
 #'   "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"
+#' @param directed a boolean weather the returned graph should be directed (DEFAULT: TRUE)  
 #'   
 #' @return a directed igraph network with interaction types 
 #' 

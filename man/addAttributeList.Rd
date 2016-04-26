@@ -11,7 +11,7 @@ addAttributeList(g, attr, l)
 
 \item{attr}{the name of the attribute}
 
-\item{the}{list of vectors}
+\item{l}{the list of vectors}
 }
 \value{
 the modified igraph object
