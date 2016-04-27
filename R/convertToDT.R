@@ -3,6 +3,10 @@
 #' @param lst a list returned from readSifnx
 #' @return a list entries converted to data.table
 #' 
+#' @details The SIFNX format is an evolving format. Older datasets may not have 
+#'  all the columns this function expects. In these cases, the columns will be 
+#'  added with all NULL entries. 
+#' 
 #' @concept paxtoolsr
 #' @export
 #' 
@@ -19,6 +23,7 @@ convertToDT <- function(lst) {
     edges$INTERACTION_DATA_SOURCE <- strsplit(edges$INTERACTION_DATA_SOURCE, ";")
     edges$INTERACTION_PUBMED_ID <- strsplit(as.character(edges$INTERACTION_PUBMED_ID), ";")
     edges$PATHWAY_NAMES <- strsplit(as.character(edges$PATHWAY_NAMES), ";")  
+    edges$MEDIATOR_IDS <- strsplit(as.character(edges$MEDIATOR_IDS), ";") 
     
     lst$edges <- edges
     lst$nodes <- nodes

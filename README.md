@@ -1,4 +1,7 @@
-**NOTE:** Users interested in the source code should download the latest code directly from Bioconductor SVN repositories:
+[![Travis-CI Build Status](https://travis-ci.org/BioPAX/paxtoolsr.svg?branch=master)](https://travis-ci.org/BioPAX/paxtoolsr)
+[![codecov.io](https://codecov.io/github/BioPAX/paxtoolsr/coverage.svg?branch=master)](https://codecov.io/github/BioPAX/paxtoolsr?branch=master)
+
+**NOTE:** Users interested in the source code should download the code directly from Bioconductor SVN repositories:
 
 * [Release Version](http://bioconductor.org/packages/devel/bioc/html/paxtoolsr.html)
 * [Development Version](http://bioconductor.org/packages/devel/bioc/html/paxtoolsr.html)
@@ -67,7 +70,6 @@ Download the [development version](http://bioconductor.org/packages/devel/bioc/h
 The tutorial describes a number of possible use cases, including network visualization
 and gene set enrichment analysis using this R package. Once installed, view tutorials for
 PaxtoolsR using the following command:
-
 
 ```
 library(paxtoolsr)

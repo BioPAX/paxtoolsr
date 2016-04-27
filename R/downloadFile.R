@@ -35,6 +35,7 @@ downloadFile <- function(baseUrl, fileName, destDir=NULL, cacheEnv="PAXTOOLSR_CA
     
     if(verbose) {
         cat("filePath: ", filePath, "\n")
+        cat("url: ", url, "\n")
     }
     
     if(length(fileIdx) == 0) {

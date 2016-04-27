@@ -15,6 +15,11 @@ a list entries converted to data.table
 \description{
 Convert Results from readSifnx to data.table
 }
+\details{
+The SIFNX format is an evolving format. Older datasets may not have 
+ all the columns this function expects. In these cases, the columns will be 
+ added with all NULL entries.
+}
 \concept{
 paxtoolsr
 }

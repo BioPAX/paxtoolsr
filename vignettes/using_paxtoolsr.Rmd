@@ -143,10 +143,16 @@ The **results** object is a list with two entries: nodes and edges. **nodes** wi
 
 **NOTE:** Conversion of **results** entries from **data.table** to **data.frame** can be done using **setDF** in the **data.table** package. 
 
-**NOTE:** **downloadPc2** may take several minutes to complete. It is suggested that the results of this command be saved locally rather than using this command frequently. 
+**NOTE:** **downloadPc2** may take several minutes to complete. 
 
 ```{r downloadSif, eval=FALSE}
 results <- downloadPc2()
+```
+
+It is suggested that the results of this command be saved locally rather than using this command frequently to speed up work. Caching is attempted automatically, the location of downloaded files for this cache is available with this command:
+
+```{r paxtoolsrCache, eval=FALSE}
+Sys.getenv("PAXTOOLSR_CACHE")
 ```
 
 # Searching Pathway Commons
@@ -257,7 +263,7 @@ Next, we show how to perform graph search using Pathway Commons useful for findi
 
 ```{r graphQueryExampleSingle}
 gene <- "BDNF"
-t1 <- results <- graphPc(source=gene, kind="neighborhood", format="BINARY_SIF")
+t1 <- graphPc(source=gene, kind="neighborhood", format="BINARY_SIF", verbose=TRUE)
 t2 <- t1[which(t1[,2] == "controls-state-change-of"),]
 
 g <- graph.edgelist(as.matrix(t2[,c(1,3)]), directed=FALSE)
@@ -491,6 +497,8 @@ cat("Max Memory: ", maxMemoryMb, "\n")
 ```{r sessionInfo}
 sessionInfo()
 ```
+
+<iframe class="analytics" src="https://ga-beacon-lunean.appspot.com/UA-43341809-5/using-paxtoolsr?pixel" width="1" height="1" frameBorder="0"></iframe>
 
 # References
 

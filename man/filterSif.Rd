@@ -2,27 +2,46 @@
 % Please edit documentation in R/filterSif.R
 \name{filterSif}
 \alias{filterSif}
-\title{Keep interactions in SIF network of certain interaction types}
+\title{Keep interactions in SIF network based on certain criteria}
 \usage{
-filterSif(sif, interactionTypes)
+filterSif(sif, interactionTypes = NULL, dataSources = NULL, ids = NULL,
+  edgelist = NULL)
 }
 \arguments{
 \item{sif}{a binary SIF as a data.frame with three columns: 
 "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"}
 
-\item{interactionTypes}{a vector of interaction types 
+\item{interactionTypes}{a vector of interaction types to be kept
 (List of interaction types: http://www.pathwaycommons.org/pc2/formats)}
+
+\item{dataSources}{a vector of data sources to be kept}
+
+\item{ids}{a vector of IDs to be kept}
+
+\item{edgelist}{a two-column data.frame where each row is an interaction to be kept.
+Directionality is ignored (e.g. Edge A B will return interactions A B and B A from SIF)}
 }
 \value{
-a data.frame of filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"
+filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B". 
+  The intersection of multiple filters is returned. The return class is the same as the input: 
+  data.frame or data.table
 }
 \description{
-Keep interactions in SIF network of certain interaction types
+Keep interactions in SIF network based on certain criteria
 }
 \examples{
 results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
 intTypes <- c("controls-state-change-of", "controls-expression-of", "catalysis-precedes")
 filteredNetwork <- filterSif(results, intTypes)
+
+tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
+results <- filterSif(tmp$edges, dataSources=c("INOH", "KEGG"))
+results <- filterSif(tmp$edges, ids=c("CHEBI:17640", "MCM3"))
+results <- filterSif(tmp$edges, dataSources=c("IntAct"), ids=c("CHEBI:17640", "MCM3"))
+
+tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
+edgelist <- read.table(system.file("extdata", "test_edgelist.txt", package = "paxtoolsr"), sep="\\t", header=FALSE, stringsAsFactors=FALSE)
+results <- filterSif(tmp$edges, edgelist=edgelist)
 
 }
 \concept{
