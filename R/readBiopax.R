@@ -4,7 +4,8 @@
 #' @return an XMLInternalDocument
 #' 
 #' @examples 
-#' results <- readBiopax(system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="paxtoolsr"))
+#' results <- readBiopax(system.file("extdata", "biopax3-short-metabolic-pathway.owl", 
+#'   package="paxtoolsr"))
 #' 
 #' @concept paxtoolsr
 #' @export

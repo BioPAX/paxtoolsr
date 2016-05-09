@@ -24,7 +24,8 @@
 #' results <- filterSif(tmp$edges, dataSources=c("IntAct"), ids=c("CHEBI:17640", "MCM3"))
 #' 
 #' tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
-#' edgelist <- read.table(system.file("extdata", "test_edgelist.txt", package = "paxtoolsr"), sep="\t", header=FALSE, stringsAsFactors=FALSE)
+#' edgelist <- read.table(system.file("extdata", "test_edgelist.txt", package = "paxtoolsr"), 
+#'   sep="\t", header=FALSE, stringsAsFactors=FALSE)
 #' results <- filterSif(tmp$edges, edgelist=edgelist)
 #' 
 #' @concept paxtoolsr

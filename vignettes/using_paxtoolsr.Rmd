@@ -112,7 +112,7 @@ errorLog <- validate(system.file("extdata", "raf_map_kinase_cascade_reactome.owl
 
 ## Converting BioPAX Files to Other Formats
 
-It is often useful to convert BioPAX into other formats. Currently, **paxtoolsr** supports conversion to [Gene Set Enrichment Analysis](http://www.broadinstitute.org/gsea/index.jsp) (GSEA, .gmt), [Systems Biology Graphical Notation](http://www.sbgn.org/) (SBGN, .sbgn), [Simple Interaction Format](SIF).
+It is often useful to convert BioPAX into other formats. Currently, **paxtoolsr** supports conversion to [Gene Set Enrichment Analysis](http://www.broadinstitute.org/gsea/index.jsp) (GSEA, .gmt), [Systems Biology Graphical Notation](http://www.sbgn.org/) (SBGN, .sbgn), [Simple Interaction Format](http://wiki.cytoscape.org/Cytoscape_User_Manual/Network_Formats) (SIF).
 
 ### Simple Interaction Format (SIF) Network
 
