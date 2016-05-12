@@ -3,7 +3,7 @@
 
 **NOTE:** Users interested in the release version source code should download the code directly from Bioconductor SVN repositories:
 
-* [Release Version](http://bioconductor.org/packages/devel/bioc/html/paxtoolsr.html)
+* [Release Version](http://bioconductor.org/packages/release/bioc/html/paxtoolsr.html)
 
 # PaxtoolsR
 
