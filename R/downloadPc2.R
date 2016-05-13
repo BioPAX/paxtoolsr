@@ -16,7 +16,7 @@
 #' \dontrun{
 #'   downloadPc2()
 #'   downloadPc2(returnNames="ext.*sif")
-#'   downloadPc2("Pathway Commons.7.pid.GSEA.hgnc.gmt.gz", verbose=TRUE)
+#'   downloadPc2("PathwayCommons.8.inoh.GSEA.hgnc.gmt.gz", verbose=TRUE)
 #' }
 #'   
 #' @aliases downloadPc  
@@ -24,7 +24,7 @@
 #' @export
 #' 
 #' @importFrom R.utils gunzip
-downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, version=NULL, verbose=FALSE) {
+downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, version="current", verbose=FALSE) {
     if(is.null(destDir)) {
         stopifnot(Sys.getenv("PAXTOOLSR_CACHE") != "")
         destDir <- Sys.getenv("PAXTOOLSR_CACHE")
@@ -40,7 +40,11 @@ downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, v
             doc <- htmlParse(baseUrl) 
             links <- xpathSApply(doc, "//a/@href")
             
-            idx <- grepl(paste0("^v", version), links)
+            if(version == "current") {
+                idx <- grepl(paste0("^current"), links)
+            } else {
+                idx <- grepl(paste0("^v", version), links)
+            }
             
             downloadsSubDir <- unname(links[idx])
         } else {
@@ -67,8 +71,8 @@ downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, v
         tmp2 <- lapply(tmp, function(x) { x[length(x)] }) 
         
         tmp3 <- unname(unlist(tmp2))  
-        tmp <- strsplit(tmp3, ";")
-        tmp3 <- lapply(tmp, function(x) { x[1] }) 
+        #tmp3 <- strsplit(tmp3, ";")
+        tmp3 <- lapply(tmp3, function(x) { x[1] }) 
         
         #filenames <- gsub(downloadsSubDir, "", tmp3)
         # Remove any existing starting slash

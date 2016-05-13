@@ -86,7 +86,7 @@ test_that("graphPc", {
     expect_error(graphPc(source="http://identifiers.org/uniprot/PXXXXX", 
                          kind="neighborhood", 
                          format="EXTENDED_BINARY_SIF", 
-                         verbose=TRUE), ".*460.*PC Webservice Error.*")
+                         verbose=TRUE), ".*500.*PC Webservice Error.*")
 
     expect_error(graphPc(source="http://identifiers.org/uniprot/O14503", 
                          kind="PATHSFROMTO", 

@@ -6,7 +6,7 @@
 \title{Download Pathway Commons files (uses menu and cache)}
 \usage{
 downloadPc2(selectedFileName = NULL, destDir = NULL, returnNames = NULL,
-  version = NULL, verbose = FALSE)
+  version = "current", verbose = FALSE)
 }
 \arguments{
 \item{selectedFileName}{a string, a name of a file to skip the the interactive selection}
@@ -33,7 +33,7 @@ Download Pathway Commons files (uses menu and cache)
 \dontrun{
   downloadPc2()
   downloadPc2(returnNames="ext.*sif")
-  downloadPc2("Pathway Commons.7.pid.GSEA.hgnc.gmt.gz", verbose=TRUE)
+  downloadPc2("PathwayCommons.8.inoh.GSEA.hgnc.gmt.gz", verbose=TRUE)
 }
   
 }

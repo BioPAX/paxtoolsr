@@ -59,11 +59,14 @@ Run these commands within R:
     source("http://bioconductor.org/biocLite.R")
     biocLite("paxtoolsr") 
 
-# Install PaxtoolsR Development Version
+# Install PaxtoolsR Development Version from GitHub
 
-Download the [development version](http://bioconductor.org/packages/devel/bioc/html/paxtoolsr.html) package source and [install from source](http://stackoverflow.com/questions/1474081/how-do-i-install-an-r-package-from-source) with the following command:
+    setRepositories(ind=1:6)
+    options(repos="http://cran.rstudio.com/")
+    if(!require(devtools)) { install.packages("devtools") }
+    library(devtools) 
 
-    install.packages(file_name_and_path, repos = NULL, type="source")
+    install_github("BioPAX/paxtoolsr")
 
 # Using PaxtoolsR: R Vignette (Tutorial)
 
