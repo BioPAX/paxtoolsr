@@ -195,6 +195,8 @@ test_that("idMapping", {
 })
 
 test_that("readSifnx", {
+    expect_error(readSifnx("BAD"), "ERROR: inputFile not file.")
+    
     results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
     expect_true(all(c("nodes", "edges") %in% names(results)))
 
@@ -209,21 +211,29 @@ test_that("readSifnx", {
 })
 
 test_that("readBiopax", {
+    expect_error(readBiopax("BAD"), "ERROR: inputFile not file.")
+    
     results <- readBiopax(system.file("extdata", "test_biopax.owl", package="paxtoolsr"))
     expect_is(results, "XMLInternalDocument")
 })
 
 test_that("readSbgn", {
+    expect_error(readSbgn("BAD"), "ERROR: inputFile not file.")
+    
     results <- readSbgn(system.file("extdata", "test_sbgn.xml", package="paxtoolsr"))
     expect_is(results, "XMLInternalDocument")
 })
 
 test_that("readGmt", {
+    expect_error(readGmt("BAD"), "ERROR: inputFile not file.")
+    
     results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
     expect_is(results, "list")
 })
 
 test_that("readSif", {
+    expect_error(readSif("BAD"), "ERROR: inputFile not file.")
+    
     results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
     expect_is(results, "data.frame")
 })

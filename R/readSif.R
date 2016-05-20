@@ -11,6 +11,10 @@
 #' 
 #' @importFrom data.table fread
 readSif <- function(inputFile) {
+    if(!file.exists(inputFile)) {
+        stop("ERROR: inputFile not file.")
+    }
+    
     results <- fread(inputFile, sep="\t", header=TRUE, stringsAsFactors=FALSE)
     results <- as.data.frame(results)
     colnames(results) <- c("PARTICIPANT_A",  "INTERACTION_TYPE", "PARTICIPANT_B")

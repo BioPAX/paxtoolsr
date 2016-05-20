@@ -11,6 +11,10 @@
 #' @concept paxtoolsr
 #' @export
 readGmt <- function(inputFile) {
+    if(!file.exists(inputFile)) {
+        stop("ERROR: inputFile not file.")
+    }
+    
     f <- readLines(inputFile)
     
     # NOTE: Removing empty strings is necessary

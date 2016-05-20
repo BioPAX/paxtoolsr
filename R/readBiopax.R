@@ -10,6 +10,10 @@
 #' @concept paxtoolsr
 #' @export
 readBiopax <- function(inputFile) {
+    if(!file.exists(inputFile)) {
+        stop("ERROR: inputFile not file.")
+    }
+    
     results <- xmlTreeParse(inputFile, useInternalNodes=TRUE)
     return(results)
 }

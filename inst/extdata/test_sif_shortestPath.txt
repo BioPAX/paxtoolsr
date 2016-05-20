@@ -1,0 +1,1 @@
+PARTICIPANT_A	INTERACTION_TYPE	PARTICIPANT_BDAP3	interacts-with	SH3GL2SH3GL2	interacts-with	TIAM2TIAM2	interacts-with	FOXD3SH3GL2	interacts-with	SLC10A7SLC10A7	interacts-with	FOXD3FOXD3	interacts-with	RPS16FOXD3	interacts-with	RNPS1RBL2	interacts-with	RHOC

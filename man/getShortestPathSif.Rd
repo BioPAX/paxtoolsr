@@ -5,7 +5,7 @@
 \title{Get the shortest between two IDs (HGNC or CHEBI)}
 \usage{
 getShortestPathSif(sif, idA, idB, mode = c("all", "out", "in"),
-  weights = NULL, filterFun, ...)
+  weights = NULL, verbose = FALSE, filterFun, ...)
 }
 \arguments{
 \item{sif}{a SIF network}
@@ -18,6 +18,8 @@ getShortestPathSif(sif, idA, idB, mode = c("all", "out", "in"),
 
 \item{weights}{see shortest_paths() in igraph}
 
+\item{verbose}{a boolean whether to show debugging information}
+
 \item{filterFun}{a function to filter multiple paths of the same length}
 
 \item{...}{additional arguments passed on to filterFun}
@@ -27,6 +29,14 @@ a data.frame representing a SIF network
 }
 \description{
 Get the shortest between two IDs (HGNC or CHEBI)
+}
+\examples{
+idA <- "DAP3"
+idB <- "RPS16"
+sif <- readSif(system.file("extdata", "test_sif_shortestPath.txt", package="paxtoolsr"))
+filterFun <- function(vpaths) { idx <- sample(1:length(vpaths), 1); return(vpaths[[idx]]) }
+m1 <- getShortestPathSif(sif, idA, idB, mode="all", weights=NULL, filterFun=filterFun, verbose=TRUE)
+
 }
 \concept{
 paxtoolsr

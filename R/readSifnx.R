@@ -19,6 +19,10 @@
 #' 
 #' @importFrom data.table fread
 readSifnx <- function(inputFile, asDT=TRUE) {
+    if(!file.exists(inputFile)) {
+        stop("ERROR: inputFile not file.")
+    }
+    
     # Files with small sizes will confuse fread to think there are fewer columns 
     # in the edges because it scans the 5th row to determine number of columns. 
     # Two methods of reading are therefore necessary. 
