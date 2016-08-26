@@ -2,6 +2,7 @@
 #' 
 #' This command returns all "top" pathways.
 #' 
+#' @param q [Optional] a keyword, name, external identifier, or a Lucene query string, like in 'search', but the default is '*' (match all).
 #' @param datasource filter by data source (same as for 'search').
 #' @param organism organism filter (same as for 'search').
 #' @param verbose a boolean, display the command used to query Pathway Commons
@@ -19,35 +20,51 @@
 #'   another process.
 #' 
 #' @examples
-#' datasource <- "panther"
-#' #results <- topPathways(datasource=datasource)
+#' #results <- topPathways(datasource="panther")
 #' 
 #' @concept paxtoolsr
 #' @export
 #' 
 #' @importFrom plyr ldply
-topPathways <- function(datasource=NULL, organism=NULL, verbose=FALSE) {
-    baseUrl <- paste0(getPcUrl(), "top_pathways?")
-    url <- baseUrl
+#' @importFrom httr build_url parse_url
+topPathways <- function(q=NULL, datasource=NULL, organism=NULL, verbose=FALSE) {
+    baseUrl <- paste0(getPcUrl(), "top_pathways")
+    
+    queryList <- list()
+
+    if(!is.null(q)) {
+        queryList[["q"]] <- q
+    }
     
     if(!is.null(datasource)) {
-        url <- paste(url, "&datasource=", datasource, sep="")
+        queryList[["datasource"]] <- datasource
     }
     
     if(!is.null(organism)) {
-        url <- paste(url, "&organism=", organism, sep="")
+        queryList[["organism"]] <- organism
     }
+    
+    tmpUrl <- parse_url(baseUrl)
+    tmpUrl$query <- queryList
+    url <- build_url(tmpUrl)
     
     tmp <- getPcRequest(url, verbose)
     results <- processPcRequest(tmp, "XML")
     
     #DEBUG
+    #str(results)
     #return(results)
     
     resultsDf <- ldply(xmlToList(results), data.frame, stringsAsFactors=FALSE)
-    resultsDf <- resultsDf[,c("uri", "biopaxClass", "name", 
-                              "dataSource", "organism")]
     
+    if("organism" %in% colnames(resultsDf)) {
+        resultsDf <- resultsDf[,c("uri", "biopaxClass", "name", 
+                                  "dataSource", "organism")]        
+    } else {
+        resultsDf <- resultsDf[,c("uri", "biopaxClass", "name", 
+                                  "dataSource")]    
+    }
+
     # Remove NAs
     resultsDf <- resultsDf[which(!is.na(resultsDf[,"uri"])),]
     

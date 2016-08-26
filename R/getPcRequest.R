@@ -1,6 +1,8 @@
 #' Get a Pathway Commons Webservice Request 
 #' 
 #' @param url Pathway Commons webservice request URL 
+#' @param verbose a boolean whether to display debugging information
+#' 
 #' @return request results 
 #' 
 #' @concept paxtoolsr

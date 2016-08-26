@@ -4,22 +4,31 @@
 \alias{filterSif}
 \title{Keep interactions in SIF network based on certain criteria}
 \usage{
-filterSif(sif, interactionTypes = NULL, dataSources = NULL, ids = NULL,
-  edgelist = NULL)
+filterSif(sif, ids = NULL, interactionTypes = NULL, dataSources = NULL,
+  interactionPubmedIds = NULL, pathwayNames = NULL, mediatorIds = NULL,
+  edgelist = NULL, verbose = FALSE)
 }
 \arguments{
 \item{sif}{a binary SIF as a data.frame with three columns: 
 "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"}
 
+\item{ids}{a vector of IDs to be kept}
+
 \item{interactionTypes}{a vector of interaction types to be kept
 (List of interaction types: http://www.pathwaycommons.org/pc2/formats)}
 
-\item{dataSources}{a vector of data sources to be kept}
+\item{dataSources}{a vector of data sources to be kept. For Extended SIF.}
 
-\item{ids}{a vector of IDs to be kept}
+\item{pathwayNames}{a vector of pathway names to be kept. For Extended SIF.}
+
+\item{mediatorIds}{a vector of mediator IDs to be kept. For Extended SIF.
+Mediator IDs are the full BioPAX objects that were simplified to interaction 
+given in the SIF. For Extended SIF.}
 
 \item{edgelist}{a two-column data.frame where each row is an interaction to be kept.
 Directionality is ignored (e.g. Edge A B will return interactions A B and B A from SIF)}
+
+\item{interactionPubmedId}{a vector of Pubmed IDs to be kept. For Extended SIF.}
 }
 \value{
 filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B". 
@@ -35,9 +44,13 @@ intTypes <- c("controls-state-change-of", "controls-expression-of", "catalysis-p
 filteredNetwork <- filterSif(results, intTypes)
 
 tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
-results <- filterSif(tmp$edges, dataSources=c("INOH", "KEGG"))
 results <- filterSif(tmp$edges, ids=c("CHEBI:17640", "MCM3"))
+results <- filterSif(tmp$edges, dataSources=c("INOH", "KEGG"))
 results <- filterSif(tmp$edges, dataSources=c("IntAct"), ids=c("CHEBI:17640", "MCM3"))
+results <- filterSif(tmp$edges, pathwayNames=c("Metabolic pathways"))
+(BAD) results <- filterSif(tmp$edges, mediatorIds=c("http://purl.org/pc2/8/Catalysis_62496fb4de005d332e14fea0d60e017f"))
+results <- filterSif(tmp$edges, interactionPubmedId="17654400")
+
 
 tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
 edgelist <- read.table(system.file("extdata", "test_edgelist.txt", package = "paxtoolsr"), 

@@ -2,8 +2,8 @@ Package: paxtoolsr
 Type: Package
 Title: PaxtoolsR: Access Pathways from Multiple Databases through BioPAX and
     Pathway Commons
-Version: 1.6.1
-Date: 2016-05-12
+Version: 1.6.4
+Date: 2016-08-23
 Author: Augustin Luna
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
 Imports:
@@ -31,7 +31,8 @@ Suggests:
     limma,
     foreach,
     doSNOW,
-    parallel
+    parallel,
+    org.Hs.eg.db
 SystemRequirements: Java (>= 1.6)
 License: LGPL-3
 Description: The package provides a set of R functions for interacting with
