@@ -9,7 +9,7 @@ readSifnx(inputFile, asDT = TRUE)
 \arguments{
 \item{inputFile}{an inputFile}
 
-\item{asDT}{TODO}
+\item{asDT}{a boolean return file as a data.table}
 }
 \value{
 a list with nodes and edges entries

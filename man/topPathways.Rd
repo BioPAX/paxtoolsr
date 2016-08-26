@@ -4,9 +4,12 @@
 \alias{topPathways}
 \title{Retrieve top pathways}
 \usage{
-topPathways(datasource = NULL, organism = NULL, verbose = FALSE)
+topPathways(q = NULL, datasource = NULL, organism = NULL,
+  verbose = FALSE)
 }
 \arguments{
+\item{q}{[Optional] a keyword, name, external identifier, or a Lucene query string, like in 'search', but the default is '*' (match all).}
+
 \item{datasource}{filter by data source (same as for 'search').}
 
 \item{organism}{organism filter (same as for 'search').}
@@ -32,8 +35,7 @@ Pathways that are neither 'controlled' nor 'pathwayComponent' of
   another process.
 }
 \examples{
-datasource <- "panther"
-#results <- topPathways(datasource=datasource)
+#results <- topPathways(datasource="panther")
 
 }
 \concept{

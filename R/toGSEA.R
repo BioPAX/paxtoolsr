@@ -26,7 +26,7 @@
 #' 
 #' @concept paxtoolsr
 #' @export
-toGSEA <- function(inputFile, outputFile=NULL, database, crossSpeciesCheckFlag) {
+toGSEA <- function(inputFile, outputFile=NULL, database="uniprot", crossSpeciesCheckFlag=TRUE) {
     inputFile <- checkInputFile(inputFile)
     outputFile <- checkOutputFile(outputFile)
     

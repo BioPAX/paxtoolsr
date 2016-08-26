@@ -4,19 +4,25 @@
 \alias{readGmt}
 \title{Read in gene sets from GMT files}
 \usage{
-readGmt(inputFile)
+readGmt(inputFile, removePrefix = FALSE, returnDetailed = FALSE)
 }
 \arguments{
 \item{inputFile}{an inputFile}
+
+\item{removePrefix}{Pathway Commons genesets are prefixed with a NCBI organism taxonomy number (e.g. 9606 for humans); this is a boolean whether to remove the prefix (default: FALSE)}
+
+\item{returnDetailed}{a boolean whether to return detailed results; detailed results are returned a list of two items: 1) is the non-detailed results and 2) datasource, organism, and id type information for each gene set (default: FALSE)}
 }
 \value{
-a named list where each entry corresponds to a gene set
+a named list where each entry corresponds to a gene set or a list described in the returnDetailed parameter
 }
 \description{
 This function will read in gene sets in the GMT format into a named list.
 }
 \examples{
 results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
+results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), removePrefix=TRUE)
+results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), returnDetailed=TRUE)
 
 }
 \concept{

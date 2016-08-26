@@ -1,7 +1,7 @@
 #' Read in a Extended SIF file 
 #' 
 #' @param inputFile an inputFile
-#' @param asDT TODO
+#' @param asDT a boolean return file as a data.table
 #' 
 #' @return a list with nodes and edges entries 
 #' 
