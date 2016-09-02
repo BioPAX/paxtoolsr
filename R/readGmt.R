@@ -4,18 +4,18 @@
 #' 
 #' @param inputFile an inputFile
 #' @param removePrefix Pathway Commons genesets are prefixed with a NCBI organism taxonomy number (e.g. 9606 for humans); this is a boolean whether to remove the prefix (default: FALSE)
-#' @param returnDetailed a boolean whether to return detailed results; detailed results are returned a list of two items: 1) is the non-detailed results and 2) datasource, organism, and id type information for each gene set (default: FALSE)
+#' @param returnInfo a boolean whether to return information on genesets; these results are returned a list of two items: 1) basic GMT results and 2) datasource, organism, and id type information for each gene set (default: FALSE)
 #' 
-#' @return a named list where each entry corresponds to a gene set or a list described in the returnDetailed parameter
+#' @return a named list where each entry corresponds to a gene set or a list described in the returnInfo parameter
 #' 
 #' @examples 
 #' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
 #' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), removePrefix=TRUE)
-#' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), returnDetailed=TRUE)
+#' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), returnInfo=TRUE)
 #' 
 #' @concept paxtoolsr
 #' @export
-readGmt <- function(inputFile, removePrefix=FALSE, returnDetailed=FALSE) {
+readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
     if(!file.exists(inputFile)) {
         stop("ERROR: inputFile not file.")
     }
@@ -40,10 +40,10 @@ readGmt <- function(inputFile, removePrefix=FALSE, returnDetailed=FALSE) {
         return(results)
     })
     
-    if(returnDetailed) {
+    if(returnInfo) {
         info <- lapply(tmpResults, function(x) {
             t1 <- trimws(strsplit(x[2], ";")[[1]])
-            tmp <- strsplit(details, ": ")
+            tmp <- strsplit(t1, ": ")
             
             dataSource <- tmp[[1]][2]
             organism <- tmp[[2]][2]
