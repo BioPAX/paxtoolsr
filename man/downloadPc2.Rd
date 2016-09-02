@@ -6,7 +6,7 @@
 \title{Download Pathway Commons files (uses menu and cache)}
 \usage{
 downloadPc2(selectedFileName = NULL, destDir = NULL, returnNames = NULL,
-  version = "current", verbose = FALSE)
+  version = "current", verbose = FALSE, ...)
 }
 \arguments{
 \item{selectedFileName}{a string, a name of a file to skip the the interactive selection}
@@ -21,6 +21,8 @@ directory file.path(Sys.getenv("HOME"), ".paxtoolsRCache")}
 versions 3 and above}
 
 \item{verbose}{a flag to display debugging information (Default: FALSE)}
+
+\item{...}{additional parameters to send to corresponding read* methods}
 }
 \value{
 an R object using one of the read* methods provided in this package 

@@ -8,6 +8,7 @@
 #' @param version a version number for a previous version of Pathway Commons data; 
 #'   versions 3 and above  
 #' @param verbose a flag to display debugging information (Default: FALSE)  
+#' @param ... additional parameters to send to corresponding read* methods
 #'   
 #' @return an R object using one of the read* methods provided in this package 
 #'   corresponding to the file downloaded 
@@ -24,7 +25,7 @@
 #' @export
 #' 
 #' @importFrom R.utils gunzip
-downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, version="current", verbose=FALSE) {
+downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, version="current", verbose=FALSE, ...) {
     if(is.null(destDir)) {
         stopifnot(Sys.getenv("PAXTOOLSR_CACHE") != "")
         destDir <- Sys.getenv("PAXTOOLSR_CACHE")
@@ -121,27 +122,28 @@ downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, v
     
     tmpFile <- R.utils::gunzip(selectedFilePath, remove=FALSE, temporary=TRUE, skip=TRUE)
     
-    # Parse GMT 
+    # READ FUNCTIONS ----
+    ## Parse GMT 
     if(grepl("GSEA", selectedFileName)) {
-        results <- readGmt(tmpFile)
+        results <- readGmt(tmpFile, ...)
         return(results)
     }      
     
-    # Parse EXTENDED_BINARY_SIF
+    ## Parse EXTENDED_BINARY_SIF
     if(grepl("EXTENDED_BINARY_SIF", selectedFileName)) {
-        results <- readSifnx(tmpFile)
+        results <- readSifnx(tmpFile, ...)
         return(results)
     }      
     
-    # Parse BINARY_SIF
+    ## Parse BINARY_SIF
     if(grepl("BINARY_SIF", selectedFileName)) {
-        results <- readSif(tmpFile)
+        results <- readSif(tmpFile, ...)
         return(results)
     }  
     
-    # Parse BIOPAX
+    ## Parse BIOPAX
     if(grepl("BIOPAX", selectedFileName)) {
-        results <- readBiopax(tmpFile)
+        results <- readBiopax(tmpFile, ...)
         return(results)
     }
 }
