@@ -13,6 +13,8 @@
 #' @param format output format (Default: BIOPAX). Valid options can be found using 
 #'   \code{\link{pcFormats}}
 #' @param verbose a boolean, display the command used to query Pathway Commons
+#' @param ... additional arguments to read* methods that handle data from Pathway Commons
+#' 
 #' @return a XMLInternalDocument object
 #' 
 #' @details Get commands only retrieve the BioPAX elements that are directly
@@ -33,7 +35,7 @@
 #' 
 #' @concept paxtoolsr
 #' @export
-getPc <- function(uri, format="BIOPAX", verbose=FALSE) {
+getPc <- function(uri, format="BIOPAX", verbose=FALSE, ...) {
     uris <- paste(paste0("uri=", uri), collapse="&")
     
     baseUrl <- paste0(getPcUrl(), "get?")
@@ -46,6 +48,6 @@ getPc <- function(uri, format="BIOPAX", verbose=FALSE) {
     }
     
     tmp <- getPcRequest(url, verbose)
-    results <- processPcRequest(tmp, format)
+    results <- processPcRequest(tmp, format, ...)
     return(results) 
 }

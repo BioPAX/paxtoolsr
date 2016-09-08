@@ -17,7 +17,7 @@
 #' @export 
 #' 
 #' @importFrom rjson fromJSON
-processPcRequest <- function(content, format) {
+processPcRequest <- function(content, format, ...) {
     if(format == "JSON") {     
         results <- fromJSON(content)
         return(results)
@@ -34,15 +34,15 @@ processPcRequest <- function(content, format) {
     #cat("FILENAME: ", filename, "\n") 
     
     if(format == "EXTENDED_BINARY_SIF") {
-        results <- readSifnx(filename) 
+        results <- readSifnx(filename, ...) 
     } else if(format == "BINARY_SIF") {
-        results <- readSif(filename)           
+        results <- readSif(filename, ...)           
     } else if(format == "BIOPAX") {     
-        results <- readBiopax(filename)
+        results <- readBiopax(filename, ...)
     } else if(format == "SBGN") {     
-        results <- readSbgn(filename)
+        results <- readSbgn(filename, ...)
     } else if(format == "GSEA") {     
-        results <- readGmt(filename)
+        results <- readGmt(filename, ...)
     } else {
         results <- content
     }

@@ -20,12 +20,13 @@ readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
         stop("ERROR: inputFile not file.")
     }
     
-    f <- readLines(inputFile)
+    fileContents <- readLines(inputFile)
     
     # NOTE: Removing empty strings is necessary
-    tmpResults <- sapply(f, function(x) { 
+    fileContents <- fileContents[fileContents != ""]
+    
+    tmpResults <- sapply(fileContents, function(x) { 
       tmp <- unlist(strsplit(x, "\t", fixed = TRUE)) 
-      tmp[tmp != ""]
     })
     
     names(tmpResults) <- sapply(tmpResults, function(x) {
@@ -41,24 +42,19 @@ readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
     })
     
     if(returnInfo) {
-        info <- lapply(tmpResults, function(x) {
+        results <- lapply(tmpResults, function(x) {
             t1 <- trimws(strsplit(x[2], ";")[[1]])
             tmp <- strsplit(t1, ": ")
             
             dataSource <- tmp[[1]][2]
             organism <- tmp[[2]][2]
             idType <- tmp[[3]][2]
+            geneSet <- x[-(1:2)]
             
-            results <- list(dataSource=dataSource, organism=organism, idType=idType)
+            results <- list(geneSet=geneSet, dataSource=dataSource, organism=organism, idType=idType)
             
             return(results)
         })
-        
-        gmt <- lapply(tmpResults, function(x) {
-            x[-(1:2)]
-        })
-        
-        results <- list(gmt=gmt, info=info)
     } else {
         # Remove the first two entries, i.e. the name and description
         results <- lapply(tmpResults, function(x) x[-(1:2)])

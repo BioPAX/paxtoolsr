@@ -4,7 +4,7 @@
 \alias{getPc}
 \title{Get Pathway Commons BioPAX elements}
 \usage{
-getPc(uri, format = "BIOPAX", verbose = FALSE)
+getPc(uri, format = "BIOPAX", verbose = FALSE, ...)
 }
 \arguments{
 \item{uri}{a vector that includes valid/existing BioPAX element's URI (RDF
@@ -19,6 +19,8 @@ Identifiers.org in details.}
 \code{\link{pcFormats}}}
 
 \item{verbose}{a boolean, display the command used to query Pathway Commons}
+
+\item{...}{additional arguments to read* methods that handle data from Pathway Commons}
 }
 \value{
 a XMLInternalDocument object

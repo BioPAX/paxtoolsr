@@ -2,19 +2,19 @@
 #' 
 #' @param inputFile an inputFile
 #' 
-#' @return a list with two items: 1) pathwayChildren and 2) pathwayInfo
+#' @return a data.table 
 #' 
 #' @details This file is generally found as pathways.txt.gz (e.g. 
 #' http://www.pathwaycommons.org/archives/PC2/current/pathways.txt.gz)
 #' 
 #' @examples 
-#' #results <- readPcPathwaysInfo(INPUTFILE)
+#' #results <- readPcPathwaysInfo("http://www.pathwaycommons.org/archives/PC2/current/pathways.txt.gz")
 #' 
 #' @concept paxtoolsr
 #' @export
 readPcPathwaysInfo <- function(inputFile) {
     if(!file.exists(inputFile)) {
-        stop("ERROR: inputFile not file.")
+        stop("ERROR: inputFile was not found")
     }
     
     pathwayChildrenFile <- tempfile("pathwayChildren", fileext=".txt")
@@ -59,9 +59,15 @@ readPcPathwaysInfo <- function(inputFile) {
                         stringsAsFactors=FALSE, fill=TRUE)
     pathwayInfo <- read.table(pathwayInfoFile, header=TRUE, sep="\t", quote="", 
                         stringsAsFactors=FALSE, fill=TRUE)        
-
-    results <- list(pathwayInfo=pathwayInfo, 
-                    pathwayChildren=pathwayChildren)
     
-    return(results)    
+    results <- merge(pathwayChildren, pathwayInfo, by=c("PATHWAY_URI", "DISPLAY_NAME"))
+
+    results <- setDT(results)
+    results$DIRECT_SUB_PATHWAY_URIS <- strsplit(results$DIRECT_SUB_PATHWAY_URIS, ";")
+    results$ALL_SUB_PATHWAY_URIS <- strsplit(results$ALL_SUB_PATHWAY_URIS, ";")
+    results$ALL_NAMES <- strsplit(results$ALL_NAMES, ";")
+    
+    results$DATASOURCE <- tolower(results$DATASOURCE)
+    
+    return(results)
 }

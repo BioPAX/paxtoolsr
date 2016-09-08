@@ -4,7 +4,7 @@
 \alias{processPcRequest}
 \title{Process Pathway Commons request in various formats}
 \usage{
-processPcRequest(content, format)
+processPcRequest(content, format, ...)
 }
 \arguments{
 \item{content}{a string, content to be processed}

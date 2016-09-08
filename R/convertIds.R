@@ -9,7 +9,7 @@
 #' @examples 
 #' convertIds("TP53", "SYMBOL", "ENTREZID")
 #' 
-#' @concepts paxtoolsr
+#' @concept paxtoolsr
 #' @export
 convertIds <- function(ids, from="UNIPROT", to="SYMBOL") {
     if(!require("org.Hs.eg.db")) {

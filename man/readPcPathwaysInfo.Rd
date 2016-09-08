@@ -10,7 +10,7 @@ readPcPathwaysInfo(inputFile)
 \item{inputFile}{an inputFile}
 }
 \value{
-a list with two items: 1) pathwayChildren and 2) pathwayInfo
+a data.table
 }
 \description{
 Read in Pathway Commons Pathways Information
@@ -20,7 +20,7 @@ This file is generally found as pathways.txt.gz (e.g.
 http://www.pathwaycommons.org/archives/PC2/current/pathways.txt.gz)
 }
 \examples{
-#results <- readPcPathwaysInfo(INPUTFILE)
+#results <- readPcPathwaysInfo("http://www.pathwaycommons.org/archives/PC2/current/pathways.txt.gz")
 
 }
 \concept{
