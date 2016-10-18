@@ -36,7 +36,7 @@ readPcPathwaysInfo <- function(inputFile) {
     lineTmp <- readLines(con, warn=FALSE)
     
     # Skip first line because it is empty
-    for (i in 2:length(lineTmp)) {
+    for (i in 1:length(lineTmp)) {
         line <- lineTmp[i]
         
         if(grepl("^$", line)) {
