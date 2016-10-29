@@ -26,9 +26,11 @@ This package is primarily directed towards R users who wish to work with binary 
 
 * NOTE: Installation on Windows 10 from GitHub using devtools::install_github may require args="--no-multiarch"
 
-#### OS X (tested on Mavericks OSX 10.9)
+#### OS X (tested on Mavericks OSX 10.9+)
 
 Java needs to be installed. If it is not installed, you will be prompted to install Java the first time you load the paxtoolsr package (NOTE: This prompt may crash RStudio, but installation of Java should not be affected).
+
+* NOTE: Further instructions on rJava installation are found here: http://stackoverflow.com/questions/30738974/rjava-load-error-in-rstudio-r-after-upgrading-to-osx-yosemite
 
 #### Ubuntu (tested on Ubuntu 14.04)
 
