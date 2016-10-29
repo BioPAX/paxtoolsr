@@ -20,9 +20,11 @@ This package is primarily directed towards R users who wish to work with binary 
 ## Install PaxtoolsR from Bioconductor (Recommended)
 
 ### Dependencies
-#### Windows (tested on Windows 8)
+#### Windows (tested on Windows 10)
 
 [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) needs to be installed. NOTE: If using a 64-bit system, make sure to install (or re-install) the 64-bit version. Otherwise, you may encounter an [rJava issue with JAVA_HOME](http://www.r-statistics.com/2012/08/how-to-load-the-rjava-package-after-the-error-java_home-cannot-be-determined-from-the-registry/).
+
+* NOTE: Installation on Windows 10 from GitHub using devtools::install_github may require args="--no-multiarch"
 
 #### OS X (tested on Mavericks OSX 10.9)
 
