@@ -13,7 +13,7 @@ output:
 %\VignettePackage{paxtoolsr}
 -->
 
-# PaxtoolsR Tutorial 
+# PaxtoolsR Tutorial
 
 ```{r knitrSetup, include=FALSE}
 library(knitr)
@@ -25,40 +25,40 @@ opts_chunk$set(out.extra='style="display:block; margin: auto"', fig.align="cente
 BiocStyle::markdown()
 ```
 
-The **paxtoolsr** package exposes a number of the algorithms and functions provided by the Paxtools Java library and Pathway Commons webservice allowing them to be used in R. 
+The **paxtoolsr** package exposes a number of the algorithms and functions provided by the Paxtools Java library and Pathway Commons webservice allowing them to be used in R.
 
 # Overview
 
 ## BioPAX, Paxtools, Pathway Commons, and the Simple Interaction Format
 
-The [Biological Pathway Exchange](http://www.ncbi.nlm.nih.gov/pubmed/20829833) (BioPAX) format is a community-driven standard language to represent biological pathways at the molecular and cellular level and to facilitate the exchange of pathway data. BioPAX can represent metabolic and signaling pathways, molecular and genetic interactions and gene regulation networks. Using BioPAX, millions of interactions, organized into thousands of pathways, from many organisms are available from a growing number of databases. This large amount of pathway data in a computable form will support visualization, analysis and biological discovery. The BioPAX format using syntax for data exchange based on the OWL ([Web Ontology Language](http://www.w3.org/TR/owl2-overview/)) that aids pathway data integration; classes in the BioPAX ontology are described [here](http://www.biopax.org/owldoc/Level3/). Ontologies are formal systems for knowledge representation allowing machine-readability of pathway data; one well-known example of a biological ontology is the [Gene Ontology](http://geneontology.org) for biological terms. 
+The [Biological Pathway Exchange](http://www.ncbi.nlm.nih.gov/pubmed/20829833) (BioPAX) format is a community-driven standard language to represent biological pathways at the molecular and cellular level and to facilitate the exchange of pathway data. BioPAX can represent metabolic and signaling pathways, molecular and genetic interactions and gene regulation networks. Using BioPAX, millions of interactions, organized into thousands of pathways, from many organisms are available from a growing number of databases. This large amount of pathway data in a computable form will support visualization, analysis and biological discovery. The BioPAX format using syntax for data exchange based on the OWL ([Web Ontology Language](http://www.w3.org/TR/owl2-overview/)) that aids pathway data integration; classes in the BioPAX ontology are described [here](http://www.biopax.org/owldoc/Level3/). Ontologies are formal systems for knowledge representation allowing machine-readability of pathway data; one well-known example of a biological ontology is the [Gene Ontology](http://geneontology.org) for biological terms.
 
-[Paxtools](http://www.ncbi.nlm.nih.gov/pubmed/24068901) is a Java libary that allows users to interact with biological pathways represented in the BioPAX language. [Pathway Commons](http://www.pathwaycommons.org/about/) is a resource that integrates biological pathway information for a number of public pathway databases, including Reactome, PantherDB, HumanCyc, etc. that are represented using the BioPAX language. 
+[Paxtools](http://www.ncbi.nlm.nih.gov/pubmed/24068901) is a Java libary that allows users to interact with biological pathways represented in the BioPAX language. [Pathway Commons](http://www.pathwaycommons.org/about/) is a resource that integrates biological pathway information for a number of public pathway databases, including Reactome, PantherDB, HumanCyc, etc. that are represented using the BioPAX language.
 
-**NOTE:** BioPAX can encode very detailed information about biological processes. Analysis of this data, however, can be complicated as one needs to consider a wide array of n-ary relationships, different states of entities and generics. An alternative approach is to derive higher order relations based on a set of templates to define a simple binary network between biological entities and use conventional graph algorithms to analyze it. For many users of this package, the binary representation termed the Simple Interaction Format (SIF) will be the main entry point to the usage of BioPAX data. Conversion of BioPAX datasets to the SIF format is done through a series of [simplification rules](https://docs.google.com/document/d/1coFo66uuPQQ4ZMSHr8IzCV7I2DwXCoDBfZw7Vg4MgUE/edit?usp=sharing). 
+**NOTE:** BioPAX can encode very detailed information about biological processes. Analysis of this data, however, can be complicated as one needs to consider a wide array of n-ary relationships, different states of entities and generics. An alternative approach is to derive higher order relations based on a set of templates to define a simple binary network between biological entities and use conventional graph algorithms to analyze it. For many users of this package, the binary representation termed the Simple Interaction Format (SIF) will be the main entry point to the usage of BioPAX data. Conversion of BioPAX datasets to the SIF format is done through a series of [simplification rules](https://docs.google.com/document/d/1coFo66uuPQQ4ZMSHr8IzCV7I2DwXCoDBfZw7Vg4MgUE/edit?usp=sharing).
 
-## Limitations 
+## Limitations
 
-The Paxtools Java library produces that full model of a given BioPAX data set that can be searched via code. The **paxtoolsr** provides a limited set of functionality mainly to produce SIF representations of networks that can be analyzed in R. 
+The Paxtools Java library produces that full model of a given BioPAX data set that can be searched via code. The **paxtoolsr** provides a limited set of functionality mainly to produce SIF representations of networks that can be analyzed in R.
 
-# Basics 
+# Basics
 
-## Installation 
+## Installation
 
 ```{r installPaxtoolsr, eval=FALSE}
 source("http://bioconductor.org/biocLite.R")
 biocLite("paxtoolsr")
 ```
 
-## Getting Started 
+## Getting Started
 
-Load **paxtoolsr** package: 
+Load **paxtoolsr** package:
 
 ```{r loadLibrary, message=FALSE, warning=FALSE}
 library(paxtoolsr)
 ```
 
-A list of all accessible vignettes and methods is available with the following command: 
+A list of all accessible vignettes and methods is available with the following command:
 
 ```{r searchHelp, eval=FALSE, tidy=FALSE}
 help.search("paxtoolsr")
@@ -71,9 +71,9 @@ help(graphPc)
 ?graphPc
 ```
 
-## Common Function Return Types 
+## Common Function Return Types
 
-**paxtoolsr** return two main types of values **data.frame** and **XMLInternalDocument**. Data.frames are table like data structures. **XMLInternalDocument** is a representation provided by the **XML** package and this data structure form is returned for functions that search or return raw BioPAX results. An **XMLInternalDocument** can be used as the input for any function requiring a BioPAX file. 
+**paxtoolsr** return two main types of values **data.frame** and **XMLInternalDocument**. Data.frames are table like data structures. **XMLInternalDocument** is a representation provided by the **XML** package and this data structure form is returned for functions that search or return raw BioPAX results. An **XMLInternalDocument** can be used as the input for any function requiring a BioPAX file.
 
 # Handling BioPAX OWL Files
 
@@ -81,7 +81,7 @@ help(graphPc)
 
 ## Merging BioPAX Files
 
-We illustrate how to merge two BioPAX files. Only entities that share IDs will be merged; no additional merging occurs on cross-references. The merging occurs as described further in the Java library [documentation](http://sourceforge.net/projects/biopax/files/paxtools/paxtools.pdf/download). Throughout this BioPAX and Pathway Commons tutorial we use the system.file() command to access sample BioPAX files included with the **paxtoolsr** package. Merging may result in warning messages caused as a result of redundant actions being checked against by the Java library; these messages may be ignored. 
+We illustrate how to merge two BioPAX files. Only entities that share IDs will be merged; no additional merging occurs on cross-references. The merging occurs as described further in the Java library [documentation](http://sourceforge.net/projects/biopax/files/paxtools/paxtools.pdf/download). Throughout this BioPAX and Pathway Commons tutorial we use the system.file() command to access sample BioPAX files included with the **paxtoolsr** package. Merging may result in warning messages caused as a result of redundant actions being checked against by the Java library; these messages may be ignored.
 
 ```{r paxtoolsMergeExample}
 file1 <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")
@@ -90,9 +90,9 @@ file2 <- system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="
 mergedFile <- mergeBiopax(file1, file2)
 ```
 
-Here we summarize information about one of the BioPAX files provide in the **paxtoolsr** package. The summarize() function produces a counts for various BioPAX classes and can be used to filter through BioPAX files matching particular characteristics. In the example below, we show that the merged file contains the sum of the Catalysis elements from the original two BioPAX files. This can be used iterate over and to identify files with particular properties quickly or to summarize across the files from a set. 
+Here we summarize information about one of the BioPAX files provide in the **paxtoolsr** package. The summarize() function produces a counts for various BioPAX classes and can be used to filter through BioPAX files matching particular characteristics. In the example below, we show that the merged file contains the sum of the Catalysis elements from the original two BioPAX files. This can be used iterate over and to identify files with particular properties quickly or to summarize across the files from a set.
 
-```{r summarize, results='hold'} 
+```{r summarize, results='hold'}
 s1 <- summarize(file1)
 s2 <- summarize(file2)
 s3 <- summarize(mergedFile)
@@ -104,10 +104,10 @@ s3$Catalysis
 
 ## Validating BioPAX Files
 
-To validate BioPAX **paxtoolsr** the types of validation performed are described in the [**BioPAX Validator**](http://www.ncbi.nlm.nih.gov/pubmed/23918249) publication by Rodchenkov I, et al. 
+To validate BioPAX **paxtoolsr** the types of validation performed are described in the [**BioPAX Validator**](http://www.ncbi.nlm.nih.gov/pubmed/23918249) publication by Rodchenkov I, et al.
 
 ```{r paxtoolsValidationExample, eval=FALSE}
-errorLog <- validate(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), onlyErrors=TRUE) 
+errorLog <- validate(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"), onlyErrors=TRUE)
 ```
 
 ## Converting BioPAX Files to Other Formats
@@ -119,7 +119,7 @@ It is often useful to convert BioPAX into other formats. Currently, **paxtoolsr*
 The basic SIF format includes a three columns: PARTICIPANT_A, INTERACTION_TYPE, and PARTICIPANT_B; possible INTERACTION_TYPEs are described [here](http://www.pathwaycommons.org/pc/sif_interaction_rules.do).
 
 ```{r loadSifFromFile}
-sif <- toSif(system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="paxtoolsr")) 
+sif <- toSif(system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="paxtoolsr"))
 ```
 
 SIF representations of networks are returned as **data.frame** objects. SIF representations can be readily be visualized in network analysis tools, such as [Cytoscape](http://www.cytoscape.org), which can be interfaced with through the R package, [RCytoscape](http://www.bioconductor.org/packages/release/bioc/html/RCytoscape.html).
@@ -130,20 +130,20 @@ head(sif)
 
 ### Extended Simple Interaction Format (SIF) Network
 
-Often analysis requires additional items of information, this could be the literature references related to a resource or the name of the data source where an interaction was derived. This information can be retrieved as part of an extended SIF network. A BioPAX dataset can be converted to extended SIF network. 
+Often analysis requires additional items of information, this could be the literature references related to a resource or the name of the data source where an interaction was derived. This information can be retrieved as part of an extended SIF network. A BioPAX dataset can be converted to extended SIF network.
 
-```{r toSifnxExample, tidy=TRUE} 
+```{r toSifnxExample, tidy=TRUE}
 # Select additional node and edge properties
 inputFile <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")
 
-results <- toSifnx(inputFile=inputFile) 
+results <- toSifnx(inputFile=inputFile)
 ```
 
 The **results** object is a list with two entries: nodes and edges. **nodes** will be a **data.table** where each row corresponds to a biological entity, an **EntityReference**, and will contain any user-selected node properties as additional columns. Similarly, **edges** will be a **data.table** with a SIF extended with any user-selected properties for an **Interaction** as additional columns. Information on possible properties for an EntityReference or Interaction is available through the [BioPAX ontology](http://www.biopax.org/owldoc/Level3/). It is also possible to download a pre-computed extended SIF representation for the entire [Pathway Commons database](http://www.pathwaycommons.org) that includes information about the data sources for interactions and identifiers for nodes; refer to documentation of the method for more details about the returned entries.  
 
-**NOTE:** Conversion of **results** entries from **data.table** to **data.frame** can be done using **setDF** in the **data.table** package. 
+**NOTE:** Conversion of **results** entries from **data.table** to **data.frame** can be done using **setDF** in the **data.table** package.
 
-**NOTE:** **downloadPc2** may take several minutes to complete. 
+**NOTE:** **downloadPc2** may take several minutes to complete.
 
 ```{r downloadSif, eval=FALSE}
 results <- downloadPc2()
@@ -157,34 +157,34 @@ Sys.getenv("PAXTOOLSR_CACHE")
 
 # Searching Pathway Commons
 
-Networks can also be loaded using Pathway Commons rather than from local BioPAX files. First, we show how Pathway Commons can be searched. 
+Networks can also be loaded using Pathway Commons rather than from local BioPAX files. First, we show how Pathway Commons can be searched.
 
 ```{r searchResultsExample, eval=FALSE}
-## Search Pathway Commons for "glycolysis"-related pathways 
+## Search Pathway Commons for "glycolysis"-related pathways
 searchResults <- searchPc(q="glycolysis", type="pathway")
 ```
 
 All functions that query Pathway Commons include a flag **verbose** that allows users to see the query URL sent to Pathway Commons for debugging purposes.
 
 ```{r searchResultsExampleVerbose}
-## Search Pathway Commons for "glycolysis"-related pathways 
+## Search Pathway Commons for "glycolysis"-related pathways
 searchResults <- searchPc(q="glycolysis", type="pathway", verbose=TRUE)
 ```
 
-Pathway Commons search results are returned as an XML object. 
+Pathway Commons search results are returned as an XML object.
 
 ```{r searchResultsType}
 str(searchResults)
 ```
 
-These results can be filtered using the **XML** package using XPath expressions; [examples of XPath expressions and syntax](http://www.w3schools.com/xpath/xpath_examples.asp). The examples here shows how to pull the name for the pathway and the URI that contains information about the pathway in the BioPAX format. 
+These results can be filtered using the **XML** package using XPath expressions; [examples of XPath expressions and syntax](http://www.w3schools.com/xpath/xpath_examples.asp). The examples here shows how to pull the name for the pathway and the URI that contains information about the pathway in the BioPAX format.
 
 ```{r searchResultsXpathExample}
 xpathSApply(searchResults, "/searchResponse/searchHit/name", xmlValue)[1]
 xpathSApply(searchResults, "/searchResponse/searchHit/pathway", xmlValue)[1]
 ```
 
-Alternatively, these XML results can be converted to data.frames using the **XML** and **plyr** libraries. 
+Alternatively, these XML results can be converted to data.frames using the **XML** and **plyr** libraries.
 
 ```{r convertXmlToDf, message=FALSE}
 library(plyr)
@@ -194,25 +194,25 @@ searchResultsDf <- ldply(xmlToList(searchResults), data.frame)
 simplifiedSearchResultsDf <- searchResultsDf[, c("name", "uri", "biopaxClass")]
 ```
 
-This type of searching can be used to locally save BioPAX files retrieved from Pathway Commons. 
+This type of searching can be used to locally save BioPAX files retrieved from Pathway Commons.
 
 ```{r saveBiopaxFileFromPcQuery, message=FALSE, results='hide'}
 ## Use an XPath expression to extract the results of interest. In this case, the URIs (IDs) for the pathways from the results
 searchResults <- xpathSApply(searchResults, "/searchResponse/searchHit/uri", xmlValue)
 
 ## Generate temporary file to save content into
-biopaxFile <- tempfile() 
+biopaxFile <- tempfile()
 
 ## Extract a URI for a pathway in the search results and save into a file  
-idx <- which(grepl("panther", simplifiedSearchResultsDf$uri) & 
+idx <- which(grepl("panther", simplifiedSearchResultsDf$uri) &
              grepl("glycolysis", simplifiedSearchResultsDf$name, ignore.case=TRUE))
 uri <- simplifiedSearchResultsDf$uri[idx]
-saveXML(getPc(uri, "BIOPAX"), biopaxFile) 
+saveXML(getPc(uri, "BIOPAX"), biopaxFile)
 ```
 
-# Extracting Information from BioPAX Datasets Using traverse() 
+# Extracting Information from BioPAX Datasets Using traverse()
 
-The **traverse** function allows the extraction of specific entries from BioPAX records. traverse() functionality should be available for any **uniprot.org** or **purl.org** URI. 
+The **traverse** function allows the extraction of specific entries from BioPAX records. traverse() functionality should be available for any **uniprot.org** or **purl.org** URI.
 
 ```{r traverse}
 # Get the protein Uniprot ID for a given HGNC gene symbol
@@ -224,7 +224,7 @@ uri <- paste0("http://identifiers.org/uniprot/", id)
 # Get URIs for only the ModificationFeatures of the protein
 xml <- traverse(uri=uri, path="ProteinReference/entityFeature:ModificationFeature")
 
-# Extract all the URIs 
+# Extract all the URIs
 uris <- xpathSApply(xml, "//value/text()", xmlValue)
 
 # For the first URI get the modification position and type
@@ -239,7 +239,7 @@ cat("Modification Type: ", xpathSApply(tmpXml, "//value/text()", xmlValue))
 
 ## Visualizing SIF Interactions from Pathway Commons using R Graph Libraries
 
-A common use case for **paxtoolsr** to retrieve a network or sub-network from a pathway derived from a BioPAX file or a Pathway Commons query. Next, we show how to visualize subnetworks loaded from BioPAX files and retrieved using the Pathway Commons webservice. To do this, we use the **igraph** R graph library because it has simple methods for loading edgelists, analyzing the networks, and visualizing these networks. 
+A common use case for **paxtoolsr** to retrieve a network or sub-network from a pathway derived from a BioPAX file or a Pathway Commons query. Next, we show how to visualize subnetworks loaded from BioPAX files and retrieved using the Pathway Commons webservice. To do this, we use the **igraph** R graph library because it has simple methods for loading edgelists, analyzing the networks, and visualizing these networks.
 
 Next, we show how subnetworks queried from Pathway Commons can be visualized directly in R using the **igraph** library. Alternatively, these graphical plots can be made using [Cytoscape](http://cytoscape.org) either by exporting the SIF format and then importing the SIF format into Cytoscape or by using the **RCytoscape** package to work with Cytoscape directly from R.
 
@@ -247,17 +247,17 @@ Next, we show how subnetworks queried from Pathway Commons can be visualized dir
 library(igraph)
 ```
 
-We load the network from a BioPAX file using the SIF format: 
+We load the network from a BioPAX file using the SIF format:
 
 ```{r plotGraph}
-sif <- toSif(system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="paxtoolsr")) 
+sif <- toSif(system.file("extdata", "biopax3-short-metabolic-pathway.owl", package="paxtoolsr"))
 
 # graph.edgelist requires a matrix
 g <- graph.edgelist(as.matrix(sif[,c(1,3)]), directed=FALSE)
 plot(g, layout=layout.fruchterman.reingold)
 ```
 
-## Pathway Commons Graph Query 
+## Pathway Commons Graph Query
 
 Next, we show how to perform graph search using Pathway Commons useful for finding connections and neighborhoods of elements. This can be used to extract the neighborhood of a single gene that is then filtered for a specific interaction type: "controls-state-change-of". State change here indicates a modification of another molecule (e.g. post-translational modifications). This interaction type is directed, and it is read as "A controls a state change of B".
 
@@ -286,16 +286,16 @@ plot(g, layout=layout.fruchterman.reingold)
 
 ## Overlaying Experimental Data on Pathway Commons Networks
 
-Often, it is useful not only to visualize a biological pathway, but also to overlay a given network with some form of biological data, such as gene expression values for genes in the network. 
+Often, it is useful not only to visualize a biological pathway, but also to overlay a given network with some form of biological data, such as gene expression values for genes in the network.
 
 ```{r dataOverlayExample}
 library(RColorBrewer)
 
-# Generate a color palette that goes from white to red that contains 10 colors 
+# Generate a color palette that goes from white to red that contains 10 colors
 numColors <- 10
 colors <- colorRampPalette(brewer.pal(9, "Reds"))(numColors)
 
-# Generate values that could represent some experimental values 
+# Generate values that could represent some experimental values
 values <- runif(length(V(g)$name))
 
 # Scale values to generate indicies from the color palette  
@@ -306,30 +306,30 @@ factor <- (newrange[2]-newrange[1]) / (xrange[2]-xrange[1])
 scaledValues <- newrange[1] + (values-xrange[1]) * factor
 indicies <- as.integer(scaledValues)
 
-# Color the nodes based using the indicies and the color palette created above 
+# Color the nodes based using the indicies and the color palette created above
 g <- set.vertex.attribute(g, "color", value=colors[indicies])
 
 #get.vertex.attribute(h, "color")
 
-plot(g, layout = layout.fruchterman.reingold) 
+plot(g, layout = layout.fruchterman.reingold)
 ```
 
-## Network Statistics 
+## Network Statistics
 
-Often it is useful to produce statistics on a network. Here we show how to determine SIF network statistics and statistics on BioPAX files. 
+Often it is useful to produce statistics on a network. Here we show how to determine SIF network statistics and statistics on BioPAX files.
 
-### SIF Network Statistics 
+### SIF Network Statistics
 
 Once Pathway Commons and BioPAX networks are loaded as graphs using the **igraph** R package, it is possible to analyze these networks. Here we show how to get common statistics for the current network retrieved from Pathway Commons:
 
 ```{r sifNetStats}
-# Degree for each node in the igraph network 
+# Degree for each node in the igraph network
 degree(g)
-#Number of nodes 
+#Number of nodes
 length(V(g)$name)
-#Clustering coefficient 
+#Clustering coefficient
 transitivity(g)
-#Network density 
+#Network density
 graph.density(g)
 # Network diameter
 diameter(g)
@@ -348,17 +348,17 @@ if(class(tmp[[1]]) == "list") {
   path <- tmp[[1]] # OS X
 }
 
-# Convert from indicies to vertex names 
+# Convert from indicies to vertex names
 V(g)$name[path]
 ```
 
-# Gene Set Enrichment Analysis with Pathway Commons 
+# Gene Set Enrichment Analysis with Pathway Commons
 
-The processing of the microarray data is taken from the following webpage: [Bioconductor Tutorial on Microarray Processing and Gene Set Analysis](http://www.bioconductor.org/help/course-materials/2005/BioC2005/labs/lab01/estrogen/) with for grabbing gene sets from a Pathway Commons pathway and using same data as in the example, but stored in the **estrogen** R package. 
+The processing of the microarray data is taken from the following webpage: [Bioconductor Tutorial on Microarray Processing and Gene Set Analysis](http://www.bioconductor.org/help/course-materials/2005/BioC2005/labs/lab01/estrogen/) with for grabbing gene sets from a Pathway Commons pathway and using same data as in the example, but stored in the **estrogen** R package.
 
 To access microarray data sets, users should consider retrieving data from the NCBI Gene Expression Omnibus (GEO) using the [GEOQuery package](http://www.bioconductor.org/packages/2.13/bioc/html/GEOquery.html).
 
-The first thing we'll do is load up the necessary packages. 
+The first thing we'll do is load up the necessary packages.
 
 ```{r gseaExampleLibraries, message=FALSE}
 library(paxtoolsr) # To retrieve data from Pathway Commons
@@ -369,41 +369,41 @@ library(hgu95av2cdf)
 library(XML) # To parse XML files
 ```
 
-We then retrieve a pathway of interest using the the Pathway Commons search functionality. 
+We then retrieve a pathway of interest using the the Pathway Commons search functionality.
 
 ```{r gseaExampleGenGeneSet, results='hide', eval=FALSE}
-# Generate a Gene Set 
-## Search Pathway Commons for "glycolysis"-related pathways 
+# Generate a Gene Set
+## Search Pathway Commons for "glycolysis"-related pathways
 searchResults <- searchPc(q="glycolysis", type="pathway")
 
 ## Use an XPath expression to extract the results of interest. In this case, the URIs (IDs) for the pathways from the results
 searchResults <- xpathSApply(searchResults, "/searchResponse/searchHit/uri", xmlValue)
 
 ## Generate temporary files to save content into
-biopaxFile <- tempfile() 
+biopaxFile <- tempfile()
 
 ## Extract the URI for the first pathway in the search results and save into a file  
 uri <- searchResults[2]
 saveXML(getPc(uri, "BIOPAX"), biopaxFile)
 ```
 
-And then, we convert this pathway to a gene set. 
+And then, we convert this pathway to a gene set.
 
 ```{r gseaExampleGenGeneSetSave, results='hide'}
 ## Generate temporary files to save content into
-gseaFile <- tempfile() 
+gseaFile <- tempfile()
 
-## Generate a gene set for the BioPAX pathway with gene symbols 
-### NOTE: Not all search results are guaranteed to result in gene sets 
+## Generate a gene set for the BioPAX pathway with gene symbols
+### NOTE: Not all search results are guaranteed to result in gene sets
 tmp <- toGSEA(biopaxFile, gseaFile, "HGNC Symbol", FALSE)
 geneSet <- tmp$geneSet
 ```
 
-Finally, we process the microarray data and apply the gene set entrichment analysis. 
+Finally, we process the microarray data and apply the gene set entrichment analysis.
 
 ```{r gseaExampleMicroarrayAnalyis}
 # Process Microarray Data
-## Load/process the estrogen microarray data 
+## Load/process the estrogen microarray data
 estrogenDataDir <- system.file("extdata", package="estrogen")
 targets <- readTargets(file.path(estrogenDataDir, "estrogen.txt"), sep="")
 
@@ -416,18 +416,18 @@ design <- model.matrix(~0+f)
 colnames(design) <- levels(f)
 
 fit <- lmFit(eset, design)
- 
+
 cont.matrix <- makeContrasts(E10="present10-absent10",E48="present48-absent48",Time="absent48-absent10",levels=design)
 
 fit2  <- contrasts.fit(fit, cont.matrix)
 fit2  <- eBayes(fit2)
 
-## Map the gene symbols to the probe IDs 
+## Map the gene symbols to the probe IDs
 symbol <- unlist(as.list(hgu95av2SYMBOL))
 
-### Check that the gene symbols are on the microarray platform 
+### Check that the gene symbols are on the microarray platform
 genesOnChip <- match(geneSet,symbol)
-genesOnChip # CHECK FOR ERROR HERE 
+genesOnChip # CHECK FOR ERROR HERE
 
 genesOnChip <- genesOnChip[!is.na(genesOnChip)]
 
@@ -440,9 +440,9 @@ genesOnChip <- genesOnChip[!is.na(genesOnChip)]
 geneSetTest(genesOnChip,fit2$t[,1],"two.sided")
 ```
 
-# ID Mapping 
+# ID Mapping
 
-Functions and results from **paxtoolsr** functions can be used in conjunction with the ID mapping functions of the [**biomaRt** Bioconductor package](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html); users should check the the **biomaRt** package documentation for a list of possible ID types. 
+Functions and results from **paxtoolsr** functions can be used in conjunction with the ID mapping functions of the [**biomaRt** Bioconductor package](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html); users should check the the **biomaRt** package documentation for a list of possible ID types.
 
 ```{r idMapping, eval=FALSE}
 sif <- toSif(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"))
@@ -456,18 +456,18 @@ hgnc_symbol <- c(sif$PARTICIPANT_A, sif$PARTICIPANT_B)
 output <- getBM(attributes=c('hgnc_symbol', 'uniprot_sptrembl'), filters='hgnc_symbol', values=hgnc_symbol, mart=ensembl)
 
 # Remove blank entries
-output <- output[output[,2] != "",] 
+output <- output[output[,2] != "",]
 ```
 
-# Troubleshooting 
+# Troubleshooting
 
-## File Paths 
+## File Paths
 
-Use properly delimited and full paths (do not use relative paths, such as ../directory/file or ~/directory/file) to files should be used with the **paxtoolsr** package. 
+Use properly delimited and full paths (do not use relative paths, such as ../directory/file or ~/directory/file) to files should be used with the **paxtoolsr** package.
 
 ```{r filePathExample, eval=FALSE}
 toSif("/directory/file")
-#or 
+#or
 toSif("X:\\directory\\file")
 ```
 
@@ -475,10 +475,10 @@ toSif("X:\\directory\\file")
 
 By default **paxtoolsr** uses a maximum heap size limit of 512MB. For large BioPAX files, this limit may be insufficient. The code below shows how to change this limit and observe that the change was made.  
 
-**NOTE:** This limit cannot be changed once the virtual machine has been initialized 
-by loading the library, so the memory heap size limit must be changed beforehand. 
+**NOTE:** This limit cannot be changed once the virtual machine has been initialized
+by loading the library, so the memory heap size limit must be changed beforehand.
 
-```{r changeHeapSize, eval=FALSE} 
+```{r changeHeapSize, eval=FALSE}
 options(java.parameters="-Xmx1024m")
 
 library(paxtoolsr)

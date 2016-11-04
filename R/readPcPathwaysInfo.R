@@ -1,6 +1,6 @@
 #' Read in Pathway Commons Pathways Information 
 #' 
-#' @param inputFile an inputFile
+#' @param inputFile an inputFile; if NULL then retrieve the current pathways.txt; see details (default: NULL)
 #' 
 #' @return a data.table 
 #' 
@@ -12,10 +12,19 @@
 #' 
 #' @concept paxtoolsr
 #' @export
-readPcPathwaysInfo <- function(inputFile) {
+readPcPathwaysInfo <- function(inputFile=NULL) {
+    if(is.null(inputFile)) {
+        url <- "http://www.pathwaycommons.org/archives/PC2/current/"
+        fileName <- "pathways.txt.gz"
+        
+        downloadFile(url, fileName)
+        
+        inputFile <- file.path(Sys.getenv("PAXTOOLSR_CACHE"), fileName)
+    } 
+    
     if(!file.exists(inputFile)) {
         stop("ERROR: inputFile was not found")
-    }
+    } 
     
     pathwayChildrenFile <- tempfile("pathwayChildren", fileext=".txt")
     pathwayInfoFile <- tempfile("pathwayInfo", fileext=".txt")

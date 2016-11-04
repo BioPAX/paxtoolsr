@@ -4,10 +4,10 @@
 \alias{readPcPathwaysInfo}
 \title{Read in Pathway Commons Pathways Information}
 \usage{
-readPcPathwaysInfo(inputFile)
+readPcPathwaysInfo(inputFile = NULL)
 }
 \arguments{
-\item{inputFile}{an inputFile}
+\item{inputFile}{an inputFile; if NULL then retrieve the current pathways.txt; see details (default: NULL)}
 }
 \value{
 a data.table

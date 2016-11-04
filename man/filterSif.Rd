@@ -6,7 +6,7 @@
 \usage{
 filterSif(sif, ids = NULL, interactionTypes = NULL, dataSources = NULL,
   interactionPubmedIds = NULL, pathwayNames = NULL, mediatorIds = NULL,
-  edgelist = NULL, verbose = FALSE)
+  edgelist = NULL, idsBothParticipants = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{sif}{a binary SIF as a data.frame with three columns: 
@@ -27,6 +27,9 @@ given in the SIF. For Extended SIF.}
 
 \item{edgelist}{a two-column data.frame where each row is an interaction to be kept.
 Directionality is ignored (e.g. Edge A B will return interactions A B and B A from SIF)}
+
+\item{idsBothParticipants}{a boolean whether both interaction participants should be in 
+a given interaction when using the ids parameter; TRUE if both (DEFAULT: TRUE)}
 
 \item{interactionPubmedId}{a vector of Pubmed IDs to be kept. For Extended SIF.}
 }

@@ -63,6 +63,10 @@
     }
 }
 
+.onAttach <- function(libname, pkgname){
+    packageStartupMessage('Consider citing this package: Luna A, et al. PaxtoolsR: pathway analysis in R using Pathway Commons. PMID: 26685306; citation("paxtoolsr")')
+}
+
 #jar.paxtools <- "lib/paxtools-4.2.1.jar"
 #jar.paxtools <- "lib/paxtools-jar-with-dependencies.jar"
 #.jinit(classpath=c(jar.paxtools))

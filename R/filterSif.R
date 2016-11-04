@@ -13,6 +13,8 @@
 #'   given in the SIF. For Extended SIF.
 #' @param edgelist a two-column data.frame where each row is an interaction to be kept.
 #'   Directionality is ignored (e.g. Edge A B will return interactions A B and B A from SIF)
+#' @param idsBothParticipants a boolean whether both interaction participants should be in 
+#'   a given interaction when using the ids parameter; TRUE if both (DEFAULT: TRUE)
 #'  
 #' @return filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B". 
 #'   The intersection of multiple filters is returned. The return class is the same as the input: 
@@ -39,14 +41,18 @@
 #' 
 #' @concept paxtoolsr
 #' @export
-filterSif <- function(sif, ids=NULL, interactionTypes=NULL, dataSources=NULL, interactionPubmedIds=NULL, pathwayNames=NULL, mediatorIds=NULL, edgelist=NULL, verbose=FALSE) {
+filterSif <- function(sif, ids=NULL, interactionTypes=NULL, dataSources=NULL, interactionPubmedIds=NULL, pathwayNames=NULL, mediatorIds=NULL, edgelist=NULL, idsBothParticipants=FALSE, verbose=FALSE) {
     idxList <- NULL
     
     if(!is.null(ids)) {
         aIdx <- which(sif$PARTICIPANT_A %in% ids) 
         bIdx <- which(sif$PARTICIPANT_B %in% ids) 
         
-        idxIds <- unique(c(aIdx, bIdx))
+        if(idsBothParticipants) {
+            idxIds <- intersect(aIdx, bIdx)
+        } else {
+            idxIds <- unique(c(aIdx, bIdx))
+        }
         
         #cat("II: ", paste(idxIds, collapse=","), "\n")
         idxList[["idxIds"]] <- idxIds
