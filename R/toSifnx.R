@@ -8,11 +8,13 @@
 #' @param inputFile a string with the name of the input BioPAX OWL file
 #' @param outputFile a string with the name of the output file for SIFNX 
 #'   information
+#' @param idType a string either "hgnc" or "uniprot" (DEFAULT: uniprot, more common)  
 #' 
 #' @return see readSifnx()
 #' 
 #' @details Information on SIF conversion is provided on the Pathway Commons 
-#'   site: \url{http://www.pathwaycommons.org/pc2/}
+#'   site: \url{http://www.pathwaycommons.org/pc2/}. Also, this is a Java-based
+#'   methods, it is best to use full paths. 
 #' 
 #' @examples
 #' inputFile <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")
@@ -20,7 +22,7 @@
 #' 
 #' @concept paxtoolsr
 #' @export
-toSifnx <- function(inputFile, outputFile=tempfile()) {
+toSifnx <- function(inputFile, outputFile=tempfile(), idType="uniprot") {
     inputFile <- checkInputFile(inputFile)
     #outputNodesFile <- checkOutputFile(outputNodesFile)
     #outputEdgesFile <- checkOutputFile(outputEdgesFile)
@@ -39,9 +41,10 @@ toSifnx <- function(inputFile, outputFile=tempfile()) {
     
     #nodePropsJStr <- .jnew("java/lang/String", nodePropsCollapsed)
     #edgePropsJStr <- .jnew("java/lang/String", edgePropsCollapsed)
+    idTypeJStr <- .jnew("java/lang/String", idType)
     
     #argsList <- list(commandJStr, inputJStr, outputJStr, nodePropsJStr, edgePropsJStr) 
-    argsList <- list(commandJStr, inputJStr, outputJStr) 
+    argsList <- list(commandJStr, inputJStr, outputJStr, idTypeJStr) 
     
     #DEBUG 
     #str(argsList)

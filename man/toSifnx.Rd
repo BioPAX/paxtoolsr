@@ -4,13 +4,15 @@
 \alias{toSifnx}
 \title{Converts BioPAX OWL file to extended binary SIF representation}
 \usage{
-toSifnx(inputFile, outputFile = tempfile())
+toSifnx(inputFile, outputFile = tempfile(), idType = "uniprot")
 }
 \arguments{
 \item{inputFile}{a string with the name of the input BioPAX OWL file}
 
 \item{outputFile}{a string with the name of the output file for SIFNX 
 information}
+
+\item{idType}{a string either "hgnc" or "uniprot" (DEFAULT: uniprot, more common)}
 }
 \value{
 see readSifnx()
@@ -20,7 +22,8 @@ Converts BioPAX OWL file to extended binary SIF representation
 }
 \details{
 Information on SIF conversion is provided on the Pathway Commons 
-  site: \url{http://www.pathwaycommons.org/pc2/}
+  site: \url{http://www.pathwaycommons.org/pc2/}. Also, this is a Java-based
+  methods, it is best to use full paths.
 }
 \examples{
 inputFile <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr")

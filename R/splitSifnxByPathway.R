@@ -20,13 +20,14 @@ splitSifnxByPathway <- function(edges, parallel=FALSE) {
     pathwayNames <- unique(unlist(tmp2))
     
     iterations <- length(pathwayNames)
-    cat("ITERATIONS: ", iterations, "\n")
+    cat("NUMBER OF PATHWAYS: ", iterations, "\n")
     
     # Make sure the necessary packages are available 
-    if(all(parallel,
-           requireNamespace("foreach"), 
-           requireNamespace("doSNOW"), 
-           requireNamespace("parallel"))) {
+    if(parallel) {
+        require("foreach")
+        require("doSNOW")
+        require("parallel")
+        
         numCores <- parallel::detectCores()
         cl <- parallel::makeCluster(numCores, outfile="") # number of cores. Notice 'outfile'
         doSNOW::registerDoSNOW(cl)
@@ -46,16 +47,21 @@ splitSifnxByPathway <- function(edges, parallel=FALSE) {
         close(pb)
         parallel::stopCluster(cl) 
     } else {
-        pb <- txtProgressBar(min = 1, max = iterations, style = 3)
+        if(iterations > 1) {
+            pb <- txtProgressBar(min = 1, max = iterations, style = 3)
+        }
         
         results <- list()
         
         for(i in 1:iterations) {
-            setTxtProgressBar(pb, i) 
+            if(iterations > 1) {
+                setTxtProgressBar(pb, i)                
+            }
+
             pathwayName <- pathwayNames[i]
             
             tmpResults <-  searchListOfVectors(pathwayName, tmp)
-            results[[pathwayName]] <- as.vector(tmpResults)
+            results[[pathwayName]] <- unname(unlist(tmpResults))
         }
     }
     

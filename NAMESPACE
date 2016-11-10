@@ -2,6 +2,7 @@
 
 export(addAttributeList)
 export(convertIds)
+export(convertSifToGmt)
 export(convertSifToSpia)
 export(convertSifnxIds)
 export(convertToDF)
