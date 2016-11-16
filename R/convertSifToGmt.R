@@ -9,7 +9,7 @@
 #' @concept paxtoolsr
 #' @export
 convertSifToGmt <- function(sif, name="gmt", returnSmallMolecules=FALSE) {
-    ids <- unique(sif$PARTICIPANT_A, sif$PARTICIPANT_B)
+    ids <- unique(c(sif$PARTICIPANT_A, sif$PARTICIPANT_B))
     
     if(returnSmallMolecules) {
         idx <- grepl("^CHEBI", ids)
@@ -18,7 +18,7 @@ convertSifToGmt <- function(sif, name="gmt", returnSmallMolecules=FALSE) {
     }
     
     results <- list()
-    results[[name]] <- ids[idx]
+    results[[name]] <- sort(ids[idx])
     
     return(results)
 }

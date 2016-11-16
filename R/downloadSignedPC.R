@@ -3,6 +3,9 @@
 #' @param destDir a string, the destination directory for the file to be 
 #'   downloaded (Default: NULL). If NULL, then file will be downloaded to cache
 #'   directory file.path(Sys.getenv("HOME"), ".paxtoolsRCache")
+#' @param forceCache a boolean to force the use of a cached version (DEFAULT: FALSE); 
+#'   the current host of the file (GitHub) does not support the LAST-MODIFIED header  
+#'   
 #' @return a SIF containing interactions that are considered signed (i.e. 
 #'   interactions causing an increase on decrease in a molecular species)
 #' 
@@ -10,11 +13,9 @@
 #' # downloadSignedPC()
 #' 
 #' @export
-downloadSignedPC <- function(destDir=NULL) {
+downloadSignedPC <- function(destDir=NULL, forceCache=FALSE) {
     baseUrl <- Sys.getenv("SIGNED_PC_URL")
     selectedFileName <- Sys.getenv("SIGNED_PC_FILE")
-    
-    downloadResult <- paxtoolsr::downloadFile(baseUrl=baseUrl, fileName=selectedFileName)
     
     if(is.null(destDir)) {
         stopifnot(Sys.getenv("PAXTOOLSR_CACHE") != "")
@@ -22,11 +23,15 @@ downloadSignedPC <- function(destDir=NULL) {
     } else {
         selectedFilePath <- file.path(destDir, selectedFileName)
     }
-
-    if(!downloadResult) {
-        stop("ERROR: File was not found.") 
-    } 
     
+    if(!forceCache) {
+        downloadResult <- paxtoolsr::downloadFile(baseUrl=baseUrl, fileName=selectedFileName)
+        
+        if(!downloadResult) {
+            stop("ERROR: File was not found.") 
+        }         
+    }
+
     tmpFile <- gunzip(selectedFilePath, remove=FALSE, temporary=TRUE, skip=TRUE)
     
     results <- read.table(tmpFile, 

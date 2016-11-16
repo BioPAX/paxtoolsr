@@ -15,6 +15,7 @@
 #'   Directionality is ignored (e.g. Edge A B will return interactions A B and B A from SIF)
 #' @param idsBothParticipants a boolean whether both interaction participants should be in 
 #'   a given interaction when using the ids parameter; TRUE if both (DEFAULT: TRUE)
+#' @param edgelistCheckReverse a boolean whether to check for edges in the reverse order (DEFAULT: TRUE)
 #'  
 #' @return filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B". 
 #'   The intersection of multiple filters is returned. The return class is the same as the input: 
@@ -33,7 +34,6 @@
 #' results <- filterSif(tmp$edges, mediatorIds=c("http://purl.org/pc2/8/MolecularInteraction_1452626895158"))
 #' results <- filterSif(tmp$edges, interactionPubmedId="17654400")
 #' 
-#' 
 #' tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
 #' edgelist <- read.table(system.file("extdata", "test_edgelist.txt", package = "paxtoolsr"), 
 #'   sep="\t", header=FALSE, stringsAsFactors=FALSE)
@@ -41,7 +41,7 @@
 #' 
 #' @concept paxtoolsr
 #' @export
-filterSif <- function(sif, ids=NULL, interactionTypes=NULL, dataSources=NULL, interactionPubmedIds=NULL, pathwayNames=NULL, mediatorIds=NULL, edgelist=NULL, idsBothParticipants=FALSE, verbose=FALSE) {
+filterSif <- function(sif, ids=NULL, interactionTypes=NULL, dataSources=NULL, interactionPubmedIds=NULL, pathwayNames=NULL, mediatorIds=NULL, edgelist=NULL, idsBothParticipants=FALSE, edgelistCheckReverse=TRUE, verbose=FALSE) {
     idxList <- NULL
     
     if(!is.null(ids)) {
@@ -107,10 +107,14 @@ filterSif <- function(sif, ids=NULL, interactionTypes=NULL, dataSources=NULL, in
         idxEdgelist1 <- intersect(aIdx, bIdx)
         
         # Same in reverse
-        aIdx <- which(sif$PARTICIPANT_A %in% edgelist[,2]) 
-        bIdx <- which(sif$PARTICIPANT_B %in% edgelist[,1]) 
-        idxEdgelist2 <- intersect(aIdx, bIdx)
+        idxEdgelist2 <- NULL 
         
+        if(edgelistCheckReverse) {
+            aIdx <- which(sif$PARTICIPANT_A %in% edgelist[,2]) 
+            bIdx <- which(sif$PARTICIPANT_B %in% edgelist[,1]) 
+            idxEdgelist2 <- intersect(aIdx, bIdx)
+        }
+
         idxEdgelist <- c(idxEdgelist1, idxEdgelist2)
         
         #cat("II: ", paste(idxIds, collapse=","), "\n")

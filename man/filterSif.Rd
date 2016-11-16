@@ -6,7 +6,8 @@
 \usage{
 filterSif(sif, ids = NULL, interactionTypes = NULL, dataSources = NULL,
   interactionPubmedIds = NULL, pathwayNames = NULL, mediatorIds = NULL,
-  edgelist = NULL, idsBothParticipants = FALSE, verbose = FALSE)
+  edgelist = NULL, idsBothParticipants = FALSE,
+  edgelistCheckReverse = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{sif}{a binary SIF as a data.frame with three columns: 
@@ -31,6 +32,8 @@ Directionality is ignored (e.g. Edge A B will return interactions A B and B A fr
 \item{idsBothParticipants}{a boolean whether both interaction participants should be in 
 a given interaction when using the ids parameter; TRUE if both (DEFAULT: TRUE)}
 
+\item{edgelistCheckReverse}{a boolean whether to check for edges in the reverse order (DEFAULT: TRUE)}
+
 \item{interactionPubmedId}{a vector of Pubmed IDs to be kept. For Extended SIF.}
 }
 \value{
@@ -53,7 +56,6 @@ results <- filterSif(tmp$edges, dataSources=c("IntAct"), ids=c("CHEBI:17640", "M
 results <- filterSif(tmp$edges, pathwayNames=c("Metabolic pathways"))
 results <- filterSif(tmp$edges, mediatorIds=c("http://purl.org/pc2/8/MolecularInteraction_1452626895158"))
 results <- filterSif(tmp$edges, interactionPubmedId="17654400")
-
 
 tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
 edgelist <- read.table(system.file("extdata", "test_edgelist.txt", package = "paxtoolsr"), 
