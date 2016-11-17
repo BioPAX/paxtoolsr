@@ -10,7 +10,7 @@ bioc_required: true
 warnings_are_errors: false
 
 # Need this if also using covr to get code coverage
-r_github_packages:
+r_packages:
   - jimhester/covr
 after_success:
   - Rscript -e 'covr::codecov()'
