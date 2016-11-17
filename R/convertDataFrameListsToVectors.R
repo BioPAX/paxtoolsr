@@ -3,7 +3,7 @@
 #' @param df a data.frame
 #' @param delimiter a delimiter to concatenate (DEFAULT: ;)
 #' 
-#' @results a data.frame without list columns 
+#' @return a data.frame without list columns 
 #' 
 #' @note Lists as columns are useful programmatically, but cause issue in writing 
 #'   output to text-based files

@@ -10,6 +10,7 @@
 #' 
 #' @examples 
 #' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
+#' results <- readGmt(system.file("extdata", "test_gsea_1.gmt", package="paxtoolsr"))
 #' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), removePrefix=TRUE)
 #' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), returnInfo=TRUE)
 #' 
@@ -28,6 +29,12 @@ readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
     tmpResults <- sapply(fileContents, function(x) { 
       tmp <- unlist(strsplit(x, "\t", fixed = TRUE)) 
     })
+    
+    if(class(tmpResults) == "matrix") {
+        t2 <- tmpResults
+        tmpResults <- list() 
+        tmpResults[[t2[1]]] <- as.vector(t2)
+    }
     
     names(tmpResults) <- sapply(tmpResults, function(x) {
         if(removePrefix) {

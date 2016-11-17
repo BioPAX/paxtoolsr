@@ -11,6 +11,9 @@ convertDataFrameListsToVectors(df, delimiter = ";")
 
 \item{delimiter}{a delimiter to concatenate (DEFAULT: ;)}
 }
+\value{
+a data.frame without list columns
+}
 \description{
 Convert columns with list in data.frame to vector
 }

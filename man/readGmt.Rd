@@ -21,6 +21,7 @@ This function will read in gene sets in the GMT format into a named list.
 }
 \examples{
 results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
+results <- readGmt(system.file("extdata", "test_gsea_1.gmt", package="paxtoolsr"))
 results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), removePrefix=TRUE)
 results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), returnInfo=TRUE)
 
