@@ -12,6 +12,7 @@ warnings_are_errors: false
 # Need this if also using covr to get code coverage
 r_packages:
   - covr
+  - devtools
 after_success:
   - Rscript -e 'covr::codecov()'
   
