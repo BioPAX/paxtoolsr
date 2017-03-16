@@ -26,4 +26,3 @@ convertIds("TP53", "SYMBOL", "ENTREZID")
 \concept{
 paxtoolsr
 }
-

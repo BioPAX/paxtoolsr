@@ -39,4 +39,3 @@ results <- mergeBiopax(system.file("extdata", "raf_map_kinase_cascade_reactome.o
 \concept{
 paxtoolsr
 }
-

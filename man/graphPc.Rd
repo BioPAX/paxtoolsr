@@ -52,4 +52,3 @@ source <- "http://identifiers.org/uniprot/O14503"
 \concept{
 paxtoolsr
 }
-

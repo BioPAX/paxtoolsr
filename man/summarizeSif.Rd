@@ -24,4 +24,3 @@ summarizeSif(results)
 \concept{
 paxtoolsr
 }
-

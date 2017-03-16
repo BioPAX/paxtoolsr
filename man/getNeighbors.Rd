@@ -35,4 +35,3 @@ results <- getNeighbors(system.file("extdata",
 \concept{
 paxtoolsr
 }
-

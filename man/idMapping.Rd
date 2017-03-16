@@ -38,4 +38,3 @@ genes <- c("BRCA2", "TP53")
 \concept{
 paxtoolsr
 }
-

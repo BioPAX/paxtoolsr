@@ -35,4 +35,3 @@ results <- toSBGN(system.file("extdata", "biopax3-short-metabolic-pathway.owl",
 \concept{
 paxtoolsr
 }
-

@@ -18,4 +18,3 @@ Convert Results from readSifnx to data.frame
 \concept{
 paxtoolsr
 }
-

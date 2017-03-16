@@ -41,4 +41,3 @@ m1 <- getShortestPathSif(sif, idA, idB, mode="all", weights=NULL, filterFun=filt
 \concept{
 paxtoolsr
 }
-

@@ -54,4 +54,3 @@ Rodchenkov I, Demir E, Sander C, Bader GD. The BioPAX Validator,
 \concept{
 paxtoolsr
 }
-

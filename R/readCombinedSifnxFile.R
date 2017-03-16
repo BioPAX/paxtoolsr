@@ -41,9 +41,9 @@ readCombinedSifnxFile <- function(inputFile) {
     close(con)
     
     edges <- read.table(edgesFile, header=TRUE, sep="\t", quote="", 
-                        stringsAsFactors=FALSE, fill=TRUE)
+                        stringsAsFactors=FALSE, fill=TRUE, row.names=NULL)
     nodes <- read.table(nodesFile, header=TRUE, sep="\t", quote="", 
-                        stringsAsFactors=FALSE, fill=TRUE)   
+                        stringsAsFactors=FALSE, fill=TRUE, row.names=NULL)   
     
     results <- list(nodes=nodes, 
                     edges=edges)
@@ -51,5 +51,7 @@ readCombinedSifnxFile <- function(inputFile) {
     return(results)
 }
 
-
- 
+# data <- c("A", "B", "C", "X", "Y", "Z") 
+# oldValue <- LETTERS[1:20]
+# newValue <- letters[1:20]
+# results <- mapValues(data, oldValue, newValue)

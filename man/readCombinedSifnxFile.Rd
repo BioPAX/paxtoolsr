@@ -18,4 +18,3 @@ Read a combined file with nodes and edges
 \concept{
 paxtoolsr
 }
-

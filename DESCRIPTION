@@ -46,4 +46,4 @@ LazyData: true
 biocViews: GeneSetEnrichment, GraphAndNetwork, Pathways, Software,
     SystemsBiology, NetworkEnrichment, Network, Reactome, KEGG
 URL: https://github.com/BioPAX/paxtoolsr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

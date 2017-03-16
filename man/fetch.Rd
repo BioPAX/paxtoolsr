@@ -35,4 +35,3 @@ results <- fetch(system.file("extdata", "REACT_12034-3.owl", package="paxtoolsr"
 \concept{
 paxtoolsr
 }
-
