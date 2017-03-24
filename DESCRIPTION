@@ -12,7 +12,8 @@ Imports:
     plyr,
     rjson,
     R.utils,
-    data.table
+    data.table,
+    jsonlite
 Depends:
     R (>= 3.2),
     rJava (>= 0.9-8),
