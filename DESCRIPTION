@@ -2,8 +2,8 @@ Package: paxtoolsr
 Type: Package
 Title: PaxtoolsR: Access Pathways from Multiple Databases through BioPAX and
     Pathway Commons
-Version: 1.9.0
-Date: 2016-05-13
+Version: 1.9.1
+Date: 2017-04-09
 Author: Augustin Luna
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
 Imports:
@@ -12,10 +12,11 @@ Imports:
     plyr,
     rjson,
     R.utils,
-    data.table
+    data.table,
+    jsonlite
 Depends:
     R (>= 3.2),
-    rJava (>= 0.9-4),
+    rJava (>= 0.9-8),
     XML
 Suggests:
     testthat,
@@ -31,7 +32,8 @@ Suggests:
     limma,
     foreach,
     doSNOW,
-    parallel
+    parallel,
+    org.Hs.eg.db
 SystemRequirements: Java (>= 1.6)
 License: LGPL-3
 Description: The package provides a set of R functions for interacting with
@@ -45,4 +47,4 @@ LazyData: true
 biocViews: GeneSetEnrichment, GraphAndNetwork, Pathways, Software,
     SystemsBiology, NetworkEnrichment, Network, Reactome, KEGG
 URL: https://github.com/BioPAX/paxtoolsr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

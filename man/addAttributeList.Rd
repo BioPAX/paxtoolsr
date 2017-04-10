@@ -22,4 +22,3 @@ Add attributes using a list of vectors to an igraph object
 \concept{
 paxtoolsr
 }
-

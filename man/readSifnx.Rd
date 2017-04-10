@@ -31,4 +31,3 @@ chebiIds <- lapply(results$nodesUniXref, function(x) { x[which(grepl("CHEBI", x)
 \concept{
 paxtoolsr
 }
-

@@ -29,4 +29,3 @@ g <- loadSifInIgraph(results)
 \concept{
 paxtoolsr
 }
-

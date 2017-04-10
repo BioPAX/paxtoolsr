@@ -18,4 +18,3 @@ Convert SIF Interaction Types to SPIA types
 \concept{
 paxtoolsr
 }
-

@@ -30,4 +30,3 @@ results <- processPcRequest(content, "BIOPAX")
 \concept{
 paxtoolsr
 }
-

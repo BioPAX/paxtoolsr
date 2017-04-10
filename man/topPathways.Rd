@@ -39,4 +39,3 @@ datasource <- "panther"
 \concept{
 paxtoolsr
 }
-

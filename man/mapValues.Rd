@@ -30,4 +30,3 @@ results <- mapValues(data, oldValue, newValue)
 \concept{
 paxtoolsr
 }
-

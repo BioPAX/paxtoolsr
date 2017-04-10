@@ -22,4 +22,3 @@ results <- readSbgn(system.file("extdata", "test_sbgn.xml", package="paxtoolsr")
 \concept{
 paxtoolsr
 }
-

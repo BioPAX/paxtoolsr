@@ -22,4 +22,3 @@ results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
 \concept{
 paxtoolsr
 }
-

@@ -215,11 +215,8 @@ saveXML(getPc(uri, "BIOPAX"), biopaxFile)
 The **traverse** function allows the extraction of specific entries from BioPAX records. traverse() functionality should be available for any **uniprot.org** or **purl.org** URI. 
 
 ```{r traverse}
-# Get the protein Uniprot ID for a given HGNC gene symbol
-id <- idMapping("AKT1")
-
-# Covert the Uniprot ID to a URI that would be found in Pathway Commons
-uri <- paste0("http://identifiers.org/uniprot/", id)
+# Convert the Uniprot ID to a URI that would be found in Pathway Commons
+uri <- paste0("http://identifiers.org/uniprot/P31749")
 
 # Get URIs for only the ModificationFeatures of the protein
 xml <- traverse(uri=uri, path="ProteinReference/entityFeature:ModificationFeature")

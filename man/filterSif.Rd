@@ -48,4 +48,3 @@ results <- filterSif(tmp$edges, edgelist=edgelist)
 \concept{
 paxtoolsr
 }
-

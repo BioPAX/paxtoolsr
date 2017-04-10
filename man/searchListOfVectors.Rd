@@ -52,4 +52,3 @@ searchListOfVectors(q, lst)
 \concept{
 paxtoolsr
 }
-

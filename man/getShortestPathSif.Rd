@@ -31,4 +31,3 @@ Get the shortest between two IDs (HGNC or CHEBI)
 \concept{
 paxtoolsr
 }
-

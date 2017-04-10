@@ -49,4 +49,3 @@ uri <- c("http://identifiers.org/uniprot/O14503", "http://identifiers.org/unipro
 \concept{
 paxtoolsr
 }
-

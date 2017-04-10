@@ -22,4 +22,3 @@ Download a SIF file containing only signed interactions
 # downloadSignedPC()
 
 }
-

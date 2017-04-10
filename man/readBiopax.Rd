@@ -23,4 +23,3 @@ results <- readBiopax(system.file("extdata", "biopax3-short-metabolic-pathway.ow
 \concept{
 paxtoolsr
 }
-

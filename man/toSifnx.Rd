@@ -30,4 +30,3 @@ results <- toSifnx(inputFile=inputFile)
 \concept{
 paxtoolsr
 }
-

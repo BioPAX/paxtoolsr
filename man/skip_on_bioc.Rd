@@ -15,4 +15,3 @@ Extension on testthat code
 \concept{
 paxtoolsr
 }
-
