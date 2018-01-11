@@ -4,13 +4,16 @@
 \alias{readPcPathwaysInfo}
 \title{Read in Pathway Commons Pathways Information}
 \usage{
-readPcPathwaysInfo(inputFile = NULL)
+readPcPathwaysInfo(inputFile = NULL, version = NULL)
 }
 \arguments{
 \item{inputFile}{an inputFile; if NULL then retrieve the current pathways.txt; see details (default: NULL)}
+
+\item{version}{a version number for a previous version of Pathway Commons data; 
+versions 3 and above. Parameter set as version="8". Available versions "http://www.pathwaycommons.org/archives/PC2/"}
 }
 \value{
-a data.table
+a data.frame
 }
 \description{
 Read in Pathway Commons Pathways Information
@@ -20,7 +23,7 @@ This file is generally found as pathways.txt.gz (e.g.
 http://www.pathwaycommons.org/archives/PC2/current/pathways.txt.gz)
 }
 \examples{
-results <- readPcPathwaysInfo(system.file("extdata", "pathways.txt.gz", package="paxtoolsr"))
+results <- readPcPathwaysInfo(system.file("extdata", "pathways.txt.gz", package="paxtoolsr"), version="8")
 
 }
 \concept{

@@ -1,20 +1,26 @@
 #' Read in Pathway Commons Pathways Information 
 #' 
 #' @param inputFile an inputFile; if NULL then retrieve the current pathways.txt; see details (default: NULL)
+#' @param version a version number for a previous version of Pathway Commons data; 
+#'   versions 3 and above. Parameter set as version="8". Available versions "http://www.pathwaycommons.org/archives/PC2/"
 #' 
-#' @return a data.table 
+#' @return a data.frame
 #' 
 #' @details This file is generally found as pathways.txt.gz (e.g. 
 #' http://www.pathwaycommons.org/archives/PC2/current/pathways.txt.gz)
 #' 
 #' @examples 
-#' results <- readPcPathwaysInfo(system.file("extdata", "pathways.txt.gz", package="paxtoolsr"))
+#' results <- readPcPathwaysInfo(system.file("extdata", "pathways.txt.gz", package="paxtoolsr"), version="8")
 #' 
 #' @concept paxtoolsr
 #' @export
-readPcPathwaysInfo <- function(inputFile=NULL) {
-    if(is.null(inputFile)) {
-        url <- "http://www.pathwaycommons.org/archives/PC2/current/"
+readPcPathwaysInfo <- function(inputFile=NULL, version=NULL) {
+    if(is.null(inputFile) && is.null(version)) {
+        stop("ERROR: Either inputFile or version must be specified")
+    }
+    
+    if(is.null(inputFile) && !is.null(version)) {
+        url <- paste0("http://www.pathwaycommons.org/archives/PC2/v", version, "/")
         fileName <- "pathways.txt.gz"
         
         downloadFile(url, fileName)
@@ -69,14 +75,31 @@ readPcPathwaysInfo <- function(inputFile=NULL) {
     pathwayInfo <- read.table(pathwayInfoFile, header=TRUE, sep="\t", quote="", 
                         stringsAsFactors=FALSE, fill=TRUE)        
     
-    results <- merge(pathwayChildren, pathwayInfo, by=c("PATHWAY_URI", "DISPLAY_NAME"))
+    tmpResults <- merge(pathwayChildren, pathwayInfo, by=c("PATHWAY_URI", "DISPLAY_NAME"))
 
-    results <- setDT(results)
-    results$DIRECT_SUB_PATHWAY_URIS <- strsplit(results$DIRECT_SUB_PATHWAY_URIS, ";")
-    results$ALL_SUB_PATHWAY_URIS <- strsplit(results$ALL_SUB_PATHWAY_URIS, ";")
-    results$ALL_NAMES <- strsplit(results$ALL_NAMES, ";")
+    tmpResults$DIRECT_SUB_PATHWAY_URIS <- I(strsplit(tmpResults$DIRECT_SUB_PATHWAY_URIS, ";"))
+    tmpResults$ALL_SUB_PATHWAY_URIS <- I(strsplit(tmpResults$ALL_SUB_PATHWAY_URIS, ";"))
+    tmpResults$ALL_NAMES <- I(strsplit(tmpResults$ALL_NAMES, ";"))
     
-    results$DATASOURCE <- tolower(results$DATASOURCE)
+    tmpResults$DATASOURCE <- tolower(tmpResults$DATASOURCE)
+    
+    # Add a column that has all the sub-pathway names 
+    pathwayNames <- list() 
+    
+    for(i in 1:nrow(tmpResults)) {
+        t1 <- tmpResults[i, "ALL_SUB_PATHWAY_URIS"][[1]]
+        
+        subPathwayNames <- NULL 
+        
+        for(j in 1:length(t1)) {
+            idx <- which(tmpResults$PATHWAY_URI == t1[j])
+            subPathwayNames <- c(subPathwayNames, tmpResults$DISPLAY_NAME[idx])
+        }  
+        
+        pathwayNames[[i]] <- subPathwayNames
+    }
+    
+    results <- data.frame(tmpResults, ALL_SUB_PATHWAY_NAMES=I(pathwayNames), stringsAsFactors = FALSE)
     
     return(results)
 }

@@ -6,7 +6,7 @@
 \title{Download Pathway Commons files (uses menu and cache)}
 \usage{
 downloadPc2(selectedFileName = NULL, destDir = NULL, returnNames = NULL,
-  version = "current", verbose = FALSE, ...)
+  version, verbose = FALSE, ...)
 }
 \arguments{
 \item{selectedFileName}{a string, a name of a file to skip the the interactive selection}
@@ -18,7 +18,7 @@ directory file.path(Sys.getenv("HOME"), ".paxtoolsRCache")}
 \item{returnNames}{return a vector of names matching the given regular expression}
 
 \item{version}{a version number for a previous version of Pathway Commons data; 
-versions 3 and above}
+versions 3 and above. Parameter set as version="8". Available versions "http://www.pathwaycommons.org/archives/PC2/"}
 
 \item{verbose}{a flag to display debugging information (Default: FALSE)}
 
@@ -33,9 +33,9 @@ Download Pathway Commons files (uses menu and cache)
 }
 \examples{
 \dontrun{
-  downloadPc2()
-  downloadPc2(returnNames="ext.*sif")
-  downloadPc2("PathwayCommons.8.inoh.GSEA.hgnc.gmt.gz", verbose=TRUE)
+  downloadPc2(version="8") 
+  downloadPc2(version="8", returnNames="ext.*sif")
+  downloadPc2("PathwayCommons.8.inoh.GSEA.hgnc.gmt.gz", version="8", verbose=TRUE)
 }
   
 }
