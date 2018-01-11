@@ -25,8 +25,10 @@ Extract IDs from an Extended SIF
 IMPORTANT: Only the first matching ID will be returned. In some cases, multiple IDs will exist.
 }
 \examples{
-tmp <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
-results <- extractIds(tmp$nodes)
+t1 <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
+t2 <- convertToDataFrameWithListOfVectors(t1)
+
+results <- extractIds(t2$nodes)
 
 }
 \concept{

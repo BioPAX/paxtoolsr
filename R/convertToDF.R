@@ -6,6 +6,16 @@
 #' @concept paxtoolsr
 #' @export
 #' 
+#' @examples 
+#' sifnx <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
+#' class(sifnx$edges)
+#' 
+#' dfSifnx <- convertToDF(sifnx)
+#' class(dfSifnx$edges)
+#' 
+#' dtSifnx <- convertToDT(dfSifnx)
+#' class(dtSifnx$edges)
+#' 
 #' @importFrom data.table setDF
 convertToDF <- function(lst) {
     nodes <- lst$nodes

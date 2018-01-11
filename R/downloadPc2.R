@@ -6,7 +6,7 @@
 #'   directory file.path(Sys.getenv("HOME"), ".paxtoolsRCache")
 #' @param returnNames return a vector of names matching the given regular expression
 #' @param version a version number for a previous version of Pathway Commons data; 
-#'   versions 3 and above  
+#'   versions 3 and above. Parameter set as version="8". Available versions "http://www.pathwaycommons.org/archives/PC2/"
 #' @param verbose a flag to display debugging information (Default: FALSE)  
 #' @param ... additional parameters to send to corresponding read* methods
 #'   
@@ -15,9 +15,9 @@
 #'   
 #' @examples 
 #' \dontrun{
-#'   downloadPc2()
-#'   downloadPc2(returnNames="ext.*sif")
-#'   downloadPc2("PathwayCommons.8.inoh.GSEA.hgnc.gmt.gz", verbose=TRUE)
+#'   downloadPc2(version="8") 
+#'   downloadPc2(version="8", returnNames="ext.*sif")
+#'   downloadPc2("PathwayCommons.8.inoh.GSEA.hgnc.gmt.gz", version="8", verbose=TRUE)
 #' }
 #'   
 #' @aliases downloadPc  
@@ -25,7 +25,7 @@
 #' @export
 #' 
 #' @importFrom R.utils gunzip
-downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, version="current", verbose=FALSE, ...) {
+downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, version, verbose=FALSE, ...) {
     if(is.null(destDir)) {
         stopifnot(Sys.getenv("PAXTOOLSR_CACHE") != "")
         destDir <- Sys.getenv("PAXTOOLSR_CACHE")

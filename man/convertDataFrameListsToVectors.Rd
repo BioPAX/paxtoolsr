@@ -21,6 +21,13 @@ Convert columns with list in data.frame to vector
 Lists as columns are useful programmatically, but cause issue in writing 
   output to text-based files
 }
+\examples{
+   
+df <- data.frame(id = 1:2, name = c("Jon", "Mark"), 
+  children = I(list(c("Mary", "James"), c("Greta", "Sally"))))
+df <- convertDataFrameListsToVectors(df)
+  
+}
 \concept{
 paxtoolsr
 }

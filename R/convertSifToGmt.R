@@ -6,6 +6,10 @@
 #' 
 #' @return a list with one entry being a vector 
 #' 
+#' @examples 
+#' sif <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
+#' gmt <- convertSifToGmt(sif)
+#' 
 #' @concept paxtoolsr
 #' @export
 convertSifToGmt <- function(sif, name="gmt", returnSmallMolecules=FALSE) {

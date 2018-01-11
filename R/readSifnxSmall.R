@@ -1,12 +1,17 @@
-#' Read a combined file with nodes and edges 
+#' Read small extended SIFs (SIFNX)
 #' 
 #' @param inputFile
 #' 
 #' @return a list of nodes and edges 
 #' 
+#' @note This function is a dependency free version of readSifnx; this is not suitable for very large files 
+#' 
+#' @examples 
+#' sifnx <- readSifnxSmall(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
+#' 
 #' @concept paxtoolsr
 #' @export
-readCombinedSifnxFile <- function(inputFile) {
+readSifnxSmall <- function(inputFile) {
     edgesFile <- tempfile("edges", fileext=".txt")
     nodesFile <- tempfile("nodes", fileext=".txt")
     

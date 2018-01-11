@@ -12,6 +12,10 @@ A boolean or NULL is returned
 \description{
 Extension on testthat code
 }
+\examples{
+skip_on_bioc()
+
+}
 \concept{
 paxtoolsr
 }

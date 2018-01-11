@@ -1,7 +1,7 @@
 #' Read in a Extended SIF file 
 #' 
 #' @param inputFile an inputFile
-#' @param asDT a boolean return file as a data.table
+#' @param asDT a boolean return file as a data.table (DEFAULT: FALSE)
 #' 
 #' @return a list with nodes and edges entries 
 #' 
@@ -18,7 +18,7 @@
 #' @export
 #' 
 #' @importFrom data.table fread
-readSifnx <- function(inputFile, asDT=TRUE) {
+readSifnx <- function(inputFile, asDT=FALSE) {
     if(!file.exists(inputFile)) {
         stop("ERROR: inputFile not file.")
     }
@@ -29,43 +29,7 @@ readSifnx <- function(inputFile, asDT=TRUE) {
     tmp <- file.info(inputFile)
     
     if(tmp$size < 100000) {
-        edgesFile <- tempfile("edges", fileext=".txt")
-        nodesFile <- tempfile("nodes", fileext=".txt")
-        
-        # Open file connections
-        edgesCon <- file(edgesFile, "w")
-        nodesCon <- file(nodesFile, "w")
-        
-        con <- file(inputFile)
-        
-        newLineFlag <- FALSE
-        
-        # Read single lines
-        lineTmp <- readLines(con, warn=FALSE)
-        
-        for (i in 1:length(lineTmp)) {
-            line <- lineTmp[i]
-            
-            if(grepl("^$", line)) {
-                newLineFlag <- TRUE
-                next
-            }
-            
-            if(!newLineFlag) {
-                writeLines(line, edgesCon)
-            } else {
-                writeLines(line, nodesCon)        
-            }
-        }
-        
-        close(edgesCon)
-        close(nodesCon)
-        close(con)
-        
-        edges <- read.table(edgesFile, header=TRUE, sep="\t", quote="", 
-                            stringsAsFactors=FALSE, fill=TRUE)
-        nodes <- read.table(nodesFile, header=TRUE, sep="\t", quote="", 
-                            stringsAsFactors=FALSE, fill=TRUE)        
+        results <- readSifnxSmall(inputFile) 
     } else {
         # A warning on discarded content is expected because of the 2-files in 1 nature of the file
         suppressWarnings(tmp <- fread(inputFile, sep="\n", header=FALSE, stringsAsFactors=FALSE))
@@ -75,10 +39,10 @@ readSifnx <- function(inputFile, asDT=TRUE) {
         tmp2 <- paste(tmp$V1, collapse="\n")
         edges <- fread(tmp2, sep="\t", header=TRUE, stringsAsFactors=FALSE,  data.table=FALSE)
     }
-
+    
     results <- list(nodes=nodes, 
                     edges=edges)
-    
+
     if(asDT) {
         results <- convertToDT(results)
         return(results)    

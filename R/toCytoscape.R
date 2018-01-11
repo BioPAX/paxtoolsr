@@ -6,10 +6,16 @@
 #' 
 #' @return a JSON object
 #' 
+#' @examples 
+#' library(igraph)
+#' g <- barabasi.game(20) 
+#' json <- toCytoscape(g)
+#' 
 #' @concept paxtoolsr
 #' @export
 #' 
 #' @importFrom jsonlite toJSON
+#' @importFrom igraph graph.attributes list.vertex.attributes vertex.attributes V get.edgelist ecount edge.attributes
 toCytoscape <- function (igraphobj) {
     # Extract graph attributes
     graph_attr = graph.attributes(igraphobj)

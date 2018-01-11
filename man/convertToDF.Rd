@@ -15,6 +15,17 @@ a list entries converted to data.frame
 \description{
 Convert Results from readSifnx to data.frame
 }
+\examples{
+sifnx <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
+class(sifnx$edges)
+
+dfSifnx <- convertToDF(sifnx)
+class(dfSifnx$edges)
+
+dtSifnx <- convertToDT(dfSifnx)
+class(dtSifnx$edges)
+
+}
 \concept{
 paxtoolsr
 }

@@ -18,6 +18,12 @@ Convert igraph to Cytoscape JSON
 \note{
 From https://github.com/idekerlab/cy-rest-R/blob/17f748426bb5e48ba4075b9d97318ad582b250da/utility/cytoscape_util.R
 }
+\examples{
+library(igraph)
+g <- barabasi.game(20) 
+json <- toCytoscape(g)
+
+}
 \concept{
 paxtoolsr
 }

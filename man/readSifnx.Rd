@@ -4,12 +4,12 @@
 \alias{readSifnx}
 \title{Read in a Extended SIF file}
 \usage{
-readSifnx(inputFile, asDT = TRUE)
+readSifnx(inputFile, asDT = FALSE)
 }
 \arguments{
 \item{inputFile}{an inputFile}
 
-\item{asDT}{a boolean return file as a data.table}
+\item{asDT}{a boolean return file as a data.table (DEFAULT: FALSE)}
 }
 \value{
 a list with nodes and edges entries

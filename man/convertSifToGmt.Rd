@@ -19,6 +19,11 @@ a list with one entry being a vector
 \description{
 Convert SIF to GMT
 }
+\examples{
+sif <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
+gmt <- convertSifToGmt(sif)
+
+}
 \concept{
 paxtoolsr
 }
