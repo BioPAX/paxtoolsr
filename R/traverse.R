@@ -37,9 +37,13 @@
 #' 
 #' @concept paxtoolsr
 #' @export   
+#' @importFrom utils URLencode
 traverse <- function(uri, path, verbose=FALSE) {
     baseUrl <- paste0(getPcUrl(), "traverse?")
     
+    uri <- unname(sapply(uri, URLencode, reserved=TRUE))
+    path <- URLencode(path, reserved = TRUE)
+
     if(!is.null(uri)) {
         # Put into the correct format
         uris <- paste(paste0("uri=", uri), collapse="&")
