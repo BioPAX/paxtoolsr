@@ -38,10 +38,10 @@ readSifnx <- function(inputFile, asDT=FALSE) {
         
         tmp2 <- paste(tmp$V1, collapse="\n")
         edges <- fread(tmp2, sep="\t", header=TRUE, stringsAsFactors=FALSE,  data.table=FALSE)
+        
+        results <- list(nodes=nodes, 
+                        edges=edges)
     }
-    
-    results <- list(nodes=nodes, 
-                    edges=edges)
 
     if(asDT) {
         results <- convertToDT(results)
