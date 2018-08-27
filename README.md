@@ -1,9 +1,10 @@
 [![Travis-CI Build Status](https://travis-ci.org/BioPAX/paxtoolsr.svg?branch=master)](https://travis-ci.org/BioPAX/paxtoolsr)
 [![codecov.io](https://codecov.io/github/BioPAX/paxtoolsr/coverage.svg?branch=master)](https://codecov.io/github/BioPAX/paxtoolsr?branch=master)
 
-**NOTE:** Users interested in the release version source code should download the code directly from Bioconductor SVN repositories:
+**NOTE:** Users interested in the source code should download the code directly from Bioconductor repositories:
 
-* [Release Version](http://bioconductor.org/packages/release/bioc/html/paxtoolsr.html)
+* [Release Version](http://bioconductor.org/packages/devel/bioc/html/paxtoolsr.html)
+* [Development Version](http://bioconductor.org/packages/devel/bioc/html/paxtoolsr.html)
 
 # PaxtoolsR
 
