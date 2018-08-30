@@ -56,8 +56,9 @@ Run these commands in the Terminal:
 
 Run these commands within R:
 
-    source("http://bioconductor.org/biocLite.R")
-    biocLite("paxtoolsr") 
+    if (!requireNamespace("BiocManager", quietly=TRUE))
+        install.packages("BiocManager")
+    BiocManager::install("paxtoolsr") 
 
 # Install PaxtoolsR Development Version from GitHub
 
