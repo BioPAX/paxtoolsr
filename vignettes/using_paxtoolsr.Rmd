@@ -46,8 +46,9 @@ The Paxtools Java library produces that full model of a given BioPAX data set th
 ## Installation
 
 ```{r installPaxtoolsr, eval=FALSE}
-source("http://bioconductor.org/biocLite.R")
-biocLite("paxtoolsr")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("paxtoolsr")
 ```
 
 ## Getting Started

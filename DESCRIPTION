@@ -2,19 +2,18 @@ Package: paxtoolsr
 Type: Package
 Title: PaxtoolsR: Access Pathways from Multiple Databases through BioPAX and
     Pathway Commons
-Version: 1.15.0
-Date: 2018-08-09
+Version: 1.15.1
+Date: 2018-09-20
 Author: Augustin Luna
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
 Imports:
-    utils,
     httr,
     igraph,
     plyr,
     rjson,
     R.utils,
-    jsonlite,
-    readr
+    data.table,
+    jsonlite
 Depends:
     R (>= 3.2),
     rJava (>= 0.9-8),
