@@ -2,6 +2,7 @@
 #' 
 #' @param content a string, content to be processed
 #' @param format a string, the type of format
+#' @param ... other arguments passed to read* methods for reading different formats
 #' 
 #' @return an R object using one of the read* methods provided in this package 
 #'   corresponding to the format
@@ -33,9 +34,9 @@ processPcRequest <- function(content, format, ...) {
     #DEBUG 
     #cat("FILENAME: ", filename, "\n") 
     
-    if(format == "EXTENDED_BINARY_SIF") {
+    if(format %in% c("TXT", "EXTENDED_BINARY_SIF")) {
         results <- readSifnx(filename, ...) 
-    } else if(format == "BINARY_SIF") {
+    } else if(format %in% c("SIF", "BINARY_SIF")) {
         results <- readSif(filename, ...)           
     } else if(format == "BIOPAX") {     
         results <- readBiopax(filename, ...)

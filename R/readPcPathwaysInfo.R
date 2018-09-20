@@ -10,10 +10,12 @@
 #' http://www.pathwaycommons.org/archives/PC2/current/pathways.txt.gz)
 #' 
 #' @examples 
-#' results <- readPcPathwaysInfo(system.file("extdata", "pathways.txt.gz", package="paxtoolsr"), version="8")
+#' file <- system.file("extdata", "pathways.txt.gz", package="paxtoolsr")
+#' results <- readPcPathwaysInfo(file, version="8")
 #' 
 #' @concept paxtoolsr
 #' @export
+#' @importFrom utils read.table
 readPcPathwaysInfo <- function(inputFile=NULL, version=NULL) {
     if(is.null(inputFile) && is.null(version)) {
         stop("ERROR: Either inputFile or version must be specified")

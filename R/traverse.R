@@ -39,18 +39,28 @@
 #' @export   
 #' @importFrom utils URLencode
 traverse <- function(uri, path, verbose=FALSE) {
-    baseUrl <- paste0(getPcUrl(), "traverse?")
+    baseUrl <- paste0(getPcUrl(), "traverse")
     
-    uri <- unname(sapply(uri, URLencode, reserved=TRUE))
-    path <- URLencode(path, reserved = TRUE)
+    #uri <- unname(sapply(uri, URLencode, reserved=TRUE))
+    #path <- URLencode(path, reserved = TRUE)
 
+    uriList <- NULL
     if(!is.null(uri)) {
         # Put into the correct format
-        uris <- paste(paste0("uri=", uri), collapse="&")
-        url <- paste(baseUrl, uris, sep="")
+        #uris <- paste(paste0("uri=", uri), collapse="&")
+        #url <- paste(baseUrl, uris, sep="")
+        
+        uriList <- lapply(uri, function(x) { x })
+        names(uriList) <- rep("uri", length(uriList))
     }
     
-    url <- paste(url, "&path=", path, sep="") 
+    pathList <- list(path=path)
+    
+    queryList <- c(uriList, pathList)
+    
+    tmpUrl <- parse_url(baseUrl)
+    tmpUrl$query <- queryList
+    url <- build_url(tmpUrl)
     
     tmp <- getPcRequest(url, verbose)
     results <- processPcRequest(tmp, "XML")

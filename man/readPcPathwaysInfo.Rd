@@ -23,7 +23,8 @@ This file is generally found as pathways.txt.gz (e.g.
 http://www.pathwaycommons.org/archives/PC2/current/pathways.txt.gz)
 }
 \examples{
-results <- readPcPathwaysInfo(system.file("extdata", "pathways.txt.gz", package="paxtoolsr"), version="8")
+file <- system.file("extdata", "pathways.txt.gz", package="paxtoolsr")
+results <- readPcPathwaysInfo(file, version="8")
 
 }
 \concept{

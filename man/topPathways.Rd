@@ -35,7 +35,7 @@ Pathways that are neither 'controlled' nor 'pathwayComponent' of
   another process.
 }
 \examples{
-#results <- topPathways(datasource="panther")
+#results <- topPathways(q="TP53", datasource="panther")
 
 }
 \concept{

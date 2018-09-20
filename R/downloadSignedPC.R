@@ -13,6 +13,7 @@
 #' # downloadSignedPC()
 #' 
 #' @export
+#' @importFrom utils read.table
 downloadSignedPC <- function(destDir=NULL, forceCache=FALSE) {
     baseUrl <- Sys.getenv("SIGNED_PC_URL")
     selectedFileName <- Sys.getenv("SIGNED_PC_FILE")

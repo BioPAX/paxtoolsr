@@ -25,6 +25,7 @@
 #' @export
 #' 
 #' @importFrom R.utils gunzip
+#' @importFrom utils select.list
 downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, version, verbose=FALSE, ...) {
     if(is.null(destDir)) {
         stopifnot(Sys.getenv("PAXTOOLSR_CACHE") != "")
@@ -129,14 +130,14 @@ downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, v
         return(results)
     }      
     
-    ## Parse EXTENDED_BINARY_SIF
-    if(grepl("EXTENDED_BINARY_SIF", selectedFileName)) {
+    ## Parse EXTENDED_BINARY_SIF (TXT)
+    if(grepl("TXT", selectedFileName) || grepl("EXTENDED_BINARY_SIF", selectedFileName)) {
         results <- readSifnx(tmpFile, ...)
         return(results)
     }      
     
-    ## Parse BINARY_SIF
-    if(grepl("BINARY_SIF", selectedFileName)) {
+    ## Parse BINARY_SIF (SIF)
+    if(grepl("SIF", selectedFileName) || grepl("BINARY_SIF", selectedFileName)) {
         results <- readSif(tmpFile, ...)
         return(results)
     }  

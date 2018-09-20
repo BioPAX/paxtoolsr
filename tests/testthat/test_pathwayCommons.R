@@ -19,7 +19,7 @@ test_that("pcGraphQueries", {
 })
 
 test_that("pcFormats", {
-    expect_is(pcFormats(), "character")
+    expect_is(pcFormats(), "list")
 })
 
 test_that("getPc", {
@@ -76,34 +76,39 @@ test_that("getPc", {
 test_that("graphPc", {  
     skip_on_bioc()
     
-    results <- graphPc(source="http://identifiers.org/uniprot/O14503", 
+    results <- graphPc(source="http://identifiers.org/uniprot/Q8N5Y8", 
                        kind="neighborhood", 
-                       format="EXTENDED_BINARY_SIF", 
+                       format="TXT", 
                        verbose=TRUE)
     expect_true(all(c("nodes", "edges") %in% names(results)))
     
     # Test Against Error Code 460
+    # expect_error(graphPc(source="http://identifiers.org/uniprot/PXXXXX", 
+    #                      kind="neighborhood", 
+    #                      format="TXT", 
+    #                      verbose=TRUE), ".*500.*PC Webservice Error.*")
+    
     expect_error(graphPc(source="http://identifiers.org/uniprot/PXXXXX", 
                          kind="neighborhood", 
-                         format="EXTENDED_BINARY_SIF", 
-                         verbose=TRUE), ".*500.*PC Webservice Error.*")
+                         format="TXT", 
+                         verbose=TRUE), "ERROR: Result was empty")
 
     expect_error(graphPc(source="http://identifiers.org/uniprot/O14503", 
                          kind="PATHSFROMTO", 
-                         format="EXTENDED_BINARY_SIF", 
+                         format="TXT", 
                          verbose=TRUE), "target must be set if kind is PATHSFROMTO")
     
     results <- graphPc(source="http://identifiers.org/uniprot/O14503", 
                        target="http://identifiers.org/uniprot/O00327",
                        kind="PATHSFROMTO", 
-                       format="EXTENDED_BINARY_SIF", 
+                       format="TXT", 
                        verbose=TRUE)
     expect_true(all(c("nodes", "edges") %in% names(results)))
     
     expect_is(graphPc(source=c("http://identifiers.org/uniprot/Q06609", 
                                "http://identifiers.org/uniprot/Q96EB6"), 
                          kind="neighborhood", 
-                         format="EXTENDED_BINARY_SIF", 
+                         format="TXT", 
                          verbose=TRUE), "list")
 
     expect_is(graphPc(source=c("http://identifiers.org/uniprot/O14503", 
@@ -111,13 +116,13 @@ test_that("graphPc", {
                       target=c("http://identifiers.org/uniprot/Q9P2X7",
                                "http://identifiers.org/uniprot/O15516"),
                       kind="PATHSFROMTO", 
-                      format="EXTENDED_BINARY_SIF", 
+                      format="TXT", 
                       verbose=TRUE), "list")
     
     # Multiple datasources
     expect_is(graphPc(source="http://identifiers.org/uniprot/O14503", 
                       kind="neighborhood", 
-                      format="EXTENDED_BINARY_SIF", 
+                      format="TXT", 
                       datasource=c("DIP","Reactome","HumanCyc"),
                       verbose=TRUE), "list")
 })
@@ -129,7 +134,7 @@ test_that("outputFormatsSupported", {
 
     results <- graphPc(source=genes, 
                                  kind="PATHSBETWEEN", 
-                                 format="EXTENDED_BINARY_SIF", 
+                                 format="TXT", 
                                  verbose=TRUE)
     
     expect_true(all(c("nodes", "edges") %in% names(results)))
@@ -144,7 +149,7 @@ test_that("outputFormatsSupported", {
     
     results <- graphPc(source=genes, 
                                  kind="PATHSBETWEEN", 
-                                 format="BINARY_SIF",
+                                 format="SIF",
                                  verbose=TRUE)
     
     expect_equal(ncol(results), 3)
@@ -179,19 +184,8 @@ test_that("traverse", {
 test_that("topPathways", {  
     skip_on_bioc()
     
-    results <- topPathways(datasource="panther")
+    results <- topPathways(q="TP53", datasource="panther", verbose = TRUE)
     expect_is(results, "data.frame")
-})
-
-test_that("idMapping", {
-    skip_on_bioc()
-    
-    outFile <- tempfile()
-    
-    results <- idMapping(c("BRCA2", "TP53"))
-        
-    expect_equal(results$BRCA2, "P51587")
-    expect_equal(results$TP53, "P04637")
 })
 
 test_that("readSifnx", {
@@ -201,13 +195,13 @@ test_that("readSifnx", {
     expect_true(all(c("nodes", "edges") %in% names(results)))
 
     results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
-    expect_equal(ncol(results$edges), 7)
+    expect_equal(ncol(results$edges), 6)
         
     results <- readSifnx(system.file("extdata", "test_sifnx2.txt", package="paxtoolsr"))
-    expect_equal(ncol(results$edges), 7)
+    expect_equal(ncol(results$edges), 6)
     
     results <- readSifnx(system.file("extdata", "test_sifnx_sm.txt", package="paxtoolsr"))
-    expect_equal(ncol(results$edges), 7)
+    expect_equal(ncol(results$edges), 6)
 })
 
 test_that("readBiopax", {

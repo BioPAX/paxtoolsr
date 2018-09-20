@@ -11,6 +11,7 @@
 #' 
 #' @concept paxtoolsr
 #' @export
+#' @importFrom utils txtProgressBar setTxtProgressBar
 splitSifnxByPathway <- function(edges, parallel=FALSE) {
     stopifnot("PATHWAY_NAMES" %in% colnames(edges))
     
@@ -24,10 +25,6 @@ splitSifnxByPathway <- function(edges, parallel=FALSE) {
     
     # Make sure the necessary packages are available 
     if(parallel) {
-        require("foreach")
-        require("doSNOW")
-        require("parallel")
-        
         numCores <- parallel::detectCores()
         cl <- parallel::makeCluster(numCores, outfile="") # number of cores. Notice 'outfile'
         doSNOW::registerDoSNOW(cl)

@@ -20,7 +20,7 @@
 #'   another process.
 #' 
 #' @examples
-#' #results <- topPathways(datasource="panther")
+#' #results <- topPathways(q="TP53", datasource="panther")
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -29,20 +29,24 @@
 #' @importFrom httr build_url parse_url
 topPathways <- function(q=NULL, datasource=NULL, organism=NULL, verbose=FALSE) {
     baseUrl <- paste0(getPcUrl(), "top_pathways")
-    
-    queryList <- list()
 
+    stopifnot(!is.null(q))
+    qList <- NULL
     if(!is.null(q)) {
-        queryList[["q"]] <- q
+      qList <- list(q=q)
     }
     
+    datasourceList <- NULL
     if(!is.null(datasource)) {
-        queryList[["datasource"]] <- datasource
+      datasourceList <- list(datasource=datasource)
     }
     
+    organismList <- NULL
     if(!is.null(organism)) {
-        queryList[["organism"]] <- organism
+      organismList <- list(organism=organism)
     }
+    
+    queryList <- c(qList, datasourceList, organismList)
     
     tmpUrl <- parse_url(baseUrl)
     tmpUrl$query <- queryList

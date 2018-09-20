@@ -6,20 +6,26 @@
 #'   would be labeled as missing an ID. 
 #' @param mapping a two column data.frame with columns mapping$PARTICIPANT (old 
 #'   IDs to convert from) and mapping$ID (new IDs to convert to) 
-#' @param idType an ID type for conversion (not used if mapping parameter used)
+#' @param idType an ID type for conversion (not used if mapping parameter is used)
 #' @param naRm remove edges where NA's were introduced due to failed conversions
 #' 
 #' @return a SIFNX list with nodes and edges. Only edges will have converted IDs
 #' 
+#' @examples
+#' lst <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
+#' newSifnx <- convertToDataFrameWithListOfVectors(lst)
+#' #t1 <- extractIds(sifnx$nodes, participantType="ProteinReference", idType="UniProt Knowledgebase")
+#' tmp <- convertSifnxIds(lst, idType="UniProt Knowledgebase")
+#' FIXME
+#' 
 #' @concept paxtoolsr
 #' @export
-#' 
-#' @importFrom data.table data.table
-convertSifnxIds <- function(sifnx, participantType="ProteinReference", idType="NCBI Gene", mapping=NULL, naRm=TRUE) {
+convertSifnxIds <- function(sifnx, participantType="ProteinReference", idType="NCBI Gene", 
+                            mapping=NULL, naRm=TRUE) {
 
     if(is.null(mapping)) {
         t1 <- extractIds(sifnx$nodes, participantType=participantType, idType=idType)
-        t2 <- data.table(PARTICIPANT=names(t1), ID=t1)
+        t2 <- data.frame(PARTICIPANT=names(t1), ID=t1, stringsAsFactors = FALSE)
         
         newA <- mapValues(sifnx$edges$PARTICIPANT_A, t2$PARTICIPANT, t2$ID)
         newB <- mapValues(sifnx$edges$PARTICIPANT_B, t2$PARTICIPANT, t2$ID)

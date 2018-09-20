@@ -16,12 +16,7 @@
 #' @export
 #' 
 #' @importFrom igraph graph.edgelist E E<- set_edge_attr
-#' @importFrom data.table setDF
 loadSifInIgraph <- function(sif, directed=TRUE) {
-    if("data.table" %in% class(sif)) {
-        setDF(sif)
-    }
-
     # Handle SIF undirected reactions 
     tmpSifUndirected <- sif[which(sif$INTERACTION_TYPE %in% "in-complex-with"),]
     a <- tmpSifUndirected$PARTICIPANT_A

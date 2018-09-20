@@ -53,7 +53,10 @@ getPcRequest <- function(url, verbose) {
         #tmp <- getURLContent(url, .opts=list(followlocation=TRUE))
         
         #Set preference order of accept types
-        tmp <- content(GET(url, accept("text/xml,text/plain,application/json")), as="text")
+        tmp <- content(GET(url, 
+                           accept("text/xml,text/plain,application/json"),
+                           add_headers("Cache-Control"="nocache")), 
+                           as="text")
     } else {
         # Make sure the statusCode is numeric
         if(grepl("^\\d+$", statusCode)) {

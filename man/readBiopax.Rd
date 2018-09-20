@@ -16,7 +16,7 @@ an XMLInternalDocument
 Read BioPAX files as XML documents
 }
 \examples{
-results <- readBiopax(system.file("extdata", "biopax3-short-metabolic-pathway.owl", 
+results <- readBiopax(system.file("extdata", "biopax3-short-metabolic-pathway.owl",
   package="paxtoolsr"))
 
 }

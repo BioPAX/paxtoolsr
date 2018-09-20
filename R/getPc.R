@@ -36,16 +36,23 @@
 #' @concept paxtoolsr
 #' @export
 getPc <- function(uri, format="BIOPAX", verbose=FALSE, ...) {
-    uris <- paste(paste0("uri=", uri), collapse="&")
+    baseUrl <- paste0(getPcUrl(), "get")
     
-    baseUrl <- paste0(getPcUrl(), "get?")
-    url <- paste(baseUrl, uris, sep="") 
+    uriList <- lapply(uri, function(x) { x })
+    names(uriList) <- rep("uri", length(uriList))
     
-    stopifnot(format %in% pcFormats())
-    
+    format <- toupper(format)
+    stopifnot(format %in% names(pcFormats()))
+    formatList <- NULL
     if(!is.null(format)) {
-        url <- paste0(url, "&format=", format)
+      formatList <- list(format=format)
     }
+    
+    queryList <- c(uriList, formatList)
+    
+    tmpUrl <- parse_url(baseUrl)
+    tmpUrl$query <- queryList
+    url <- build_url(tmpUrl)
     
     tmp <- getPcRequest(url, verbose)
     results <- processPcRequest(tmp, format, ...)

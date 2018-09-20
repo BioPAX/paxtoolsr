@@ -1,19 +1,22 @@
 #' Get a Pathway Commons Databases
 #' 
+#' @param version PC2 version 
+#' 
 #' @return a names of databases that can be used as part of queries
 #' 
 #' @examples 
-#' getPcDatabaseNames()
+#' getPcDatabaseNames(version=10)
 #' 
 #' @concept paxtoolsr
 #' @export
-getPcDatabaseNames <- function() {
+getPcDatabaseNames <- function(version) {
     dbMapping <- c("psp"="phosphositeplus", "reconx"="recon x", "wp"="wikipathways")
     
-    t1 <- downloadPc2(returnNames="BioPAX")
+    t1 <- downloadPc2(returnNames="BioPAX", version=version)
     t2 <- strsplit(t1, "\\.")
     t3 <- lapply(t2, function(x) {
-        x[3]
+      tmp <- setdiff(x, c("PathwayCommons", "PathwayCommons10", "PathwayCommons9", "BIOPAX", "gz", "owl", "8", "7", "6", "5", "4"))
+      tmp
     })
     t4 <- setdiff(unlist(t3), c("All", "Warehouse", "Detailed"))
     t5 <- t4
@@ -24,5 +27,7 @@ getPcDatabaseNames <- function() {
         }
     }
     
-    return(t5)
+    t6 <- sort(t5)
+    
+    return(t6)
 }

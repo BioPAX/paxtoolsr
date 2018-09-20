@@ -10,6 +10,8 @@ processPcRequest(content, format, ...)
 \item{content}{a string, content to be processed}
 
 \item{format}{a string, the type of format}
+
+\item{...}{other arguments passed to read* methods for reading different formats}
 }
 \value{
 an R object using one of the read* methods provided in this package 

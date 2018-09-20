@@ -1,7 +1,7 @@
-#' Convert Results from readSifnx to data.table
+#' Convert Results from readSifnx to data.frame
 #' 
 #' @param lst a list returned from readSifnx
-#' @return a list entries converted to data.table
+#' @return a list entries converted to data.frame
 #' 
 #' @details The SIFNX format is an evolving format. Older datasets may not have 
 #'  all the columns this function expects. In these cases, the columns will be 
@@ -15,6 +15,7 @@
 #' newSifnx <- convertToDataFrameWithListOfVectors(lst)
 convertToDataFrameWithListOfVectors <- function(lst) {
     nodes <- lst$nodes
+    nodes <- as.data.frame(nodesOrg)
     for(col in colnames(nodes)) {
         nodes[, col] <- I(strsplit(nodes[, col], ";"))
     }

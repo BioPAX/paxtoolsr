@@ -6,7 +6,7 @@
 #' @param interactionTypes a vector of interaction types to be kept
 #'   (List of interaction types: http://www.pathwaycommons.org/pc2/formats)
 #' @param dataSources a vector of data sources to be kept. For Extended SIF.
-#' @param interactionPubmedId a vector of Pubmed IDs to be kept. For Extended SIF.
+#' @param interactionPubmedIds a vector of Pubmed IDs to be kept. For Extended SIF.
 #' @param pathwayNames a vector of pathway names to be kept. For Extended SIF.
 #' @param mediatorIds a vector of mediator IDs to be kept. For Extended SIF.
 #'   Mediator IDs are the full BioPAX objects that were simplified to interaction 
@@ -16,10 +16,10 @@
 #' @param idsBothParticipants a boolean whether both interaction participants should be in 
 #'   a given interaction when using the ids parameter; TRUE if both (DEFAULT: TRUE)
 #' @param edgelistCheckReverse a boolean whether to check for edges in the reverse order (DEFAULT: TRUE)
+#' @param verbose Show debugging information (DEFAULT: FALSE)
 #'  
 #' @return filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B". 
-#'   The intersection of multiple filters is returned. The return class is the same as the input: 
-#'   data.frame or data.table
+#'   The intersection of multiple filters is returned.
 #' 
 #' @examples 
 #' results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
@@ -31,7 +31,8 @@
 #' results <- filterSif(tmp$edges, dataSources=c("INOH", "KEGG"))
 #' results <- filterSif(tmp$edges, dataSources=c("IntAct"), ids=c("CHEBI:17640", "MCM3"))
 #' results <- filterSif(tmp$edges, pathwayNames=c("Metabolic pathways"))
-#' results <- filterSif(tmp$edges, mediatorIds=c("http://purl.org/pc2/8/MolecularInteraction_1452626895158"))
+#' results <- filterSif(tmp$edges, 
+#'   mediatorIds=c("http://purl.org/pc2/8/MolecularInteraction_1452626895158"))
 #' results <- filterSif(tmp$edges, interactionPubmedId="17654400")
 #' 
 #' tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
@@ -66,10 +67,6 @@ filterSif <- function(sif, ids=NULL, interactionTypes=NULL, dataSources=NULL, in
     } 
     
     if(!is.null(dataSources)) {
-        if(!("data.table" %in% class(sif))) {
-            stop("ERROR: SIF must be must be a data.table. SUGGESTION: Use convertToDT")
-        }
-        
         results <- searchListOfVectors(dataSources, sif$INTERACTION_DATA_SOURCE)
         
         idxDataSources <- unique(unlist(results))

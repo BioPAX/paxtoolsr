@@ -4,12 +4,10 @@
 \alias{readSifnx}
 \title{Read in a Extended SIF file}
 \usage{
-readSifnx(inputFile, asDT = FALSE)
+readSifnx(inputFile)
 }
 \arguments{
 \item{inputFile}{an inputFile}
-
-\item{asDT}{a boolean return file as a data.table (DEFAULT: FALSE)}
 }
 \value{
 a list with nodes and edges entries
@@ -18,14 +16,13 @@ a list with nodes and edges entries
 Read in a Extended SIF file
 }
 \details{
-SIFNX files from Pathway Commons commonly come a single file that 
-includes a tab-delimited sections for nodes and another for edges. The 
+SIFNX files from Pathway Commons commonly come a single file that
+includes a tab-delimited sections for nodes and another for edges. The
 sections are separated by an empty lines. These sections must be split before
 they are read.
 }
 \examples{
 results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
-chebiIds <- lapply(results$nodesUniXref, function(x) { x[which(grepl("CHEBI", x))] })
 
 }
 \concept{

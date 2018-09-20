@@ -5,7 +5,7 @@
 #' @return the edges data.frame with the converted interaction types
 #' 
 #' @concept paxtoolsr
-#' @export
+#' @noRd
 convertSifToSpia <- function(edges) {
     sifType <- c("controls-state-change-of", 
                  "controls-expression-of",

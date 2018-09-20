@@ -48,23 +48,41 @@
 #' @export
 searchPc <- function(q, page=0, datasource=NULL, organism=NULL, type=NULL, 
                      verbose=FALSE) {
-    baseUrl <- paste0(getPcUrl(), "search.xml?q=")
-    url <- paste0(baseUrl, q, "&page=", page) 
+    baseUrl <- paste0(getPcUrl(), "search.xml")
     
+    qList <- list(q=q)
+    pageList <- list(page=page)
+    
+    datasourceList <- NULL
     if(!is.null(datasource)) {
-        # Put into the correct format
-        datasources <- paste(paste0("datasource=", datasource), collapse="&")
-        url <- paste(url, "&", datasources, sep="")
+      # Put into the correct format
+      #datasources <- paste(paste0("datasource=", datasource), collapse="&")
+      #url <- paste(url, "&", datasources, sep="")
+      
+      datasourceList <- lapply(datasource, function(x) { x })
+      names(datasourceList) <- rep("datasource", length(datasourceList))
     }
     
+    organismList <- NULL
     if(!is.null(organism)) {
-        organisms <- paste(paste0("organism=", organism), collapse="&")
-        url <- paste(url, "&", organisms, sep="")
+      #organisms <- paste(paste0("organism=", organism), collapse="&")
+      #url <- paste(url, "&", organisms, sep="")
+      
+      organismList <- lapply(organism, function(x) { x })
+      names(organismList) <- rep("organism", length(organismList))
     }
     
+    typeList <- NULL
     if(!is.null(type)) {
-        url <- paste(url, "&type=", type, sep="")
+      #url <- paste(url, "&type=", type, sep="")
+      typeList <- list(type=type)
     }
+    
+    queryList <- c(qList, pageList, datasourceList, organismList, typeList)
+    
+    tmpUrl <- parse_url(baseUrl)
+    tmpUrl$query <- queryList
+    url <- build_url(tmpUrl)
     
     tmp <- getPcRequest(url, verbose)
     results <- processPcRequest(tmp, "XML")

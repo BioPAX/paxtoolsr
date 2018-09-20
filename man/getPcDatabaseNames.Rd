@@ -4,7 +4,10 @@
 \alias{getPcDatabaseNames}
 \title{Get a Pathway Commons Databases}
 \usage{
-getPcDatabaseNames()
+getPcDatabaseNames(version)
+}
+\arguments{
+\item{version}{PC2 version}
 }
 \value{
 a names of databases that can be used as part of queries
@@ -13,7 +16,7 @@ a names of databases that can be used as part of queries
 Get a Pathway Commons Databases
 }
 \examples{
-getPcDatabaseNames()
+getPcDatabaseNames(version=10)
 
 }
 \concept{

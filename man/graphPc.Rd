@@ -43,7 +43,7 @@ This function will retrieve a set of BioPAX elements given a graph query match.
 }
 \examples{
 source <- "http://identifiers.org/uniprot/O14503"
-#results <- graphPc(source=source, kind="neighborhood", format="EXTENDED_BINARY_SIF")
+#results <- graphPc(source=source, kind="neighborhood", format="TXT")
 
 }
 \seealso{

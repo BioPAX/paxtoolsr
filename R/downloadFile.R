@@ -19,6 +19,7 @@
 #' @export
 #' 
 #' @importFrom httr HEAD GET http_status write_disk progress add_headers http_date
+#' @importFrom utils read.table write.table
 downloadFile <- function(baseUrl, fileName, destDir=NULL, cacheEnv="PAXTOOLSR_CACHE", verbose=FALSE) {
     url <- URLencode(paste0(baseUrl, fileName))
     fileIdx <- NULL

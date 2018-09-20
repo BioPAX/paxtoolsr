@@ -1,0 +1,11 @@
+var,val
+t0,x2;x4
+t1,x1;x2;x3
+t2,x2;x3
+t3,x4;x5
+t4,x1;x7
+t5,x2;x8
+t6,x3;x9;x10
+t7,x4;x11
+t8,x8;x10
+t9,x10;x1

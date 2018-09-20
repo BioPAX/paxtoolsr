@@ -3,3 +3,5 @@
 ^installPackages.R
 ^README.md
 ^\.travis\.yml$
+^\.httr-oauth$
+^\.git$

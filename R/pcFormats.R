@@ -14,7 +14,13 @@
 #' @concept paxtoolsr
 #' @export 
 pcFormats <- function() {
-    pcFormats <- c("BINARY_SIF", "BIOPAX", "EXTENDED_BINARY_SIF", "GSEA", "SBGN") 
+    #pcFormats <- c("BINARY_SIF", "BIOPAX", "EXTENDED_BINARY_SIF", "GSEA", "SBGN") 
+    pcFormats <- list("BIOPAX"="BioPAX Level 3 RDF/XML Format",
+                      "GSEA"="Gene Set Expression Analysis Format",
+                      "JSONLD"="JSON-LD format",
+                      "SBGN"="Systems Biology Graphical Notation Format",
+                      "SIF"="Simple Binary Interaction Format",
+                      "TXT"="Extended SIF")
     
     return(pcFormats)
 }

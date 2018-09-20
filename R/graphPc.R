@@ -26,69 +26,97 @@
 #' 
 #' @examples
 #' source <- "http://identifiers.org/uniprot/O14503"
-#' #results <- graphPc(source=source, kind="neighborhood", format="EXTENDED_BINARY_SIF")
+#' #results <- graphPc(source=source, kind="neighborhood", format="TXT")
 #' 
 #' @concept paxtoolsr
 #' @export 
 graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL, 
                     format=NULL, datasource=NULL, organism=NULL, 
                     verbose=FALSE) {
-    # Pre-process arguments 
-    ## Convert to uppercase to avoid issues in if statements
-    format <- toupper(format)
     
-    baseUrl <- paste0(getPcUrl(), "graph?kind=")
-    url <- paste(baseUrl, kind, sep="") 
+    baseUrl <- paste0(getPcUrl(), "graph")
+    kindList <- list(kind=kind)
     
-    stopifnot(format %in% pcFormats())
-    
+    sourceList <- NULL
     if(!is.null(source)) {
         # Put into the correct format
-        sources <- paste(paste0("source=", source), collapse="&")
-        url <- paste(url, "&", sources, sep="")
+        #sources <- paste(paste0("source=", source), collapse="&")
+        #url <- paste(url, "&", sources, sep="")
+          
+        sourceList <- lapply(source, function(x) { x })
+        names(sourceList) <- rep("source", length(sourceList))
     }
     
     #DEBUG 
     #cat("TARGET: ", target, "\n")
     #cat("KIND: ", kind, "\n")
     
+    targetList <- NULL
     if(kind == "PATHSFROMTO") {
         if(!is.null(target)) {
-            targets <- paste(paste0("target=", target), collapse="&")
-            url <- paste(url, "&", targets, sep="")
+            #targets <- paste(paste0("target=", target), collapse="&")
+            #url <- paste(url, "&", targets, sep="")
+            
+            targetList <- lapply(target, function(x) { x })
+            names(targetList) <- rep("source", length(targetList))
         } else {
             stop("target must be set if kind is PATHSFROMTO")
         }
     }
     
+    directionList <- NULL
     if(!is.null(direction)) {
-        direction <- toupper(direction)     
-        stopifnot(direction %in% pcDirections())
-        
-        url <- paste(url, "&direction=", direction, sep="")
+      direction <- toupper(direction)     
+      stopifnot(direction %in% pcDirections())
+      
+      #url <- paste(url, "&direction=", direction, sep="")
+      directionList <- list(direction=direction)
     }
     
+    limitList <- NULL
     if(!is.null(limit)) {
-        url <- paste(url, "&limit=", limit, sep="")
+      #url <- paste(url, "&limit=", limit, sep="")
+      limitList <- list(limit=limit)
     }
     
+    # Pre-process arguments 
+    ## Convert to uppercase to avoid issues in if statements
+    format <- toupper(format)
+    stopifnot(format %in% names(pcFormats()))
+    formatList <- NULL
     if(!is.null(format)) {
-        url <- paste(url, "&format=", format, sep="")
+      #url <- paste(url, "&format=", format, sep="")
+      formatList <- list(format=format)
     }
     
+    datasourceList <- NULL
     if(!is.null(datasource)) {
-        # Put into the correct format
-        datasources <- paste(paste0("datasource=", datasource), collapse="&")
-        url <- paste(url, "&", datasources, sep="")
+      # Put into the correct format
+      #datasources <- paste(paste0("datasource=", datasource), collapse="&")
+      #url <- paste(url, "&", datasources, sep="")
         
-        #url <- paste(url, "&datasource=", datasource, sep="")
+      datasourceList <- lapply(datasource, function(x) { x })
+      names(datasourceList) <- rep("datasource", length(datasourceList))
     }
     
+    organismList <- NULL
     if(!is.null(organism)) {
-        url <- paste(url, "&organism=", organism, sep="")
+      # url <- paste(url, "&organism=", organism, sep="")
+      organismList <- list(organism=organism)
     }
+    
+    queryList <- c(kindList, sourceList, targetList, directionList, limitList, 
+               formatList, datasourceList, organismList)
+    
+    tmpUrl <- parse_url(baseUrl)
+    tmpUrl$query <- queryList
+    url <- build_url(tmpUrl)
     
     tmp <- getPcRequest(url, verbose)
+    if(tmp == "") {
+      stop("ERROR: Result was empty")
+    }
+    
     results <- processPcRequest(tmp, format)
     return(results)
 }

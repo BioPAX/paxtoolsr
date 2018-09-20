@@ -20,6 +20,8 @@ filterSif(sif, ids = NULL, interactionTypes = NULL, dataSources = NULL,
 
 \item{dataSources}{a vector of data sources to be kept. For Extended SIF.}
 
+\item{interactionPubmedIds}{a vector of Pubmed IDs to be kept. For Extended SIF.}
+
 \item{pathwayNames}{a vector of pathway names to be kept. For Extended SIF.}
 
 \item{mediatorIds}{a vector of mediator IDs to be kept. For Extended SIF.
@@ -34,12 +36,11 @@ a given interaction when using the ids parameter; TRUE if both (DEFAULT: TRUE)}
 
 \item{edgelistCheckReverse}{a boolean whether to check for edges in the reverse order (DEFAULT: TRUE)}
 
-\item{interactionPubmedId}{a vector of Pubmed IDs to be kept. For Extended SIF.}
+\item{verbose}{Show debugging information (DEFAULT: FALSE)}
 }
 \value{
 filtered interactions with three columns: "PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B". 
-  The intersection of multiple filters is returned. The return class is the same as the input: 
-  data.frame or data.table
+  The intersection of multiple filters is returned.
 }
 \description{
 Keep interactions in SIF network based on certain criteria
@@ -54,7 +55,8 @@ results <- filterSif(tmp$edges, ids=c("CHEBI:17640", "MCM3"))
 results <- filterSif(tmp$edges, dataSources=c("INOH", "KEGG"))
 results <- filterSif(tmp$edges, dataSources=c("IntAct"), ids=c("CHEBI:17640", "MCM3"))
 results <- filterSif(tmp$edges, pathwayNames=c("Metabolic pathways"))
-results <- filterSif(tmp$edges, mediatorIds=c("http://purl.org/pc2/8/MolecularInteraction_1452626895158"))
+results <- filterSif(tmp$edges, 
+  mediatorIds=c("http://purl.org/pc2/8/MolecularInteraction_1452626895158"))
 results <- filterSif(tmp$edges, interactionPubmedId="17654400")
 
 tmp <- readSifnx(system.file("extdata", "test_sifnx_250.txt", package = "paxtoolsr"))
