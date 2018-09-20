@@ -7,13 +7,14 @@ Date: 2018-09-20
 Author: Augustin Luna
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
 Imports:
+    utils,
     httr,
     igraph,
     plyr,
     rjson,
     R.utils,
-    data.table,
-    jsonlite
+    jsonlite,
+    readr
 Depends:
     R (>= 3.2),
     rJava (>= 0.9-8),
