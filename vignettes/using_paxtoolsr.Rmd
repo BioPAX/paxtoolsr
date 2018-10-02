@@ -193,13 +193,14 @@ searchResultsDf <- ldply(xmlToList(searchResults), data.frame)
 
 # Simplified results
 simplifiedSearchResultsDf <- searchResultsDf[, c("name", "uri", "biopaxClass")]
+head(simplifiedSearchResultsDf)
 ```
 
 This type of searching can be used to locally save BioPAX files retrieved from Pathway Commons.
 
 ```{r saveBiopaxFileFromPcQuery, message=FALSE, results='hide'}
 ## Use an XPath expression to extract the results of interest. In this case, the URIs (IDs) for the pathways from the results
-searchResults <- xpathSApply(searchResults, "/searchResponse/searchHit/uri", xmlValue)
+tmpSearchResults <- xpathSApply(searchResults, "/searchResponse/searchHit/uri", xmlValue)
 
 ## Generate temporary file to save content into
 biopaxFile <- tempfile()
@@ -259,18 +260,19 @@ plot(g, layout=layout.fruchterman.reingold)
 
 Next, we show how to perform graph search using Pathway Commons useful for finding connections and neighborhoods of elements. This can be used to extract the neighborhood of a single gene that is then filtered for a specific interaction type: "controls-state-change-of". State change here indicates a modification of another molecule (e.g. post-translational modifications). This interaction type is directed, and it is read as "A controls a state change of B".
 
-```{r graphQueryExampleSingle}
+```{r graphQueryExampleSingle, figure.width=20, figure.height=20}
 gene <- "BDNF"
 t1 <- graphPc(source=gene, kind="neighborhood", format="SIF", verbose=TRUE)
 t2 <- t1[which(t1[,2] == "controls-state-change-of"),]
 
-g <- graph.edgelist(as.matrix(t2[,c(1,3)]), directed=FALSE)
+# Show only 100 interactions for simplicity
+g <- graph.edgelist(as.matrix(t2[1:100, c(1,3)]), directed=FALSE)
 plot(g, layout=layout.fruchterman.reingold)
 ```
 
 The example below shows the extraction of a sub-network connecting a set of proteins:
 
-```{r graphQueryExample}
+```{r graphQueryExample, fig.width=7, fig.height=7}
 genes <- c("AKT1", "IRS1", "MTOR", "IGF1R")
 t1 <- graphPc(source=genes,
               kind="PATHSBETWEEN",
@@ -278,7 +280,8 @@ t1 <- graphPc(source=genes,
               verbose=TRUE)
 t2 <- t1[which(t1[,2] == "controls-state-change-of"),]
 
-g <- graph.edgelist(as.matrix(t2[,c(1,3)]), directed=FALSE)
+# Show only 100 interactions for simplicity
+g <- graph.edgelist(as.matrix(t2[1:100, c(1,3)]), directed=FALSE)
 plot(g, layout=layout.fruchterman.reingold)
 ```
 
@@ -286,7 +289,7 @@ plot(g, layout=layout.fruchterman.reingold)
 
 Often, it is useful not only to visualize a biological pathway, but also to overlay a given network with some form of biological data, such as gene expression values for genes in the network.
 
-```{r dataOverlayExample}
+```{r dataOverlayExample, fig.width=7, fig.height=7}
 library(RColorBrewer)
 
 # Generate a color palette that goes from white to red that contains 10 colors
