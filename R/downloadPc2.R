@@ -125,19 +125,19 @@ downloadPc2 <- function(selectedFileName=NULL, destDir=NULL, returnNames=NULL, v
     
     # READ FUNCTIONS ----
     ## Parse GMT 
-    if(grepl("GSEA", selectedFileName)) {
+    if(grepl("GSEA", selectedFileName) || grepl("gmt", selectedFileName)) {
         results <- readGmt(tmpFile, ...)
         return(results)
     }      
     
     ## Parse EXTENDED_BINARY_SIF (TXT)
-    if(grepl("TXT", selectedFileName) || grepl("EXTENDED_BINARY_SIF", selectedFileName)) {
+    if(grepl("TXT", selectedFileName) || grepl("txt", selectedFileName) || grepl("EXTENDED_BINARY_SIF", selectedFileName)) {
         results <- readSifnx(tmpFile, ...)
         return(results)
     }      
     
     ## Parse BINARY_SIF (SIF)
-    if(grepl("SIF", selectedFileName) || grepl("BINARY_SIF", selectedFileName)) {
+    if(grepl("SIF", selectedFileName) || grepl("BINARY_SIF", selectedFileName) || grepl("sif", selectedFileName)) {
         results <- readSif(tmpFile, ...)
         return(results)
     }  
