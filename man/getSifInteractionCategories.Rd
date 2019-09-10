@@ -26,6 +26,4 @@ sifCat <- getSifInteractionCategories()
 sifCat[["BetweenProteins"]]
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

@@ -21,6 +21,4 @@ results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
 summarizeSif(results)
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

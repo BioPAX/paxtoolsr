@@ -29,6 +29,4 @@ A simple function to see valid options
 pcGraphQueries()
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

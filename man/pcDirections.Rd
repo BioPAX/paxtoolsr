@@ -24,6 +24,4 @@ A simple function to see valid options
 pcDirections() 
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

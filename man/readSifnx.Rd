@@ -25,6 +25,4 @@ they are read.
 results <- readSifnx(system.file("extdata", "test_sifnx.txt", package="paxtoolsr"))
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

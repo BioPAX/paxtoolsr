@@ -4,8 +4,8 @@
 \alias{searchPc}
 \title{Search Pathway Commons}
 \usage{
-searchPc(q, page = 0, datasource = NULL, organism = NULL, type = NULL,
-  verbose = FALSE)
+searchPc(q, page = 0, datasource = NULL, organism = NULL,
+  type = NULL, verbose = FALSE)
 }
 \arguments{
 \item{q}{a keyword, name, external identifier, or a Lucene query string.}
@@ -62,6 +62,4 @@ query <- "glycolysis"
 #results <- searchPc(query, type="Pathway")
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

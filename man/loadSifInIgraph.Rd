@@ -26,6 +26,4 @@ results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
 g <- loadSifInIgraph(results)
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

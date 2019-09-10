@@ -22,6 +22,4 @@ Splits SIFNX entries into individual pathways
 This method can be slow; ~1.5 minutes for 150K+ rows. 
 Has a parallelized method to speed things up.
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

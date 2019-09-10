@@ -19,6 +19,4 @@ Read in a binary SIF file
 results <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

@@ -32,6 +32,4 @@ results <- getNeighbors(system.file("extdata",
     "HTTP://WWW.REACTOME.ORG/BIOPAX/48887#PROTEIN1631_1_9606")) 
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

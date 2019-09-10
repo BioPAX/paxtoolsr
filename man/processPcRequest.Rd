@@ -29,6 +29,4 @@ results <- processPcRequest(content, "BIOPAX")
 \seealso{
 \code{\link{pcFormats}}
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

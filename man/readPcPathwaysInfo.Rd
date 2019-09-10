@@ -27,6 +27,4 @@ file <- system.file("extdata", "pathways.txt.gz", package="paxtoolsr")
 results <- readPcPathwaysInfo(file, version="8")
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

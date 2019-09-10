@@ -28,6 +28,4 @@ df <- data.frame(id = 1:2, name = c("Jon", "Mark"),
 df <- convertDataFrameListsToVectors(df)
   
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

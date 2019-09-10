@@ -38,6 +38,4 @@ Pathways that are neither 'controlled' nor 'pathwayComponent' of
 #results <- topPathways(q="TP53", datasource="panther")
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

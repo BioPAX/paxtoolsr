@@ -22,6 +22,4 @@ pcFormats()
 \references{
 Output Formats Description: \url{http://www.pathwaycommons.org/pc2/help/formats.html}
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

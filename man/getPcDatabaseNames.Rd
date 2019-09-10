@@ -19,6 +19,4 @@ Get a Pathway Commons Databases
 getPcDatabaseNames(version=10)
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

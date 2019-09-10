@@ -40,6 +40,4 @@ results <- toGSEA(system.file("extdata", "biopax3-short-metabolic-pathway.owl",
                               crossSpeciesCheckFlag=TRUE) 
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

@@ -24,6 +24,4 @@ outFile <- tempfile()
 results <- toLevel3(inputFile, outFile) 
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

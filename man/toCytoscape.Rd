@@ -24,6 +24,4 @@ g <- barabasi.game(20)
 json <- toCytoscape(g)
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

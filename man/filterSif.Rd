@@ -4,10 +4,11 @@
 \alias{filterSif}
 \title{Keep interactions in SIF network based on certain criteria}
 \usage{
-filterSif(sif, ids = NULL, interactionTypes = NULL, dataSources = NULL,
-  interactionPubmedIds = NULL, pathwayNames = NULL, mediatorIds = NULL,
-  edgelist = NULL, idsBothParticipants = FALSE,
-  edgelistCheckReverse = TRUE, verbose = FALSE)
+filterSif(sif, ids = NULL, interactionTypes = NULL,
+  dataSources = NULL, interactionPubmedIds = NULL,
+  pathwayNames = NULL, mediatorIds = NULL, edgelist = NULL,
+  idsBothParticipants = FALSE, edgelistCheckReverse = TRUE,
+  verbose = FALSE)
 }
 \arguments{
 \item{sif}{a binary SIF as a data.frame with three columns: 
@@ -65,6 +66,4 @@ edgelist <- read.table(system.file("extdata", "test_edgelist.txt", package = "pa
 results <- filterSif(tmp$edges, edgelist=edgelist)
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

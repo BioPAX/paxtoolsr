@@ -24,6 +24,4 @@ summary <- summarize(system.file("extdata", "raf_map_kinase_cascade_reactome.owl
 package="paxtoolsr")) 
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

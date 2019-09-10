@@ -2,8 +2,8 @@ Package: paxtoolsr
 Type: Package
 Title: PaxtoolsR: Access Pathways from Multiple Databases through BioPAX and
     Pathway Commons
-Version: 1.15.1
-Date: 2018-09-20
+Version: 1.15.2
+Date: 2019-09-10
 Author: Augustin Luna
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
 Imports:
@@ -48,4 +48,4 @@ LazyData: true
 biocViews: GeneSetEnrichment, GraphAndNetwork, Pathways, Software,
     SystemsBiology, NetworkEnrichment, Network, Reactome, KEGG
 URL: https://github.com/BioPAX/paxtoolsr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

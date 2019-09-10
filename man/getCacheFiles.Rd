@@ -16,6 +16,4 @@ List files in cache directory
 getCacheFiles()
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

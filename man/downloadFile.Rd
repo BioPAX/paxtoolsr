@@ -34,6 +34,4 @@ downloadFile("http://google.com/", fileName="index.html", destDir=tempdir())
 \seealso{
 \code{\link{readSif}, \link{readBiopax}, \link{readSbgn}, \link{readSifnx}, \link{readGmt}}
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

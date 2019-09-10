@@ -23,6 +23,4 @@ Covert IDs Using org.Hs.eg.db
 convertIds("TP53", "SYMBOL", "ENTREZID")
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

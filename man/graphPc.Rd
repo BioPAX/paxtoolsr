@@ -5,7 +5,8 @@
 \title{Get Pathway Commons BioPAX elements}
 \usage{
 graphPc(kind, source, target = NULL, direction = NULL, limit = NULL,
-  format = NULL, datasource = NULL, organism = NULL, verbose = FALSE)
+  format = NULL, datasource = NULL, organism = NULL,
+  verbose = FALSE)
 }
 \arguments{
 \item{kind}{graph query. Valid options can be found using \code{\link{pcGraphQueries}}
@@ -49,6 +50,4 @@ source <- "http://identifiers.org/uniprot/O14503"
 \seealso{
 \code{\link{pcFormats}, \link{pcDirections}}
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

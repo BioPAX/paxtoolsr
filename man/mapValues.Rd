@@ -27,6 +27,4 @@ newValue <- letters[1:20]
 results <- mapValues(data, oldValue, newValue)
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

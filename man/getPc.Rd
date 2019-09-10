@@ -48,6 +48,4 @@ uri <- c("http://identifiers.org/uniprot/O14503", "http://identifiers.org/unipro
 \seealso{
 \code{\link{pcFormats}}
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

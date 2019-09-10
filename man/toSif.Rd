@@ -29,6 +29,4 @@ results <- toSif(system.file("extdata", "raf_map_kinase_cascade_reactome.owl",
   outFile) 
   
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

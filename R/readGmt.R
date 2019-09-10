@@ -29,16 +29,16 @@ readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
       tmp <- unlist(strsplit(x, "\t", fixed = TRUE))
     })
 
-    if(class(tmpResults) == "matrix") {
+    if(class(tmpResults) == "matrix") { 
         t2 <- tmpResults
         tmpResults <- list()
         tmpResults[[t2[1]]] <- as.vector(t2)
     }
 
     names(tmpResults) <- sapply(tmpResults, function(x) {
-        if(removePrefix) {
+        if(removePrefix) { 
             t1 <- strsplit(x, ": ")[[1]]
-            t2 <- paste(t1[2:length(t1)], collapse=": ")
+            t2 <- paste(t1[2:length(t1)], collapse = ": ")
             results <- trimws(t2)
         } else {
             results <- x[1]
@@ -47,17 +47,18 @@ readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
         return(results)
     })
 
-    if(returnInfo) {
+    if(returnInfo) { 
         results <- lapply(tmpResults, function(x) {
             t1 <- trimws(strsplit(x[2], ";")[[1]])
             tmp <- strsplit(t1, ": ")
 
-            dataSource <- tmp[[1]][2]
-            organism <- tmp[[2]][2]
-            idType <- tmp[[3]][2]
+            name <- tmp[[1]][2]
+            dataSource <- tmp[[2]][2]
+            organism <- tmp[[3]][2]
+            idType <- tmp[[4]][2]
             geneSet <- x[-(1:2)]
 
-            results <- list(geneSet=geneSet, dataSource=dataSource, organism=organism, idType=idType)
+            results <- list(geneSet = geneSet, name = name, dataSource = dataSource, organism = organism, idType = idType)
 
             return(results)
         })

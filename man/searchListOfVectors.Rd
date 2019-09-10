@@ -49,6 +49,4 @@ q <- "Z"
 searchListOfVectors(q, lst)
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

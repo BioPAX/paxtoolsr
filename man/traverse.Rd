@@ -50,6 +50,4 @@ uri <- "http://identifiers.org/uniprot/P38398"
 \references{
 Paxtools Documentation: \url{http://www.biopax.org/m2site/}
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

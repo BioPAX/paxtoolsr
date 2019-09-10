@@ -30,6 +30,4 @@ inputFile <- system.file("extdata", "raf_map_kinase_cascade_reactome.owl", packa
 results <- toSifnx(inputFile=inputFile) 
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

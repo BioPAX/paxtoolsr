@@ -26,6 +26,4 @@ results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"),
 results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), returnInfo=TRUE)
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

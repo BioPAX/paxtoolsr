@@ -24,6 +24,4 @@ sif <- readSif(system.file("extdata", "test_sif.txt", package="paxtoolsr"))
 gmt <- convertSifToGmt(sif)
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

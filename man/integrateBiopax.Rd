@@ -34,6 +34,4 @@ results <- integrateBiopax(system.file("extdata", "raf_map_kinase_cascade_reacto
 \seealso{
 \code{\link{mergeBiopax}}
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

@@ -32,6 +32,4 @@ results <- toSBGN(system.file("extdata", "biopax3-short-metabolic-pathway.owl",
 \references{
 \url{http://www.cs.bilkent.edu.tr/~ivis/layout/cose-animated-demo/cose.html}
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

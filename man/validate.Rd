@@ -4,8 +4,8 @@
 \alias{validate}
 \title{Validate BioPAX files}
 \usage{
-validate(inputFile, outputFile = NULL, type = c("xml", "html", "biopax"),
-  autoFix = FALSE, onlyErrors = FALSE, maxErrors = NULL,
+validate(inputFile, outputFile = NULL, type = c("xml", "html",
+  "biopax"), autoFix = FALSE, onlyErrors = FALSE, maxErrors = NULL,
   notStrict = FALSE)
 }
 \arguments{
@@ -51,6 +51,4 @@ rawDoc <- validate(system.file("extdata", "raf_map_kinase_cascade_reactome.owl",
 Rodchenkov I, Demir E, Sander C, Bader GD. The BioPAX Validator, 
   \url{http://www.ncbi.nlm.nih.gov/pubmed/23918249}
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

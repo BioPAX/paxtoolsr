@@ -26,6 +26,4 @@ g <- set_vertex_attr(g, "name", value=LETTERS[1:20])
 g <- addAttributeList(g, "isProt", list(A=TRUE, B=FALSE, C=TRUE, D=TRUE, E=FALSE))
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

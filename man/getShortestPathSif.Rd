@@ -38,6 +38,4 @@ filterFun <- function(vpaths) { idx <- sample(1:length(vpaths), 1); return(vpath
 m1 <- getShortestPathSif(sif, idA, idB, mode="all", weights=NULL, filterFun=filterFun, verbose=TRUE)
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

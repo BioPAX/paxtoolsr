@@ -19,6 +19,4 @@ Get Error Message for a Pathway Commons Error
 results <- getErrorMessage("452")
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}

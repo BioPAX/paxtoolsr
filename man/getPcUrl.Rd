@@ -21,6 +21,4 @@ older BioPAX outputs as an alternative.
 url <- getPcUrl()
 
 }
-\concept{
-paxtoolsr
-}
+\concept{paxtoolsr}
