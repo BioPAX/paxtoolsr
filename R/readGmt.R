@@ -19,12 +19,12 @@
 readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
     checkInputFilePc(inputFile)
 
-
     fileContents <- readLines(inputFile)
 
     # NOTE: Removing empty strings is necessary
     fileContents <- fileContents[fileContents != ""]
 
+    # Extract file contents and make a list of vectors
     tmpResults <- sapply(fileContents, function(x) {
       tmp <- unlist(strsplit(x, "\t", fixed = TRUE))
     })
@@ -35,6 +35,7 @@ readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
         tmpResults[[t2[1]]] <- as.vector(t2)
     }
 
+    # Extract the URI as the name for the geneset
     names(tmpResults) <- sapply(tmpResults, function(x) {
         if(removePrefix) { 
             t1 <- strsplit(x, ": ")[[1]]
@@ -47,6 +48,7 @@ readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
         return(results)
     })
 
+    # This splits the name into various elements
     if(returnInfo) { 
         results <- lapply(tmpResults, function(x) {
             t1 <- trimws(strsplit(x[2], ";")[[1]])
