@@ -72,6 +72,7 @@ Run these commands within R:
     library(devtools) 
 
     install_github("BioPAX/paxtoolsr")
+    install_github("BioPAX/paxtoolsr", args="--no-multiarch") # On Windows, 64-bit
 
 # Using PaxtoolsR: R Vignette (Tutorial)
 
