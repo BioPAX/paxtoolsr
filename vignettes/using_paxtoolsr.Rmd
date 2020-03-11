@@ -3,15 +3,13 @@ title: "Using PaxtoolsR: A BioPAX and Pathway Commons Tutorial in R"
 output:
   BiocStyle::html_document:
     toc: true
+author: "Augustin Luna"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+vignette: >
+  %\VignetteIndexEntry{Using PaxtoolsR}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
-
-<!--
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{Using PaxtoolsR}
-%\VignetteKeywords{paxtoolsr}
-%\VignetteDepends{paxtoolsr}
-%\VignettePackage{paxtoolsr}
--->
 
 # PaxtoolsR Tutorial
 
@@ -343,7 +341,7 @@ Another common task determine paths between nodes in a network.
 tmp <- get.shortest.paths(g, from="IRS1", to="MTOR")
 
 # igraph seems to return different objects on Linux versus OS X for get.shortest.paths()
-if(class(tmp[[1]]) == "list") {
+if(is(tmp[[1]], "list")) {
 	path <- tmp[[1]][[1]]	# Linux
 } else {
   path <- tmp[[1]] # OS X
@@ -363,10 +361,8 @@ The first thing we'll do is load up the necessary packages.
 
 ```{r gseaExampleLibraries, message=FALSE}
 library(paxtoolsr) # To retrieve data from Pathway Commons
-library(limma) # Contains geneSetTest
-library(affy) # To load microarray data
-library(hgu95av2) # Annotation packages for the hgu95av2 platform
-library(hgu95av2cdf)
+library(clusterProfiler) # Enrichment analysis
+library(org.Hs.eg.db)
 library(XML) # To parse XML files
 ```
 
@@ -400,64 +396,43 @@ tmp <- toGSEA(biopaxFile, gseaFile, "HGNC Symbol", FALSE)
 geneSet <- tmp$geneSet
 ```
 
-Finally, we process the microarray data and apply the gene set entrichment analysis.
+Finally, we process a gene list by applying the gene set entrichment analysis [**clusterProfiler** Bioconductor package](http://www.bioconductor.org/packages/release/bioc/html/clusterProfiler) using Pathway Commons gene sets either from **toGSEA** or **downloadPc2** functions. 
 
-```{r gseaExampleMicroarrayAnalyis}
-# Process Microarray Data
-## Load/process the estrogen microarray data
-estrogenDataDir <- system.file("extdata", package="estrogen")
-targets <- readTargets(file.path(estrogenDataDir, "estrogen.txt"), sep="")
+```{r gseaExample}
+library(clusterProfiler)
 
-abatch <- ReadAffy(filenames=file.path(estrogenDataDir, targets$filename))
-eset <- rma(abatch)
+# Example gene list at the end of some end analysis 
+geneList <- c("ALDOA", "ENO1", "GAPDH", "GPI", "HK1", "PFKL", "PGK1", "PKM")
 
-f <- paste(targets$estrogen,targets$time.h,sep="")
-f <- factor(f)
-design <- model.matrix(~0+f)
-colnames(design) <- levels(f)
+# Read Pathway Commons V12 KEGG dataset inluded with package
+gmt <- readGmt(system.file("extdata", "test_PathwayCommons12.kegg.hgnc.gmt", package = "paxtoolsr"), returnInfo = TRUE)  
 
-fit <- lmFit(eset, design)
+geneSetList <- lapply(seq_along(gmt), function(x, n, i) { 
+  tmp <- x[[i]]
+  data.frame(id=n[i], name=tmp[["name"]], gene=tmp[["geneSet"]], stringsAsFactors=FALSE)
+}, x=gmt, n=names(gmt))
 
-cont.matrix <- makeContrasts(E10="present10-absent10",E48="present48-absent48",Time="absent48-absent10",levels=design)
+tmp <- do.call("rbind", geneSetList)
+rownames(tmp) <- 1:nrow(tmp) # For convenience 
 
-fit2  <- contrasts.fit(fit, cont.matrix)
-fit2  <- eBayes(fit2)
+pc2gene <- tmp[, c("id", "gene")]
+pc2name <- tmp[, c("id", "name")]
 
-## Map the gene symbols to the probe IDs
-symbol <- unlist(as.list(hgu95av2SYMBOL))
-
-### Check that the gene symbols are on the microarray platform
-genesOnChip <- match(geneSet,symbol)
-genesOnChip # CHECK FOR ERROR HERE
-
-genesOnChip <- genesOnChip[!is.na(genesOnChip)]
-
-### Grab the probe IDs for the genes present
-genesOnChip <- names(symbol[genesOnChip])
-genesOnChip <- match(genesOnChip, rownames(fit2$t))
-genesOnChip <- genesOnChip[!is.na(genesOnChip)]
-
-## Run the Gene Set Test from the limma Package
-geneSetTest(genesOnChip,fit2$t[,1],"two.sided")
+enrichOutput <- clusterProfiler::enricher(geneList, pvalueCutoff=0.05, minGSSize=10, maxGSSize=500, TERM2GENE=pc2gene, TERM2NAME=pc2name)
+enrichOutput@result
 ```
 
 # ID Mapping
 
-Functions and results from **paxtoolsr** functions can be used in conjunction with the ID mapping functions of the [**biomaRt** Bioconductor package](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html); users should check the the **biomaRt** package documentation for a list of possible ID types.
+Functions and results from **paxtoolsr** functions can be used in conjunction with the ID mapping functions of the [**clusterProfiler** Bioconductor package](http://www.bioconductor.org/packages/release/bioc/html/clusterProfiler).
 
 ```{r idMapping, eval=FALSE}
 sif <- toSif(system.file("extdata", "raf_map_kinase_cascade_reactome.owl", package="paxtoolsr"))
 
-# Generate a mapping between the HGNC symbols in the SIF to the Uniprot IDs
-library(biomaRt)
-ensembl <- useMart("ensembl")
-ensembl <- useDataset("hsapiens_gene_ensembl", mart=ensembl)
+ids <- c(sif$PARTICIPANT_A, sif$PARTICIPANT_B)
 
-hgnc_symbol <- c(sif$PARTICIPANT_A, sif$PARTICIPANT_B)
-output <- getBM(attributes=c('hgnc_symbol', 'uniprot_sptrembl'), filters='hgnc_symbol', values=hgnc_symbol, mart=ensembl)
-
-# Remove blank entries
-output <- output[output[,2] != "",]
+output <- clusterProfiler::bitr(ids, fromType="SYMBOL", toType="ENTREZID", OrgDb="org.Hs.eg.db")
+output
 ```
 
 # Troubleshooting

@@ -9,12 +9,18 @@
 #' @return a named list where each entry corresponds to a gene set or a list described in the returnInfo parameter
 #'
 #' @examples
-#' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
-#' results <- readGmt(system.file("extdata", "test_gsea_1.gmt", package="paxtoolsr"))
-#' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), removePrefix=TRUE)
-#' results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), returnInfo=TRUE)
+#' f1 <- system.file("extdata", "test_PathwayCommons12.kegg.hgnc.gmt", 
+#'   package="paxtoolsr")
+#' f2 <- system.file("extdata", "test_PathwayCommons12.netpath.hgnc.gmt", 
+#'   package="paxtoolsr")
+#'   
+#' results <- readGmt(f1)
+#' results <- readGmt(f2)
+#' results <- readGmt(f1, removePrefix=TRUE)
+#' results <- readGmt(f2, returnInfo=TRUE)
 #'
 #' @concept paxtoolsr
+#' @importFrom methods is 
 #' @export
 readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
     checkInputFilePc(inputFile)
@@ -29,7 +35,7 @@ readGmt <- function(inputFile, removePrefix=FALSE, returnInfo=FALSE) {
       tmp <- unlist(strsplit(x, "\t", fixed = TRUE))
     })
 
-    if(class(tmpResults) == "matrix") { 
+    if(is(tmpResults, "matrix")) { 
         t2 <- tmpResults
         tmpResults <- list()
         tmpResults[[t2[1]]] <- as.vector(t2)

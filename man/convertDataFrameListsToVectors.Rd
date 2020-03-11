@@ -18,8 +18,8 @@ a data.frame without list columns
 Convert columns with list in data.frame to vector
 }
 \note{
-Lists as columns are useful programmatically, but cause issue in writing 
-  output to text-based files
+Lists as columns are useful programmatically, 
+  but cause issue in writing output to text-based files
 }
 \examples{
    

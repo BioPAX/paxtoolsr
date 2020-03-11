@@ -20,10 +20,15 @@ a named list where each entry corresponds to a gene set or a list described in t
 This function will read in gene sets in the GMT format into a named list.
 }
 \examples{
-results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
-results <- readGmt(system.file("extdata", "test_gsea_1.gmt", package="paxtoolsr"))
-results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), removePrefix=TRUE)
-results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"), returnInfo=TRUE)
+f1 <- system.file("extdata", "test_PathwayCommons12.kegg.hgnc.gmt", 
+  package="paxtoolsr")
+f2 <- system.file("extdata", "test_PathwayCommons12.netpath.hgnc.gmt", 
+  package="paxtoolsr")
+  
+results <- readGmt(f1)
+results <- readGmt(f2)
+results <- readGmt(f1, removePrefix=TRUE)
+results <- readGmt(f2, returnInfo=TRUE)
 
 }
 \concept{paxtoolsr}

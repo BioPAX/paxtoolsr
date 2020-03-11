@@ -4,8 +4,7 @@
 \alias{topPathways}
 \title{Retrieve top pathways}
 \usage{
-topPathways(q = NULL, datasource = NULL, organism = NULL,
-  verbose = FALSE)
+topPathways(q = NULL, datasource = NULL, organism = NULL, verbose = FALSE)
 }
 \arguments{
 \item{q}{[Optional] a keyword, name, external identifier, or a Lucene query string, like in 'search', but the default is '*' (match all).}

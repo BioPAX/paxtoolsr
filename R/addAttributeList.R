@@ -10,14 +10,15 @@
 #' library(igraph)
 #' g <- barabasi.game(20)
 #' g <- set_vertex_attr(g, "name", value=LETTERS[1:20])
-#' g <- addAttributeList(g, "isProt", list(A=TRUE, B=FALSE, C=TRUE, D=TRUE, E=FALSE))
+#' g <- addAttributeList(g, "isProt", 
+#'   list(A=TRUE, B=FALSE, C=TRUE, D=TRUE, E=FALSE))
 #' 
 #' @concept paxtoolsr
 #' @export
 #' 
 #' @importFrom igraph V V<- set_vertex_attr 
 addAttributeList <- function(g, attr, l) {
-    for(i in 1:length(l)) {
+    for(i in seq_along(l)) {
         #cat("i", i, "\n")
         vertex <- V(g)$name[V(g)$name %in% names(l)[i]]
         

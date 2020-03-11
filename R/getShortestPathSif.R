@@ -90,7 +90,7 @@ getShortestPathSif <- function(sif, idA, idB, mode=c("all", "out", "in"), weight
 
     epath <- E(g)[e1]
 
-    for(i in 1:length(epath)) {
+    for(i in seq_along(epath)) {
         idx <- epath[i]
         tmpV <- ends(g, idx)
         tmpInteractionType <- E(g)[idx]$interactionType

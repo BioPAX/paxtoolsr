@@ -221,7 +221,7 @@ test_that("readSbgn", {
 test_that("readGmt", {
     expect_error(readGmt("BAD"), "ERROR: inputFile not file.")
     
-    results <- readGmt(system.file("extdata", "test_gsea.gmt", package="paxtoolsr"))
+    results <- readGmt(system.file("extdata", "test_PathwayCommons12.kegg.hgnc.gmt", package="paxtoolsr"))
     expect_is(results, "list")
 })
 

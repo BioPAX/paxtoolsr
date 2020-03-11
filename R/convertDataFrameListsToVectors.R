@@ -5,8 +5,8 @@
 #' 
 #' @return a data.frame without list columns 
 #' 
-#' @note Lists as columns are useful programmatically, but cause issue in writing 
-#'   output to text-based files
+#' @note Lists as columns are useful programmatically, 
+#'   but cause issue in writing output to text-based files
 #' 
 #' @examples    
 #' df <- data.frame(id = 1:2, name = c("Jon", "Mark"), 

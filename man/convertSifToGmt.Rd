@@ -11,7 +11,8 @@ convertSifToGmt(sif, name = "gmt", returnSmallMolecules = FALSE)
 
 \item{name}{the name of the gene set}
 
-\item{returnSmallMolecules}{a boolean whether to return genes or small molecules in the gene set}
+\item{returnSmallMolecules}{a boolean whether to return genes 
+or small molecules in the gene set}
 }
 \value{
 a list with one entry being a vector

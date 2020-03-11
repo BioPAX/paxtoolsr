@@ -2,7 +2,8 @@
 #' 
 #' @param sif a data.frame representing a SIF (Simple Interaction Format)
 #' @param name the name of the gene set
-#' @param returnSmallMolecules a boolean whether to return genes or small molecules in the gene set
+#' @param returnSmallMolecules a boolean whether to return genes 
+#'   or small molecules in the gene set
 #' 
 #' @return a list with one entry being a vector 
 #' 

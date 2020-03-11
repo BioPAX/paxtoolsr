@@ -4,8 +4,16 @@
 \alias{getShortestPathSif}
 \title{Get the shortest between two IDs (HGNC or CHEBI)}
 \usage{
-getShortestPathSif(sif, idA, idB, mode = c("all", "out", "in"),
-  weights = NULL, verbose = FALSE, filterFun, ...)
+getShortestPathSif(
+  sif,
+  idA,
+  idB,
+  mode = c("all", "out", "in"),
+  weights = NULL,
+  verbose = FALSE,
+  filterFun,
+  ...
+)
 }
 \arguments{
 \item{sif}{a SIF network}

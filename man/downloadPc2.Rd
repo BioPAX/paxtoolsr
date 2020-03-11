@@ -5,8 +5,14 @@
 \alias{downloadPc}
 \title{Download Pathway Commons files (uses menu and cache)}
 \usage{
-downloadPc2(selectedFileName = NULL, destDir = NULL,
-  returnNames = NULL, version, verbose = FALSE, ...)
+downloadPc2(
+  selectedFileName = NULL,
+  destDir = NULL,
+  returnNames = NULL,
+  version,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{selectedFileName}{a string, a name of a file to skip the the interactive selection}

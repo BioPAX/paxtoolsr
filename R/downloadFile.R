@@ -3,7 +3,7 @@
 #' @param baseUrl a string, entire download URL except filename
 #' @param fileName a string, the filename of file to be downloaded 
 #' @param destDir a string, the path where a file should be saved 
-#' @param cacheEnv a string, the environment variable that points to the specific cache
+#' @param cacheEnv a string, environment variable pointing to specific cache
 #' @param verbose show debugging information
 #' 
 #' @return a boolean TRUE if the file was downloaded or already exists, FALSE otherwise

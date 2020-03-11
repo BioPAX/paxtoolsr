@@ -4,8 +4,12 @@
 \alias{toGSEA}
 \title{Converts a BioPAX OWL file to a GSEA GMT gene set}
 \usage{
-toGSEA(inputFile, outputFile = NULL, database = "uniprot",
-  crossSpeciesCheckFlag = TRUE)
+toGSEA(
+  inputFile,
+  outputFile = NULL,
+  database = "uniprot",
+  crossSpeciesCheckFlag = TRUE
+)
 }
 \arguments{
 \item{inputFile}{a string of the name of the input OWL file}

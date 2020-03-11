@@ -20,7 +20,7 @@ getPcDatabaseNames <- function(version) {
     })
     t4 <- setdiff(unlist(t3), c("All", "Warehouse", "Detailed"))
     t5 <- t4
-    for(i in 1:length(t5)) {
+    for(i in seq_along(t5)) {
         key <- names(dbMapping)[i]
         if(t5[i] %in% names(dbMapping)) {
             t5[i] <- dbMapping[[t5[i]]]

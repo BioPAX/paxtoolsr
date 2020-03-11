@@ -10,8 +10,8 @@
 #' http://www.pathwaycommons.org/archives/PC2/current/pathways.txt.gz)
 #' 
 #' @examples 
-#' file <- system.file("extdata", "pathways.txt.gz", package="paxtoolsr")
-#' results <- readPcPathwaysInfo(file, version="8")
+#' inputFile <- system.file("extdata", "pathways.txt.gz", package="paxtoolsr")
+#' results <- readPcPathwaysInfo(inputFile, version="8")
 #' 
 #' @concept paxtoolsr
 #' @export
@@ -53,7 +53,7 @@ readPcPathwaysInfo <- function(inputFile=NULL, version=NULL) {
     lineTmp <- readLines(con, warn=FALSE)
     
     # Skip first line because it is empty
-    for (i in 1:length(lineTmp)) {
+    for (i in seq_along(lineTmp)) {
         line <- lineTmp[i]
         
         if(grepl("^$", line)) {

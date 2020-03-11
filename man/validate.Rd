@@ -4,9 +4,15 @@
 \alias{validate}
 \title{Validate BioPAX files}
 \usage{
-validate(inputFile, outputFile = NULL, type = c("xml", "html",
-  "biopax"), autoFix = FALSE, onlyErrors = FALSE, maxErrors = NULL,
-  notStrict = FALSE)
+validate(
+  inputFile,
+  outputFile = NULL,
+  type = c("xml", "html", "biopax"),
+  autoFix = FALSE,
+  onlyErrors = FALSE,
+  maxErrors = NULL,
+  notStrict = FALSE
+)
 }
 \arguments{
 \item{inputFile}{a string of the name of the input BioPAX OWL file}

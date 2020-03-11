@@ -23,7 +23,8 @@ Add attributes using a list of vectors to an igraph object
 library(igraph)
 g <- barabasi.game(20)
 g <- set_vertex_attr(g, "name", value=LETTERS[1:20])
-g <- addAttributeList(g, "isProt", list(A=TRUE, B=FALSE, C=TRUE, D=TRUE, E=FALSE))
+g <- addAttributeList(g, "isProt", 
+  list(A=TRUE, B=FALSE, C=TRUE, D=TRUE, E=FALSE))
 
 }
 \concept{paxtoolsr}
