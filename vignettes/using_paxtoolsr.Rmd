@@ -145,7 +145,7 @@ The **results** object is a list with two entries: nodes and edges. **nodes** wi
 **NOTE:** **downloadPc2** may take several minutes to complete.
 
 ```{r downloadSif, eval=FALSE}
-results <- downloadPc2()
+results <- downloadPc2(version="12")
 ```
 
 It is suggested that the results of this command be saved locally rather than using this command frequently to speed up work. Caching is attempted automatically, the location of downloaded files for this cache is available with this command:
