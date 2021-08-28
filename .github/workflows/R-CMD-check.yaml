@@ -1,0 +1,68 @@
+on:
+  schedule:
+    - cron:  '0 8 * * *'
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+name: R-CMD-check
+
+jobs:
+  check:
+    runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.os }}, R ${{ matrix.r }}, Java ${{ matrix.java }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'windows-latest', 'macOS-10.15', 'ubuntu-20.04' ]
+        r:  [ 'release', 'devel' ]
+        java: [ 8, 11, 14 ]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.r }}
+
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+
+      - name: Build
+        run: "echo FIXME"
+
+      - name: Info
+        run: "bash -c 'java -version && which java && echo $PATH && echo $JAVA_HOME'"
+
+      - name: Setup R Java support
+        if: runner.os != 'Windows'
+        run: "echo export PATH=$PATH > reconf.sh; echo export JAVA_HOME=$JAVA_HOME >> reconf.sh; echo R CMD javareconf >> reconf.sh; sudo bash reconf.sh"
+
+      - name: R CMD check (Windows)
+        if: runner.os == 'Windows'
+        run: "bash -c 'R CMD check --no-multiarch --no-manual .'"
+
+      - name: R CMD check (Linux)
+        if: runner.os == 'Linux'
+        run: "bash -c 'xvfb-run R CMD check --no-manual .'"
+
+      - name: R CMD check (macOS)
+        if: runner.os == 'macOS'
+        run: "bash -c 'NOAWT=1 R CMD check --no-manual .'"
+
+      - name: Show install log
+        run: "bash -c 'if [ -e paxtoolsr.Rcheck/00install.out ]; then cat paxtoolsr.Rcheck/00install.out; fi'"
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ runner.os }}-r${{ matrix.r }}-j${{ matrix.java }}-results
+          path: paxtoolsr.Rcheck
+
