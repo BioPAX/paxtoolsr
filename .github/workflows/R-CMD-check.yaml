@@ -12,30 +12,47 @@ name: R-CMD-check
 
 jobs:
   check:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.os }}, R ${{ matrix.r }}, Java ${{ matrix.java }}
+    name: ${{ matrix.config.os }}, R ${{ matrix.config.r }}, Java ${{ matrix.config.java }}
 
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'windows-latest', 'macOS-10.15', 'ubuntu-20.04' ]
-        r:  [ 'release', 'devel' ]
-        java: [ 8, 14 ]
+        config:
+          - {os: windows-latest, r: 'release', java: 14}
+          - {os: macOS-latest, r: 'release', java: 14}
+          - {os: ubuntu-20.04, r: 'release', java: 8}
+          - {os: ubuntu-20.04, r: 'release', java: 14}
+          - {os: ubuntu-20.04, r: 'devel', java: 8}
+          - {os: ubuntu-20.04, r: 'devel', java: 14}
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-r@v1
         with:
-          r-version: ${{ matrix.r }}
+          r-version: ${{ matrix.config.r }}
+          
+      - uses: r-lib/actions/setup-pandoc@v1
 
       - uses: actions/setup-java@v1
         with:
-          java-version: ${{ matrix.java }}
+          java-version: ${{ matrix.config.java }}
 
-      - name: Build
-        run: "echo FIXME"
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
+
+      - name: Restore R package cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
       - name: Info
         run: "bash -c 'java -version && which java && echo $PATH && echo $JAVA_HOME'"
@@ -63,6 +80,6 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-r${{ matrix.r }}-j${{ matrix.java }}-results
+          name: ${{ runner.config.os }}-r${{ matrix.config.r }}-j${{ matrix.config.java }}-results
           path: paxtoolsr.Rcheck
 
