@@ -60,7 +60,16 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
-      - name: Show Java Info
+      - name: Show Java Info (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          java -version
+          where java
+          echo %JAVA_HOME%
+          echo %PATH%
+
+      - name: Show Java Info (Linux)
+        if: runner.os != 'Windows'
         run: "bash -c 'java -version && which java && echo $PATH && echo $JAVA_HOME'"
 
       - name: Setup R Java Support
@@ -80,12 +89,22 @@ jobs:
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}      
         
-      - name: Run Check
+      - name: Run Check (Linux/macOS)
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        if: runner.os != 'Windows'
         run: |
           options(crayon.enabled = TRUE)
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+        
+      - name: Run Check (Windows)
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        if: runner.os == 'Windows'
+        run: |
+          options(crayon.enabled = TRUE)
+          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
 #      - name: R CMD check (Windows)
