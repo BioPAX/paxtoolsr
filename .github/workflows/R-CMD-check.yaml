@@ -60,16 +60,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
-      - name: Show Java Info (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          java -version
-          where java
-          echo %JAVA_HOME%
-          echo %PATH%
-
       - name: Show Java Info (Linux)
-        if: runner.os != 'Windows'
         run: "bash -c 'java -version && which java && echo $PATH && echo $JAVA_HOME'"
 
       - name: Setup R Java Support
