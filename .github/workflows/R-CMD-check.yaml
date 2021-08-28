@@ -21,7 +21,7 @@ jobs:
       matrix:
         os: [ 'windows-latest', 'macOS-10.15', 'ubuntu-20.04' ]
         r:  [ 'release', 'devel' ]
-        java: [ 8, 11, 14 ]
+        java: [ 8, 14 ]
 
     steps:
       - uses: actions/checkout@v1
