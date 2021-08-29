@@ -9,7 +9,7 @@ downloadSignedPC(destDir = NULL, forceCache = FALSE)
 \arguments{
 \item{destDir}{a string, the destination directory for the file to be 
 downloaded (Default: NULL). If NULL, then file will be downloaded to cache
-directory file.path(Sys.getenv("HOME"), ".paxtoolsRCache")}
+directory at Sys.getenv("PAXTOOLSR_CACHE")}
 
 \item{forceCache}{a boolean to force the use of a cached version (DEFAULT: FALSE); 
 the current host of the file (GitHub) does not support the LAST-MODIFIED header}

@@ -3,7 +3,7 @@
 #' @param selectedFileName a string, a name of a file to skip the the interactive selection
 #' @param destDir a string, the destination directory for the file to be 
 #'   downloaded (Default: NULL). If NULL, then file will be downloaded to cache
-#'   directory file.path(Sys.getenv("HOME"), ".paxtoolsRCache")
+#'   directory at Sys.getenv("PAXTOOLSR_CACHE")
 #' @param returnNames return a vector of names matching the given regular expression
 #' @param version a version number for a previous version of Pathway Commons data; 
 #'   versions 3 and above. Parameter set as version="8". Available versions "http://www.pathwaycommons.org/archives/PC2/"

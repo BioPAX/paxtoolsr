@@ -19,7 +19,7 @@ downloadPc2(
 
 \item{destDir}{a string, the destination directory for the file to be 
 downloaded (Default: NULL). If NULL, then file will be downloaded to cache
-directory file.path(Sys.getenv("HOME"), ".paxtoolsRCache")}
+directory at Sys.getenv("PAXTOOLSR_CACHE")}
 
 \item{returnNames}{return a vector of names matching the given regular expression}
 

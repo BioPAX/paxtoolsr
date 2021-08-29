@@ -18,6 +18,7 @@
 #' @export 
 #' 
 #' @importFrom rjson fromJSON
+#' @importFrom XML xmlTreeParse
 processPcRequest <- function(content, format, ...) {
     if(format == "JSON") {     
         results <- fromJSON(content)

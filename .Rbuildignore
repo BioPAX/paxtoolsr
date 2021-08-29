@@ -5,3 +5,5 @@
 ^\.travis\.yml$
 ^\.httr-oauth$
 ^\.git$
+^\.github$
+^reconf.sh$
