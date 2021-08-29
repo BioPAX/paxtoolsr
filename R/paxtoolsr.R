@@ -19,7 +19,7 @@
     cacheMap <- file.path(cacheDir, "cacheMap.txt")
 
     if(!dir.exists(Sys.getenv("PAXTOOLSR_CACHE"))) {
-        dir.create(file.path(cacheDir))        
+        dir.create(file.path(cacheDir), recursive=TRUE)        
         stopifnot(dir.exists(cacheDir))
     }
     
