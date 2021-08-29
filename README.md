@@ -1,4 +1,4 @@
-[![Travis-CI Build Status](https://travis-ci.org/BioPAX/paxtoolsr.svg?branch=master)](https://travis-ci.org/BioPAX/paxtoolsr)
+![R-CMD-check](https://github.com/BioPAX/paxtoolsr/actions/workflows/R-CMD-check.yaml/badge.svg)
 
 **NOTE:** Users interested in the source code should download the code directly from Bioconductor repositories:
 
