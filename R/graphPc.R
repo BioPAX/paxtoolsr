@@ -117,6 +117,9 @@ graphPc <- function(kind, source, target=NULL, direction=NULL, limit=NULL,
       stop("ERROR: Result was empty")
     }
     
+    # Ensure UTF-8 encoding 
+    tmp <- iconv(tmp, to="UTF-8", sub="?")
+    
     results <- processPcRequest(tmp, format)
     return(results)
 }
