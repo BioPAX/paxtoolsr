@@ -43,6 +43,17 @@
         Sys.setenv("DYLD_LIBRARY_PATH"=sub("/usr/X11R6/lib","",dlp))
     }
 
+    # JAVA ----
+    ## Check if Java exists
+    check_java <- system('which java', intern=TRUE)
+
+    if(identical(check_java, character(0))) {
+      cat("ERROR: Java not found")
+    } else {
+      check_java_version <- system('java -version 2>&1 >/dev/null', intern=TRUE)
+      cat("MSG: Java found: ", check_java_version[1], "\n")
+    }
+
     #jar.paxtools <- paste(lib, pkg, "java", "paxtools-jar-with-dependencies.jar",
     #  sep=.Platform$file.sep)
     #.jinit(classpath=c(jar.paxtools))
