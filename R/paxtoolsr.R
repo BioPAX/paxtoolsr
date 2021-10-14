@@ -78,7 +78,7 @@
       startupMsg <- "ERROR: Java not found"
     } else {
       checkJavaVersion <- system('java -version 2>&1 >/dev/null', intern=TRUE)
-      startupMsg <- cat("MSG: Java found: ", checkJavaVersion[1], "\n")
+      startupMsg <- paste0("MSG: Java found: ", checkJavaVersion[1], "\n")
     }
     
     startupMsg <- paste0(startupMsg, "\n", 'Consider citing this package: Luna A, et al. PaxtoolsR: pathway analysis in R using Pathway Commons. PMID: 26685306; citation("paxtoolsr")')
