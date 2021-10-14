@@ -43,17 +43,6 @@
         Sys.setenv("DYLD_LIBRARY_PATH"=sub("/usr/X11R6/lib","",dlp))
     }
 
-    # JAVA ----
-    ## Check if Java exists
-    check_java <- system('which java', intern=TRUE)
-
-    if(identical(check_java, character(0))) {
-      cat("ERROR: Java not found")
-    } else {
-      check_java_version <- system('java -version 2>&1 >/dev/null', intern=TRUE)
-      cat("MSG: Java found: ", check_java_version[1], "\n")
-    }
-
     #jar.paxtools <- paste(lib, pkg, "java", "paxtools-jar-with-dependencies.jar",
     #  sep=.Platform$file.sep)
     #.jinit(classpath=c(jar.paxtools))
@@ -81,7 +70,20 @@
 }
 
 .onAttach <- function(libname, pkgname){
-    packageStartupMessage('Consider citing this package: Luna A, et al. PaxtoolsR: pathway analysis in R using Pathway Commons. PMID: 26685306; citation("paxtoolsr")')
+    # JAVA ----
+    ## Check if Java exists
+    check_java <- system('which java', intern=TRUE)
+    
+    if(identical(check_java, character(0))) {
+      startupMsg <- "ERROR: Java not found"
+    } else {
+      checkJavaVersion <- system('java -version 2>&1 >/dev/null', intern=TRUE)
+      startupMsg <- cat("MSG: Java found: ", checkJavaVersion[1], "\n")
+    }
+    
+    startupMsg <- paste0(startupMsg, "\n", 'Consider citing this package: Luna A, et al. PaxtoolsR: pathway analysis in R using Pathway Commons. PMID: 26685306; citation("paxtoolsr")')
+    
+    packageStartupMessage(startupMsg)
 }
 
 #jar.paxtools <- "lib/paxtools-4.2.1.jar"
