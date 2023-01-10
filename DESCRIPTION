@@ -1,8 +1,8 @@
 Package: paxtoolsr
 Type: Package
 Title: Access Pathways from Multiple Databases Through BioPAX and Pathway Commons
-Version: 1.27.3
-Date: 2021-10-25
+Version: 1.27.4
+Date: 2023-01-10
 Authors@R: person("Augustin", "Luna", email = "lunaa@cbio.mskcc.org",
                   role = c("aut", "cre"))
 Imports:

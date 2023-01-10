@@ -13,7 +13,7 @@ checkInputFilePc <- function(inputFile) {
     stop("ERROR: inputFile not file.")
   }
 
-  if(file.size(inputFile) > 1e9) {
+  if(file.size(inputFile) > 2e9) {
     stop("ERROR: A maximum file size limit of 1GB has been placed on files being read. Reading larger files with this function may be very slow. Please contact package author for workarounds.")
   }
 }
