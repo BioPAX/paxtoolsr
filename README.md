@@ -67,11 +67,11 @@ Run these commands within R:
 
     setRepositories(ind=1:6)
     options(repos="http://cran.rstudio.com/")
-    if(!require(devtools)) { install.packages("devtools") }
-    library(devtools) 
+    if(!require(remotes)) { install.packages("remotes") }
+    library(remotes) 
 
-    install_github("BioPAX/paxtoolsr")
-    install_github("BioPAX/paxtoolsr", args="--no-multiarch") # On Windows, 64-bit
+    remotes::install_github("BioPAX/paxtoolsr")
+    remotes::install_github("BioPAX/paxtoolsr", args="--no-multiarch") # On Windows, 64-bit
 
 # Using PaxtoolsR: R Vignette (Tutorial)
 
